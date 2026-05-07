@@ -6,6 +6,7 @@
 .vscode/
 .idea/
 *.swp
+.claude/
 
 # Reference assets — too big and not part of the site
 *.mov
@@ -21,3 +22,6 @@ site/_previous-attempt/
 node_modules/
 dist/
 .cache/
+
+# Local dev helpers (not part of the deployed site)
+site/_serve.py
