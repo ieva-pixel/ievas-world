@@ -438,45 +438,80 @@ section { position: relative; }
   position: sticky;
   top: 0;
   height: 100vh;
-  display: flex;
-  align-items: center;
-  padding: 0 4rem;
   overflow: hidden;
 }
 #workProgress {
   position: absolute;
-  bottom: 2.5rem;
-  right: 4rem;
-  font-family: var(--ff-sans);
-  font-size: .68rem;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--muted);
-  z-index: 3;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+}
+.work-header {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 4rem;
+  z-index: 1;
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+.work-header-title {
+  font-family: var(--ff-serif);
+  font-style: italic;
+  font-size: clamp(3.5rem, 8vw, 7rem);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: -0.025em;
+  color: var(--olive-deep);
+  margin: 0.6rem 0 0;
 }
 .work-cards-stage {
-  position: relative;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
   z-index: 2;
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
-  min-height: 70vh;
-  display: flex;
-  align-items: center;
 }
 .work-card {
   position: absolute;
-  top: 50%; left: 0; right: 0;
-  transform: translateY(-50%);
-  will-change: opacity, transform;
+  inset: 0;
+  display: flex;
   pointer-events: none;
+  will-change: opacity, transform;
 }
-.work-card-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4.5rem;
-  align-items: center;
+.work-card-visual {
+  width: 58%;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.work-card-visual .thumb {
+  position: absolute;
+  inset: 0;
   width: 100%;
+  height: 100%;
+  aspect-ratio: unset;
+  border-radius: 0;
+}
+.work-card-meta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 5rem 4rem 4.5rem;
+}
+.work-card-counter {
+  font-family: var(--ff-sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.8rem;
+}
+.work-card-cta {
+  align-self: flex-start;
+  margin-top: 2rem;
 }
 .project-eyebrow {
   font-family: var(--ff-sans);
@@ -693,7 +728,9 @@ section { position: relative; }
   #home, #disciplines, #statement, #process, #work, #about, #side, #contact {
     padding-left: 1.5rem; padding-right: 1.5rem;
   }
-  .work-card-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .work-card { flex-direction: column; }
+  .work-card-visual { width: 100%; height: 40vh; flex-shrink: 0; }
+  .work-card-meta { padding: 2rem 1.5rem; }
 }
 
 /* ═══ REDUCED MOTION ══════════════════════════════════════════════════════ */

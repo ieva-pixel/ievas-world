@@ -79,25 +79,22 @@ buildHeroLine('world',  heroLine2El);
 const workCardsEl   = document.getElementById('workCards');
 const workProgressEl = document.getElementById('workProgress');
 
-const workCardEls = PROJECTS.map((p, idx) => {
+const workCardEls = PROJECTS.map((p) => {
   const card = document.createElement('div');
   card.className = 'work-card';
   card.style.cssText = 'opacity:0;transition:none;';
-  const flip = idx % 2 === 1;
   card.innerHTML = `
-    <div class="work-card-grid"${flip ? ' style="direction:rtl"' : ''}>
-      <div style="direction:ltr">
-        <div class="project-eyebrow">${p.eyebrow}</div>
-        <h2 class="project-title">${p.title}</h2>
-        <p class="project-desc">${p.desc}</p>
-        <a href="${p.href}" class="pill pill-dark">View case study</a>
+    <div class="work-card-visual">
+      <div class="thumb" style="background:${p.bg}">
+        <div class="thumb-glow" style="background:${p.accent}"></div>
       </div>
-      <div style="direction:ltr">
-        <div class="thumb" style="background:${p.bg}">
-          <div class="thumb-glow" style="background:${p.accent}"></div>
-          <span class="thumb-label" style="color:${p.accent}">project image</span>
-        </div>
-      </div>
+    </div>
+    <div class="work-card-meta">
+      <div class="work-card-counter">${p.num}&thinsp;/&thinsp;${p.total}</div>
+      <h2 class="project-title">${p.title}</h2>
+      <div class="project-eyebrow" style="margin-bottom:0.75rem">${p.eyebrow}</div>
+      <p class="project-desc">${p.desc}</p>
+      <a href="${p.href}" class="pill pill-dark work-card-cta">View case study</a>
     </div>
   `;
   workCardsEl.appendChild(card);
@@ -275,8 +272,9 @@ const procContent = document.getElementById('processContent');
 const ovalsEl     = document.getElementById('ovalsWrap');
 
 // 3d. Work card swap
-const workPinWrap = document.getElementById('work-pin-wrap');
-const workSection = document.getElementById('work');
+const workPinWrap  = document.getElementById('work-pin-wrap');
+const workSection  = document.getElementById('work');
+const workHeaderEl = document.getElementById('workHeader');
 
 // 3e. About scene
 const aboutWrap    = document.getElementById('about-wrap');
@@ -320,10 +318,10 @@ function onPinnedScroll() {
 
 function onWorkScroll() {
   if (!workPinWrap || !workCardEls.length) return;
-  const rect = workPinWrap.getBoundingClientRect();
-  const wh   = window.innerHeight;
+  const rect        = workPinWrap.getBoundingClientRect();
+  const wh          = window.innerHeight;
   const totalScroll = workPinWrap.offsetHeight - wh;
-  const globalP = clamp01(-rect.top / totalScroll);
+  const globalP     = clamp01(-rect.top / totalScroll);
 
   // Background cream → olive during last 18%
   const bgOutP = clamp01((globalP - 0.82) / 0.18);
@@ -332,37 +330,68 @@ function onWorkScroll() {
   const b = Math.round(233 + (2  - 233) * bgOutP);
   if (workSection) workSection.style.background = `rgb(${r},${g},${b})`;
 
-  // Cards exit during last 12%
+  // Section-level approach fade + exit blur
   const entryInP   = smooth(approachInP(workPinWrap, 0.70));
   const cardsExitP = clamp01((globalP - 0.88) / 0.12);
   if (workCardsEl) {
-    workCardsEl.style.filter    = `blur(${(cardsExitP * 12).toFixed(1)}px)`;
-    workCardsEl.style.transform = `translateY(${(-cardsExitP * 30).toFixed(1)}px)`;
+    workCardsEl.style.filter    = `blur(${(cardsExitP * 10).toFixed(1)}px)`;
+    workCardsEl.style.transform = `translateY(${(-cardsExitP * 25).toFixed(1)}px)`;
     workCardsEl.style.opacity   = entryInP * (1 - cardsExitP);
   }
 
-  // Each card occupies 1/n of the window
-  const n = PROJECTS.length;
+  // Header: fades in on approach, then out as first card enters
+  if (workHeaderEl) {
+    const hIn  = 1 - Math.pow(1 - clamp01((entryInP - 0.12) / 0.88), 3);
+    const hOut = Math.pow(clamp01(globalP / 0.14), 1.8);
+    workHeaderEl.style.opacity   = hIn * (1 - hOut);
+    workHeaderEl.style.transform = `translateY(${((1 - hIn) * 28 - hOut * 50).toFixed(1)}px)`;
+  }
+
+  // Directional card swap — enter from below, exit upward (Marimba-style)
+  // vh units ensure cards are fully off-screen before the next appears
+  const n          = PROJECTS.length;
+  const CARD_START = 0.10;
+  const CARD_END   = 0.90;
+  const TRANS      = 0.025;  // shorter = snappier wipe
+  const cardBand   = (CARD_END - CARD_START) / n;
+
   workCardEls.forEach((card, i) => {
-    const centre = (i + 0.35) / n;
-    const half   = 0.5 / n;
-    const dist   = Math.abs(globalP - centre);
-    const t      = Math.max(0, 1 - dist / half);
-    const easedT = t < 0.5 ? 2*t*t : -1 + (4 - 2*t) * t;
-    card.style.opacity = easedT;
-    const dir   = globalP < centre ? 1 : -1;
-    const drift = (1 - easedT) * 28 * dir;
-    card.style.transform = `translateY(calc(-50% + ${drift.toFixed(1)}px))`;
-    card.style.pointerEvents = easedT > 0.5 ? 'auto' : 'none';
+    const cs     = CARD_START + i * cardBand;
+    const ce     = cs + cardBand;
+    const entryS = cs - TRANS, entryE = cs + TRANS;
+    const exitS  = ce - TRANS, exitE  = ce + TRANS;
+
+    let op, ty;
+    if (globalP <= entryS) {
+      op = 0; ty = 100;                              // waiting below
+    } else if (globalP < entryE) {
+      const t = (globalP - entryS) / (TRANS * 2);
+      const e = 1 - Math.pow(1 - t, 2.5);           // ease-out snap up
+      op = e;
+      ty = (1 - e) * 100;                            // 100vh → 0
+    } else if (globalP < exitS) {
+      op = 1; ty = 0;                                // dwell
+    } else if (globalP < exitE) {
+      const t = (globalP - exitS) / (TRANS * 2);
+      const e = Math.pow(t, 2);                      // ease-in push out
+      op = 1 - e * 0.35;
+      ty = -e * 100;                                 // 0 → -100vh
+    } else {
+      op = 0; ty = -100;                             // gone above
+    }
+
+    card.style.opacity      = op;
+    card.style.transform    = `translateY(${ty.toFixed(2)}vh)`;
+    card.style.pointerEvents = op > 0.5 ? 'auto' : 'none';
   });
 
-  const activeIdx = Math.min(n - 1, Math.floor(globalP * n));
-  if (workProgressEl) workProgressEl.textContent = `0${activeIdx + 1} / 0${n}`;
+  const activeIdx = Math.min(n - 1, Math.floor(clamp01((globalP - CARD_START) / (CARD_END - CARD_START)) * n));
+  if (workProgressEl) workProgressEl.textContent = `${String(activeIdx + 1).padStart(2, '0')} / 0${n}`;
 
   // Work star field parallax
   const starOp = Math.min(globalP * 6, (1 - globalP) * 6, 0.85);
   workStarItems.forEach(({ el, speed }) => {
-    el.style.opacity = Math.max(0, starOp);
+    el.style.opacity   = Math.max(0, starOp);
     el.style.transform = `translateY(${(-globalP * wh * speed).toFixed(1)}px)`;
   });
 }
