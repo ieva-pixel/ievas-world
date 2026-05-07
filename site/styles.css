@@ -344,10 +344,10 @@ section { position: relative; }
 }
 
 /* Scene 1 — Statement */
-#statement-wrap { background: #F1F0EA; }
+#statement-wrap { background: #F1F0EA; height: 150vh; }
 #statement      { background: #F1F0EA; z-index: 1; }
 .statement-fade {
-  opacity: 1;
+  opacity: 0;
   position: relative; z-index: 2; text-align: center;
   will-change: opacity, transform, filter;
 }
@@ -364,7 +364,7 @@ section { position: relative; }
 }
 
 /* Scene 2 — Process */
-#process-wrap { background: var(--olive-deep); height: 115vh; }
+#process-wrap { background: var(--olive-deep); height: 150vh; }
 #process {
   background: var(--olive-deep);
   padding: 0 4rem;

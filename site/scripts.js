@@ -208,12 +208,24 @@ const workExitStarItems = [
 
 /* ─── 3. SCROLL DRIVERS ───────────────────────────────────────────────── */
 function clamp01(v) { return Math.max(0, Math.min(1, v)); }
+function smooth(t) { return t * t * t * (t * (6 * t - 15) + 10); }
 function progress(scrollY, top, bottom) { return (scrollY - top) / (bottom - top); }
 function sceneProg(wrap) {
   if (!wrap) return 0;
   const rect = wrap.getBoundingClientRect();
   const wh   = window.innerHeight;
   return clamp01(-rect.top / (wrap.offsetHeight - wh));
+}
+// Returns 0→1 as wrap approaches from below over approachVh viewports, then stays 1
+function approachInP(wrap, approachVh) {
+  if (!wrap) return 1;
+  const rect = wrap.getBoundingClientRect();
+  return rect.top > 0 ? clamp01(1 - rect.top / (approachVh * window.innerHeight)) : 1;
+}
+// Returns 0→1 over the pin phase, but holds at 0 for the first `hold` fraction
+function pinExitP(wrap, hold) {
+  const p = sceneProg(wrap);
+  return clamp01((p - hold) / (1 - hold));
 }
 
 // 3a. Hero letter reveal
@@ -234,12 +246,17 @@ const stmtWrap    = document.getElementById('statement-wrap');
 const stmtSection = document.getElementById('statement');
 const stmtContent = document.getElementById('statementText');
 
-function applyTimeline(p, content, decorItems) {
-  const outP  = clamp01(p);
-  const op    = 1 - outP;
-  const scale = 1 - outP * 0.18;
-  const transY = -outP * 110;
-  const blur  = outP * 5;
+function applyTimeline(p, content, decorItems, inP) {
+  // Entry: short delay then fast ease-out pop-in
+  const rawIn    = inP !== undefined ? inP : 1;
+  const delayedIn = clamp01((rawIn - 0.12) / 0.88);
+  const _in  = 1 - Math.pow(1 - delayedIn, 3);
+  // Exit: ease-in power — lingers near full opacity, then fades
+  const outP = Math.pow(clamp01(p), 2.5);
+  const op   = _in * (1 - outP);
+  const scale = (0.88 + _in * 0.12) * (1 - outP * 0.14);
+  const transY = (1 - _in) * 28 - outP * 70;
+  const blur   = (1 - _in) * 10 + outP * 5;
   content.style.opacity   = op;
   content.style.filter    = `blur(${blur.toFixed(1)}px)`;
   content.style.transform = `translateY(${transY.toFixed(1)}px) scale(${scale.toFixed(3)})`;
@@ -271,13 +288,12 @@ function onPinnedScroll() {
 
   // Scene 1 — Statement
   if (stmtWrap && stmtContent) {
-    const p = sceneProg(stmtWrap);
-    const bgOutP = clamp01(p);
-    const r = Math.round(241 + (33  - 241) * bgOutP);
-    const g = Math.round(240 + (46  - 240) * bgOutP);
-    const b = Math.round(234 + (2   - 234) * bgOutP);
+    const exitP = pinExitP(stmtWrap, 0.15);
+    const r = Math.round(241 + (33  - 241) * exitP);
+    const g = Math.round(240 + (46  - 240) * exitP);
+    const b = Math.round(234 + (2   - 234) * exitP);
     if (stmtSection) stmtSection.style.background = `rgb(${r},${g},${b})`;
-    applyTimeline(p, stmtContent, stmtDecor);
+    applyTimeline(exitP, stmtContent, stmtDecor, approachInP(stmtWrap, 0.70));
   }
 
   // Scene 2 — Process (longer hold)
@@ -289,20 +305,7 @@ function onPinnedScroll() {
     const pb = Math.round(2  + (233 - 2)  * bgOutP);
     if (procSection) procSection.style.background = `rgb(${pr},${pg},${pb})`;
 
-    const inP  = clamp01(p / 0.12);
-    const outP = clamp01((p - 0.88) / 0.12);
-    const op    = inP * (1 - outP);
-    const blur  = (1 - inP) * 8 + outP * 8;
-    // Parallax: content enters at top of section (-30vh), slides down to centered by mid-scene,
-    // then drifts slightly up on exit. Decoupled from opacity for a slower, smoother glide.
-    const startY = -wh * 0.30;
-    const exitY  = -wh * 0.08;
-    const slideIn  = clamp01(p / 0.45);
-    const slideOut = clamp01((p - 0.55) / 0.45);
-    const transY = (1 - slideIn) * startY + slideOut * exitY;
-    procContent.style.opacity   = op;
-    procContent.style.filter    = `blur(${blur.toFixed(1)}px)`;
-    procContent.style.transform = `translateY(${transY.toFixed(1)}px)`;
+    applyTimeline(pinExitP(procWrap, 0.15), procContent, [], approachInP(procWrap, 0.70));
 
     if (ovalsEl) {
       const SPREAD = 72, TIGHT = 22;
@@ -330,11 +333,12 @@ function onWorkScroll() {
   if (workSection) workSection.style.background = `rgb(${r},${g},${b})`;
 
   // Cards exit during last 12%
+  const entryInP   = smooth(approachInP(workPinWrap, 0.70));
   const cardsExitP = clamp01((globalP - 0.88) / 0.12);
   if (workCardsEl) {
     workCardsEl.style.filter    = `blur(${(cardsExitP * 12).toFixed(1)}px)`;
     workCardsEl.style.transform = `translateY(${(-cardsExitP * 30).toFixed(1)}px)`;
-    workCardsEl.style.opacity   = 1 - cardsExitP;
+    workCardsEl.style.opacity   = entryInP * (1 - cardsExitP);
   }
 
   // Each card occupies 1/n of the window
@@ -368,12 +372,7 @@ function onAboutScroll() {
   const wh = window.innerHeight;
 
   if (aboutWrap && aboutContent) {
-    const p    = sceneProg(aboutWrap);
-    const inP  = clamp01(p / 0.18);
-    const outP = clamp01((p - 0.80) / 0.20);
-    aboutContent.style.opacity   = inP * (1 - outP);
-    aboutContent.style.filter    = `blur(${((1 - inP) * 10 + outP * 12).toFixed(1)}px)`;
-    aboutContent.style.transform = `translateY(${((1 - inP) * 28 - outP * 35).toFixed(1)}px)`;
+    applyTimeline(pinExitP(aboutWrap, 0.15), aboutContent, [], approachInP(aboutWrap, 0.70));
   }
 
   if (workExitStarsEl && workPinWrap) {
@@ -399,7 +398,7 @@ function onScroll() {
 }
 
 // Init hidden states
-if (stmtContent) { stmtContent.style.opacity = '1'; stmtContent.style.filter = 'blur(0px)'; stmtContent.style.transform = 'translateY(0) scale(1)'; }
+if (stmtContent) { stmtContent.style.opacity = '0'; stmtContent.style.filter = 'blur(10px)'; stmtContent.style.transform = 'translateY(30px) scale(1)'; }
 if (procContent) { procContent.style.opacity = '0'; procContent.style.filter = 'blur(10px)'; procContent.style.transform = 'translateY(30px)'; }
 if (aboutContent) { aboutContent.style.cssText = 'opacity:0;filter:blur(10px);transform:translateY(28px);will-change:opacity,transform,filter;'; }
 stmtDecor.forEach(d => { d.el.style.opacity = '0'; });
