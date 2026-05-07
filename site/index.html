@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ieva's World — UX/UI Designer, Zürich</title>
+  <meta name="description" content="Ieva Kirdaikytė — UX/UI Designer based in Zürich. Designing products that feel obvious, one decision at a time." />
+  <meta property="og:title" content="Ieva's World — UX/UI Designer" />
+  <meta property="og:description" content="Portfolio of UX/UI design projects by Ieva Kirdaikytė, based in Zürich, Switzerland." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ═══ PERSISTENT UI ═════════════════════════════════════════════════════ -->
+  <div id="logo" class="persist">
+    <div>ieva's</div>
+    <div><span class="indent">world</span></div>
+  </div>
+
+  <nav id="sidenav" class="persist" aria-label="Section navigation">
+    <a href="#home"    class="nav-item active" data-nav="home">    <span class="nav-dot" style="display:none">•</span>Home</a>
+    <a href="#work"    class="nav-item"         data-nav="work">    <span class="nav-dot" style="display:none">•</span>Work</a>
+    <a href="#about"   class="nav-item"         data-nav="about">   <span class="nav-dot" style="display:none">•</span>About</a>
+    <a href="#contact" class="nav-item"         data-nav="contact"> <span class="nav-dot" style="display:none">•</span>Contact</a>
+  </nav>
+
+  <div id="location" class="persist">Zürich, CH</div>
+
+  <main>
+
+    <!-- HERO -->
+    <section id="home" data-nav-section="home" class="col-lines-dark" aria-label="Hero">
+      <div class="hero-blob"></div>
+      <div class="inner">
+        <div class="hero-display" id="heroText" aria-label="ieva's world">
+          <div id="heroLine1"></div>
+          <div id="heroLine2" style="padding-left:1.6ch"></div>
+        </div>
+        <div class="hero-sub">
+          <span class="hero-sub-label">UX/UI Designer</span>
+          <div class="hero-sub-line"></div>
+          <span class="hero-sub-label" style="opacity:.42">Zürich</span>
+        </div>
+      </div>
+      <div class="scroll-indicator" aria-hidden="true">
+        <span>scroll</span>
+        <div class="scroll-bar"></div>
+      </div>
+    </section>
+
+    <!-- DISCIPLINES MARQUEE -->
+    <section id="disciplines" data-nav-section="home">
+      <div class="disc-marquee-track" aria-label="Practice: Interaction design, UI/UX, Visual design, Research">
+        <div class="disc-marquee-item">
+          <span class="disc-item">Interaction design</span>
+          <span class="disc-marquee-sep" aria-hidden="true"></span>
+          <span class="disc-item">UI/UX</span>
+          <span class="disc-marquee-sep" aria-hidden="true"></span>
+          <span class="disc-item">Visual design</span>
+          <span class="disc-marquee-sep" aria-hidden="true"></span>
+          <span class="disc-item">Research</span>
+          <span class="disc-marquee-sep" aria-hidden="true"></span>
+          <span class="disc-item">Interaction design</span>
+          <span class="disc-marquee-sep" aria-hidden="true"></span>
+          <span class="disc-item">UI/UX</span>
+          <span class="disc-marquee-sep" aria-hidden="true"></span>
+          <span class="disc-item">Visual design</span>
+          <span class="disc-marquee-sep" aria-hidden="true"></span>
+          <span class="disc-item">Research</span>
+          <span class="disc-marquee-sep" aria-hidden="true"></span>
+        </div>
+        <div class="disc-marquee-item" aria-hidden="true">
+          <span class="disc-item">Interaction design</span>
+          <span class="disc-marquee-sep"></span>
+          <span class="disc-item">UI/UX</span>
+          <span class="disc-marquee-sep"></span>
+          <span class="disc-item">Visual design</span>
+          <span class="disc-marquee-sep"></span>
+          <span class="disc-item">Research</span>
+          <span class="disc-marquee-sep"></span>
+          <span class="disc-item">Interaction design</span>
+          <span class="disc-marquee-sep"></span>
+          <span class="disc-item">UI/UX</span>
+          <span class="disc-marquee-sep"></span>
+          <span class="disc-item">Visual design</span>
+          <span class="disc-marquee-sep"></span>
+          <span class="disc-item">Research</span>
+          <span class="disc-marquee-sep"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ SCENE 1: STATEMENT (pinned 170vh) ═══ -->
+    <div class="pin-wrap" id="statement-wrap">
+      <section id="statement" class="pin-scene col-lines" data-nav-section="home">
+        <div class="statement-fade" id="statementText">
+          <p class="statement-text">
+            "Designing products that feel obvious — one decision at a time."
+          </p>
+        </div>
+        <div id="statementStars" class="decor-layer" aria-hidden="true"></div>
+      </section>
+    </div>
+
+    <!-- ═══ SCENE 2: PROCESS (pinned 170vh) ═══ -->
+    <div class="pin-wrap" id="process-wrap">
+      <section id="process" class="pin-scene col-lines-dark" data-nav-section="home">
+        <div class="process-content" id="processContent">
+          <div class="process-heading">
+            <div class="eyebrow eyebrow-light">Process</div>
+            <h2 class="process-title">How I work</h2>
+          </div>
+          <div class="process-grid">
+            <div>
+              <p class="body-ed body-ed-light">
+                Every project moves through the same four phases — though never in a straight line. The ovals collapse into each other, just like the work does.
+              </p>
+            </div>
+            <div>
+              <div class="ovals-wrap" id="ovalsWrap"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- FEATURED WORK — pinned card-swap -->
+    <div id="work-pin-wrap" data-nav-section="work">
+      <section id="work" class="col-lines" data-nav-section="work">
+        <div id="workProgress" aria-live="polite"></div>
+        <div id="workStarField" class="decor-layer" aria-hidden="true"></div>
+        <div id="workCards" class="work-cards-stage"></div>
+      </section>
+    </div>
+
+    <!-- WORK → ABOUT TRANSITION STARS -->
+    <div id="workExitStars" aria-hidden="true"></div>
+
+    <!-- ABOUT TEASER — pin-wrap -->
+    <div class="pin-wrap" id="about-wrap">
+      <section id="about" class="pin-scene about-scene" data-nav-section="about">
+        <div class="about-grid" id="aboutContent">
+          <div class="stagger-group">
+            <div class="eyebrow eyebrow-light">About</div>
+            <p class="body-ed body-ed-light about-bio">
+              I'm Ieva — a UX/UI designer originally from Lithuania, now based in Zürich. For the past few years I've been turning complex enterprise tools, e-commerce flows, and product ideas into interfaces people actually want to use.
+            </p>
+            <a href="about.html" class="pill pill-light reveal-pill">More about me</a>
+          </div>
+          <div class="testimonial-block reveal reveal-d2">
+            <p class="testimonial-text">
+              "Ieva is an exceptional design professional who steadfastly commits to excellence in every aspect of her work."
+            </p>
+            <p class="testimonial-attr">Christoph Schärer — Partner, PwC Switzerland</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- SIDE PROJECTS -->
+    <section id="side" class="col-lines" data-nav-section="work">
+      <div class="inner">
+        <div class="side-row stagger-group">
+          <div>
+            <div class="eyebrow eyebrow-dark">Beyond client work</div>
+            <h3 class="side-title">Illustrations &amp;<br>side projects</h3>
+          </div>
+          <a href="work/illustrations.html" class="pill pill-dark reveal-pill">View collection</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT / FOOTER -->
+    <section id="contact" data-nav-section="contact" class="col-lines-dark">
+      <div class="contact-bg-text" aria-hidden="true">hello</div>
+      <div class="contact-inner">
+        <div class="reveal-eyebrow contact-eyebrow">
+          <div class="eyebrow eyebrow-light">Contact</div>
+        </div>
+        <span class="reveal-heading">
+          <span class="reveal-heading-inner">
+            <h2 class="contact-heading">Let's work together</h2>
+          </span>
+        </span>
+        <p class="contact-sub reveal reveal-d1">
+          Open to select projects, collaborations, and full-time opportunities. Let's talk.
+        </p>
+        <div class="pill-row reveal reveal-d2">
+          <a href="mailto:ievakirdaikyte@gmail.com" class="pill pill-light">Email</a>
+          <a href="https://www.linkedin.com/in/ievakirdaikyte" target="_blank" rel="noopener" class="pill pill-light">LinkedIn</a>
+          <a href="https://www.behance.net/" target="_blank" rel="noopener" class="pill pill-light">Behance</a>
+        </div>
+        <div class="footer-base">
+          <span class="footer-copy">© 2026 Ieva Kirdaikytė</span>
+          <span class="footer-sig">ieva's world</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="scripts.js" defer></script>
+</body>
+</html>

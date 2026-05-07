@@ -1,0 +1,23 @@
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+
+# Reference assets — too big and not part of the site
+*.mov
+*.mp4
+*.zip
+
+# Reference dumps and previous attempts (keep locally, don't publish)
+marimba/
+Website/
+site/_previous-attempt/
+
+# Node / build artifacts (just in case we add tooling later)
+node_modules/
+dist/
+.cache/
