@@ -235,14 +235,14 @@ const stmtSection = document.getElementById('statement');
 const stmtContent = document.getElementById('statementText');
 
 function applyTimeline(p, content, decorItems) {
-  const inP  = clamp01(p / 0.30);
-  const outP = clamp01((p - 0.70) / 0.30);
-  const op    = inP * (1 - outP);
-  const blur  = (1 - inP) * 10 + outP * 15;
-  const transY = (1 - inP) * 30 - outP * 40;
+  const outP  = clamp01(p);
+  const op    = 1 - outP;
+  const scale = 1 - outP * 0.18;
+  const transY = -outP * 110;
+  const blur  = outP * 5;
   content.style.opacity   = op;
   content.style.filter    = `blur(${blur.toFixed(1)}px)`;
-  content.style.transform = `translateY(${transY.toFixed(1)}px)`;
+  content.style.transform = `translateY(${transY.toFixed(1)}px) scale(${scale.toFixed(3)})`;
 
   decorItems.forEach(({ el, speed, baseY }) => {
     const drift = outP * speed;
@@ -272,10 +272,10 @@ function onPinnedScroll() {
   // Scene 1 — Statement
   if (stmtWrap && stmtContent) {
     const p = sceneProg(stmtWrap);
-    const outPbg = clamp01((p - 0.50) / 0.30);
-    const r = Math.round(241 + (33  - 241) * outPbg);
-    const g = Math.round(240 + (46  - 240) * outPbg);
-    const b = Math.round(234 + (2   - 234) * outPbg);
+    const bgOutP = clamp01(p);
+    const r = Math.round(241 + (33  - 241) * bgOutP);
+    const g = Math.round(240 + (46  - 240) * bgOutP);
+    const b = Math.round(234 + (2   - 234) * bgOutP);
     if (stmtSection) stmtSection.style.background = `rgb(${r},${g},${b})`;
     applyTimeline(p, stmtContent, stmtDecor);
   }
@@ -289,18 +289,24 @@ function onPinnedScroll() {
     const pb = Math.round(2  + (233 - 2)  * bgOutP);
     if (procSection) procSection.style.background = `rgb(${pr},${pg},${pb})`;
 
-    const inP  = clamp01(p / 0.25);
-    const outP = clamp01((p - 0.82) / 0.18);
+    const inP  = clamp01(p / 0.12);
+    const outP = clamp01((p - 0.88) / 0.12);
     const op    = inP * (1 - outP);
-    const blur  = (1 - inP) * 10 + outP * 15;
-    const transY = (1 - inP) * 30 - outP * 40;
+    const blur  = (1 - inP) * 8 + outP * 8;
+    // Parallax: content enters at top of section (-30vh), slides down to centered by mid-scene,
+    // then drifts slightly up on exit. Decoupled from opacity for a slower, smoother glide.
+    const startY = -wh * 0.30;
+    const exitY  = -wh * 0.08;
+    const slideIn  = clamp01(p / 0.45);
+    const slideOut = clamp01((p - 0.55) / 0.45);
+    const transY = (1 - slideIn) * startY + slideOut * exitY;
     procContent.style.opacity   = op;
     procContent.style.filter    = `blur(${blur.toFixed(1)}px)`;
     procContent.style.transform = `translateY(${transY.toFixed(1)}px)`;
 
     if (ovalsEl) {
       const SPREAD = 72, TIGHT = 22;
-      const oP = clamp01((p - 0.20) / 0.60);
+      const oP = clamp01((p - 0.10) / 0.65);
       ovalEls.forEach((el, i) => {
         const y = SPREAD * i + (TIGHT * i - SPREAD * i) * oP;
         el.style.transform = `translateY(${y}px)`;
@@ -334,7 +340,7 @@ function onWorkScroll() {
   // Each card occupies 1/n of the window
   const n = PROJECTS.length;
   workCardEls.forEach((card, i) => {
-    const centre = (i + 0.5) / n;
+    const centre = (i + 0.35) / n;
     const half   = 0.5 / n;
     const dist   = Math.abs(globalP - centre);
     const t      = Math.max(0, 1 - dist / half);
@@ -363,7 +369,7 @@ function onAboutScroll() {
 
   if (aboutWrap && aboutContent) {
     const p    = sceneProg(aboutWrap);
-    const inP  = clamp01(p / 0.35);
+    const inP  = clamp01(p / 0.18);
     const outP = clamp01((p - 0.80) / 0.20);
     aboutContent.style.opacity   = inP * (1 - outP);
     aboutContent.style.filter    = `blur(${((1 - inP) * 10 + outP * 12).toFixed(1)}px)`;
@@ -393,7 +399,7 @@ function onScroll() {
 }
 
 // Init hidden states
-if (stmtContent) { stmtContent.style.opacity = '0'; stmtContent.style.filter = 'blur(10px)'; stmtContent.style.transform = 'translateY(30px)'; }
+if (stmtContent) { stmtContent.style.opacity = '1'; stmtContent.style.filter = 'blur(0px)'; stmtContent.style.transform = 'translateY(0) scale(1)'; }
 if (procContent) { procContent.style.opacity = '0'; procContent.style.filter = 'blur(10px)'; procContent.style.transform = 'translateY(30px)'; }
 if (aboutContent) { aboutContent.style.cssText = 'opacity:0;filter:blur(10px);transform:translateY(28px);will-change:opacity,transform,filter;'; }
 stmtDecor.forEach(d => { d.el.style.opacity = '0'; });
