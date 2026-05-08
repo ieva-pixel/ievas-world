@@ -218,7 +218,7 @@ window.addEventListener('load', () => {
   ScrollTrigger.refresh();
   ScrollTrigger.create({
     trigger:   '#process-wrap',
-    start:     'top bottom',
+    start:     'top top',
     end:       'bottom bottom',
     scrub:     2.0,
     animation: orbitScrollTl,
