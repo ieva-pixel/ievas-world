@@ -195,6 +195,22 @@ gsap.ticker.add(() => {
     el.style.transform = `translate(${(Math.cos(a) * orbitState.radius).toFixed(2)}px,${(Math.sin(a) * orbitState.radius).toFixed(2)}px)`;
     el.style.opacity   = orbitState.alpha;
   });
+
+  // Slide procSection over the still-pinned statement.
+  // Lives on gsap.ticker (paint-coupled) instead of the scroll listener so it
+  // can't lag a frame on aggressive scrolls — that lag was leaving cream gaps
+  // at the top of the section when flicking back upward.
+  if (procWrap && procSection && stmtWrap) {
+    const procRectTop = procWrap.getBoundingClientRect().top;
+    if (procRectTop > 0) {
+      const stmtP  = sceneProg(stmtWrap);
+      const slideP = clamp01((stmtP - 0.6) / 0.4);
+      const target = (1 - slideP) * window.innerHeight;
+      procSection.style.transform = `translateY(${(target - procRectTop).toFixed(1)}px)`;
+    } else if (procSection.style.transform) {
+      procSection.style.transform = '';
+    }
+  }
 });
 
 // Defer trigger until fonts/layout settle
@@ -409,18 +425,9 @@ function onPinnedScroll() {
     });
   }
 
-  // Scene 2 — Process: slides up over the still-pinned statement, then takes over
+  // Scene 2 — Process: bg fade only. Slide-up transform lives in gsap.ticker
+  // for paint-coupled timing.
   if (procWrap && procSection) {
-    const procRectTop = procWrap.getBoundingClientRect().top;
-    if (procRectTop > 0) {
-      // Visual top: vh (just below) → 0 (covering stmt) as slideP 0 → 1
-      const target = (1 - slideP) * wh;
-      procSection.style.transform = `translateY(${(target - procRectTop).toFixed(1)}px)`;
-    } else {
-      procSection.style.transform = '';
-    }
-
-    // Background fades from olive → cream slowly, finishing when work section nears viewport top
     const bgOutP = approachExitP(workPinWrap, 1.05, 0.05);
     const pr = Math.round(33 + (240 - 33) * bgOutP);
     const pg = Math.round(46 + (239 - 46) * bgOutP);
