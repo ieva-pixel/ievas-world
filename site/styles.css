@@ -364,7 +364,7 @@ section { position: relative; }
 }
 
 /* Scene 2 — Process */
-#process-wrap { background: var(--olive-deep); height: 290vh; }
+#process-wrap { background: var(--olive-deep); height: 290vh; margin-top: -100vh; }
 #process {
   background: var(--olive-deep);
   padding: 0;
