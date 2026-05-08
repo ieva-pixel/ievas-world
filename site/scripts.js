@@ -49,11 +49,23 @@ const PROJECTS = [
   },
 ];
 
-const OVALS = [
-  { label: 'Listen & define', color: '#B85A24' },
-  { label: 'Strategy & plan', color: '#3A4A16' },
-  { label: 'Design & refine', color: '#6B5A7A' },
-  { label: 'Build & test',    color: '#24445A' },
+const CIRCLES = [
+  {
+    label: 'Listen &\ndefine',
+    bg:    'radial-gradient(circle at 30% 30%, #FF6B5A 0%, rgba(255,107,90,0.7) 35%, rgba(255,107,90,0.0) 70%), radial-gradient(circle at 70% 70%, #B585DC 0%, rgba(181,133,220,0.7) 35%, rgba(181,133,220,0.0) 70%)',
+  },
+  {
+    label: 'Strategy &\nplan',
+    bg:    'radial-gradient(circle at 30% 30%, #5DCC9A 0%, rgba(93,204,154,0.7) 35%, rgba(93,204,154,0.0) 70%), radial-gradient(circle at 70% 70%, #88B8E0 0%, rgba(136,184,224,0.7) 35%, rgba(136,184,224,0.0) 70%)',
+  },
+  {
+    label: 'Design &\nrefine',
+    bg:    'radial-gradient(circle at 30% 30%, #A48AE0 0%, rgba(164,138,224,0.7) 35%, rgba(164,138,224,0.0) 70%), radial-gradient(circle at 70% 70%, #E89AC0 0%, rgba(232,154,192,0.7) 35%, rgba(232,154,192,0.0) 70%)',
+  },
+  {
+    label: 'Build &\ntest',
+    bg:    'radial-gradient(circle at 30% 30%, #F4A93A 0%, rgba(244,169,58,0.7) 35%, rgba(244,169,58,0.0) 70%), radial-gradient(circle at 70% 70%, #95C088 0%, rgba(149,192,136,0.7) 35%, rgba(149,192,136,0.0) 70%)',
+  },
 ];
 
 /* ─── 2. BUILD ────────────────────────────────────────────────────────── */
@@ -101,16 +113,100 @@ const workCardEls = PROJECTS.map((p) => {
   return card;
 });
 
-// 2c. Ovals
-const ovalsWrap = document.getElementById('ovalsWrap');
-const ovalEls = OVALS.map((o, i) => {
-  const el = document.createElement('div');
-  el.className = 'oval';
-  el.style.background = o.color;
-  el.style.zIndex = OVALS.length - i;
-  el.innerHTML = `<span>${o.label}</span>`;
-  ovalsWrap.appendChild(el);
-  return el;
+// 2c. Process orbit — circle blobs
+gsap.registerPlugin(ScrollTrigger);
+
+const CIRCLE_SIZE = 160;
+const ORBIT_R = Math.round(Math.min(window.innerWidth * 0.21, window.innerHeight * 0.29, 230));
+const EXIT_R  = Math.hypot(window.innerWidth / 2, window.innerHeight / 2) + CIRCLE_SIZE;
+
+const procOrbitStage = document.getElementById('procOrbitStage');
+
+// Orbit ring
+const procRingEl = document.createElement('div');
+procRingEl.className = 'proc-ring';
+procRingEl.style.cssText = `width:${ORBIT_R * 2}px;height:${ORBIT_R * 2}px;left:calc(50% - ${ORBIT_R}px);top:calc(50% - ${ORBIT_R}px);`;
+if (procOrbitStage) procOrbitStage.appendChild(procRingEl);
+
+// Circle blobs — two-layer: sharp core + directional glow
+const circleEls = procOrbitStage ? CIRCLES.map((c) => {
+  const wrap = document.createElement('div');
+  wrap.className = 'proc-circle';
+  wrap.style.cssText = `width:${CIRCLE_SIZE}px;height:${CIRCLE_SIZE}px;left:calc(50% - ${CIRCLE_SIZE / 2}px);top:calc(50% - ${CIRCLE_SIZE / 2}px);opacity:0;`;
+
+  const orb = document.createElement('div');
+  orb.className = 'proc-circle-orb';
+  orb.style.background = c.bg;
+
+  const label = document.createElement('span');
+  label.innerHTML = c.label.replace('\n', '<br>');
+
+  wrap.appendChild(orb);
+  wrap.appendChild(label);
+  procOrbitStage.appendChild(wrap);
+  return wrap;
+}) : [];
+
+// Orbit state — driven by scroll progress via proxy
+const orbitState = { radius: EXIT_R, alpha: 0, angleOffset: -Math.PI * 0.6 };
+let orbitBaseAngle = -Math.PI / 2;
+const N = CIRCLES.length;
+
+// Scroll-scrubbed timeline via proxy object
+const orbitProxy = { p: 0 };
+const ENTRY_END = 0.25, ORBIT_END = 0.75;
+const ORBIT_ANGLE = Math.PI * 0.6;            // main rotation, 108°
+const EDGE_ANGLE  = ORBIT_ANGLE * 0.25;       // matches angular-velocity continuity at boundaries
+
+function easeOut2(t) { return 1 - (1 - t) * (1 - t); }
+function easeIn2(t)  { return t * t; }
+
+function updateOrbitFromProgress() {
+  const p = orbitProxy.p;
+  if (p <= ENTRY_END) {
+    const t  = p / ENTRY_END;
+    const eR = easeOut2(t);
+    orbitState.radius      = EXIT_R - (EXIT_R - ORBIT_R) * eR;
+    orbitState.angleOffset = -Math.PI * 0.6 * (1 - eR);
+    orbitState.alpha       = Math.min(1, t * 2.0);
+    orbitBaseAngle         = -Math.PI / 2 + EDGE_ANGLE * easeIn2(t);
+  } else if (p <= ORBIT_END) {
+    const rp = (p - ENTRY_END) / (ORBIT_END - ENTRY_END);
+    orbitState.radius      = ORBIT_R;
+    orbitState.angleOffset = 0;
+    orbitState.alpha       = 1;
+    orbitBaseAngle         = -Math.PI / 2 + EDGE_ANGLE + ORBIT_ANGLE * rp;
+  } else {
+    const op = (p - ORBIT_END) / (1 - ORBIT_END);
+    const eR = easeIn2(op);
+    orbitState.radius      = ORBIT_R + (EXIT_R - ORBIT_R) * eR;
+    orbitState.angleOffset = Math.PI * 0.6 * eR;
+    orbitState.alpha       = 1 - eR;
+    orbitBaseAngle         = -Math.PI / 2 + EDGE_ANGLE + ORBIT_ANGLE + EDGE_ANGLE * easeOut2(op);
+  }
+}
+
+const orbitScrollTl = gsap.timeline({ paused: true })
+  .to(orbitProxy, { p: 1, ease: 'none', onUpdate: updateOrbitFromProgress });
+
+gsap.ticker.add(() => {
+  circleEls.forEach((el, i) => {
+    const a = (i / N) * Math.PI * 2 + orbitBaseAngle + orbitState.angleOffset;
+    el.style.transform = `translate(${(Math.cos(a) * orbitState.radius).toFixed(2)}px,${(Math.sin(a) * orbitState.radius).toFixed(2)}px)`;
+    el.style.opacity   = orbitState.alpha;
+  });
+});
+
+// Defer trigger until fonts/layout settle
+window.addEventListener('load', () => {
+  ScrollTrigger.refresh();
+  ScrollTrigger.create({
+    trigger:   '#process-wrap',
+    start:     'top bottom',
+    end:       'bottom bottom',
+    scrub:     2.0,
+    animation: orbitScrollTl,
+  });
 });
 
 // 2d. Decorative star SVG generators
@@ -224,6 +320,13 @@ function pinExitP(wrap, hold) {
   const p = sceneProg(wrap);
   return clamp01((p - hold) / (1 - hold));
 }
+// Returns 0→1 as nextWrap approaches: 0 while nextWrap.top > startVh*wh, 1 at endVh*wh
+function approachExitP(nextWrap, startVh, endVh) {
+  if (!nextWrap) return 0;
+  const rect = nextWrap.getBoundingClientRect();
+  const wh = window.innerHeight;
+  return clamp01((startVh * wh - rect.top) / ((startVh - endVh) * wh));
+}
 
 // 3a. Hero letter reveal
 function onHeroScroll() {
@@ -244,16 +347,14 @@ const stmtSection = document.getElementById('statement');
 const stmtContent = document.getElementById('statementText');
 
 function applyTimeline(p, content, decorItems, inP) {
-  // Entry: short delay then fast ease-out pop-in
-  const rawIn    = inP !== undefined ? inP : 1;
-  const delayedIn = clamp01((rawIn - 0.12) / 0.88);
-  const _in  = 1 - Math.pow(1 - delayedIn, 3);
-  // Exit: ease-in power — lingers near full opacity, then fades
+  const rawIn     = inP !== undefined ? inP : 1;
+  const delayedIn = clamp01((rawIn - 0.08) / 0.92);
+  const _in  = 1 - Math.pow(1 - delayedIn, 2); // ease-out-quad: completes more gradually
   const outP = Math.pow(clamp01(p), 2.5);
   const op   = _in * (1 - outP);
-  const scale = (0.88 + _in * 0.12) * (1 - outP * 0.14);
-  const transY = (1 - _in) * 28 - outP * 70;
-  const blur   = (1 - _in) * 10 + outP * 5;
+  const scale = (0.70 + _in * 0.30) * (1 - outP * 0.26);
+  const transY = (1 - _in) * 60 - outP * 110;
+  const blur   = (1 - _in) * 20 + outP * 10;
   content.style.opacity   = op;
   content.style.filter    = `blur(${blur.toFixed(1)}px)`;
   content.style.transform = `translateY(${transY.toFixed(1)}px) scale(${scale.toFixed(3)})`;
@@ -265,11 +366,9 @@ function applyTimeline(p, content, decorItems, inP) {
   });
 }
 
-// 3c. Scene 2 — Process (with collapsing ovals)
+// 3c. Scene 2 — Process
 const procWrap    = document.getElementById('process-wrap');
 const procSection = document.getElementById('process');
-const procContent = document.getElementById('processContent');
-const ovalsEl     = document.getElementById('ovalsWrap');
 
 // 3d. Work card swap
 const workPinWrap  = document.getElementById('work-pin-wrap');
@@ -280,39 +379,53 @@ const workHeaderEl = document.getElementById('workHeader');
 const aboutWrap    = document.getElementById('about-wrap');
 const aboutContent = document.getElementById('aboutContent');
 
+
 function onPinnedScroll() {
   const sy = window.scrollY;
   const wh = window.innerHeight;
 
-  // Scene 1 — Statement
+  // Scene 1 — Statement: subtle drift while next section slides on top
+  const SLIDE_START = 0.6;
+  const stmtP = stmtWrap ? sceneProg(stmtWrap) : 0;
+  const slideP = clamp01((stmtP - SLIDE_START) / (1 - SLIDE_START));
+  const slideE = Math.pow(slideP, 1.6);
+
   if (stmtWrap && stmtContent) {
-    const exitP = pinExitP(stmtWrap, 0.15);
-    const r = Math.round(241 + (33  - 241) * exitP);
-    const g = Math.round(240 + (46  - 240) * exitP);
-    const b = Math.round(234 + (2   - 234) * exitP);
-    if (stmtSection) stmtSection.style.background = `rgb(${r},${g},${b})`;
-    applyTimeline(exitP, stmtContent, stmtDecor, approachInP(stmtWrap, 0.70));
+    const inP = approachInP(stmtWrap, 1.3);
+    const delayedIn = clamp01((inP - 0.08) / 0.92);
+    const _in = 1 - Math.pow(1 - delayedIn, 2);
+    const scale  = (0.70 + _in * 0.30) * (1 - slideE * 0.08);
+    const transY = (1 - _in) * 60 - slideE * 40;
+    const blur   = (1 - _in) * 20 + slideE * 14;
+
+    stmtContent.style.opacity   = _in;
+    stmtContent.style.filter    = `blur(${blur.toFixed(1)}px)`;
+    stmtContent.style.transform = `translateY(${transY.toFixed(1)}px) scale(${scale.toFixed(3)})`;
+
+    stmtDecor.forEach(({ el, speed, baseY }) => {
+      const drift = slideE * speed * 0.5;
+      el.style.opacity   = _in * (el.dataset.baseOpacity || 1);
+      el.style.transform = `translateY(${(baseY - drift).toFixed(1)}px)`;
+    });
   }
 
-  // Scene 2 — Process (longer hold)
-  if (procWrap && procContent) {
-    const p = sceneProg(procWrap);
-    const bgOutP = clamp01((p - 0.72) / 0.28);
+  // Scene 2 — Process: slides up over the still-pinned statement, then takes over
+  if (procWrap && procSection) {
+    const procRectTop = procWrap.getBoundingClientRect().top;
+    if (procRectTop > 0) {
+      // Visual top: vh (just below) → 0 (covering stmt) as slideP 0 → 1
+      const target = (1 - slideP) * wh;
+      procSection.style.transform = `translateY(${(target - procRectTop).toFixed(1)}px)`;
+    } else {
+      procSection.style.transform = '';
+    }
+
+    // Background fades from olive → cream slowly, finishing when work section nears viewport top
+    const bgOutP = approachExitP(workPinWrap, 1.05, 0.05);
     const pr = Math.round(33 + (240 - 33) * bgOutP);
     const pg = Math.round(46 + (239 - 46) * bgOutP);
     const pb = Math.round(2  + (233 - 2)  * bgOutP);
-    if (procSection) procSection.style.background = `rgb(${pr},${pg},${pb})`;
-
-    applyTimeline(pinExitP(procWrap, 0.15), procContent, [], approachInP(procWrap, 0.70));
-
-    if (ovalsEl) {
-      const SPREAD = 72, TIGHT = 22;
-      const oP = clamp01((p - 0.10) / 0.65);
-      ovalEls.forEach((el, i) => {
-        const y = SPREAD * i + (TIGHT * i - SPREAD * i) * oP;
-        el.style.transform = `translateY(${y}px)`;
-      });
-    }
+    procSection.style.background = `rgb(${pr},${pg},${pb})`;
   }
 }
 
@@ -330,8 +443,10 @@ function onWorkScroll() {
   const b = Math.round(233 + (2  - 233) * bgOutP);
   if (workSection) workSection.style.background = `rgb(${r},${g},${b})`;
 
-  // Section-level approach fade + exit blur
-  const entryInP   = smooth(approachInP(workPinWrap, 0.70));
+  // Header has a larger approach distance so it starts appearing as process exits
+  const headerInP  = smooth(approachInP(workPinWrap, 1.2));
+  // Cards use a tighter approach — they wait for the header to clear
+  const entryInP   = smooth(approachInP(workPinWrap, 0.60));
   const cardsExitP = clamp01((globalP - 0.88) / 0.12);
   if (workCardsEl) {
     workCardsEl.style.filter    = `blur(${(cardsExitP * 10).toFixed(1)}px)`;
@@ -339,12 +454,12 @@ function onWorkScroll() {
     workCardsEl.style.opacity   = entryInP * (1 - cardsExitP);
   }
 
-  // Header: fades in on approach, then out as first card enters
+  // Header: fades in on approach (early), then out as first card enters
   if (workHeaderEl) {
-    const hIn  = 1 - Math.pow(1 - clamp01((entryInP - 0.12) / 0.88), 3);
+    const hIn  = 1 - Math.pow(1 - clamp01((headerInP - 0.08) / 0.92), 3);
     const hOut = Math.pow(clamp01(globalP / 0.14), 1.8);
     workHeaderEl.style.opacity   = hIn * (1 - hOut);
-    workHeaderEl.style.transform = `translateY(${((1 - hIn) * 28 - hOut * 50).toFixed(1)}px)`;
+    workHeaderEl.style.transform = `translateY(${((1 - hIn) * 40 - hOut * 50).toFixed(1)}px)`;
   }
 
   // Directional card swap — enter from below, exit upward (Marimba-style)
@@ -428,7 +543,6 @@ function onScroll() {
 
 // Init hidden states
 if (stmtContent) { stmtContent.style.opacity = '0'; stmtContent.style.filter = 'blur(10px)'; stmtContent.style.transform = 'translateY(30px) scale(1)'; }
-if (procContent) { procContent.style.opacity = '0'; procContent.style.filter = 'blur(10px)'; procContent.style.transform = 'translateY(30px)'; }
 if (aboutContent) { aboutContent.style.cssText = 'opacity:0;filter:blur(10px);transform:translateY(28px);will-change:opacity,transform,filter;'; }
 stmtDecor.forEach(d => { d.el.style.opacity = '0'; });
 
