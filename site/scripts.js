@@ -50,22 +50,10 @@ const PROJECTS = [
 ];
 
 const CIRCLES = [
-  {
-    label: 'Listen &\ndefine',
-    bg:    'radial-gradient(circle at 30% 30%, #FF6B5A 0%, rgba(255,107,90,0.7) 35%, rgba(255,107,90,0.0) 70%), radial-gradient(circle at 70% 70%, #B585DC 0%, rgba(181,133,220,0.7) 35%, rgba(181,133,220,0.0) 70%)',
-  },
-  {
-    label: 'Strategy &\nplan',
-    bg:    'radial-gradient(circle at 30% 30%, #5DCC9A 0%, rgba(93,204,154,0.7) 35%, rgba(93,204,154,0.0) 70%), radial-gradient(circle at 70% 70%, #88B8E0 0%, rgba(136,184,224,0.7) 35%, rgba(136,184,224,0.0) 70%)',
-  },
-  {
-    label: 'Design &\nrefine',
-    bg:    'radial-gradient(circle at 30% 30%, #A48AE0 0%, rgba(164,138,224,0.7) 35%, rgba(164,138,224,0.0) 70%), radial-gradient(circle at 70% 70%, #E89AC0 0%, rgba(232,154,192,0.7) 35%, rgba(232,154,192,0.0) 70%)',
-  },
-  {
-    label: 'Build &\ntest',
-    bg:    'radial-gradient(circle at 30% 30%, #F4A93A 0%, rgba(244,169,58,0.7) 35%, rgba(244,169,58,0.0) 70%), radial-gradient(circle at 70% 70%, #95C088 0%, rgba(149,192,136,0.7) 35%, rgba(149,192,136,0.0) 70%)',
-  },
+  { label: 'Listen &\ndefine',  variant: 'listen'   },
+  { label: 'Strategy &\nplan',  variant: 'strategy' },
+  { label: 'Design &\nrefine',  variant: 'design'   },
+  { label: 'Build &\ntest',     variant: 'build'    },
 ];
 
 /* ─── 2. BUILD ────────────────────────────────────────────────────────── */
@@ -128,23 +116,94 @@ procRingEl.className = 'proc-ring';
 procRingEl.style.cssText = `width:${ORBIT_R * 2}px;height:${ORBIT_R * 2}px;left:calc(50% - ${ORBIT_R}px);top:calc(50% - ${ORBIT_R}px);`;
 if (procOrbitStage) procOrbitStage.appendChild(procRingEl);
 
-// Circle blobs — two-layer: sharp core + directional glow
+const ORB_SVG = {
+  build: {
+    accent: ['#E6A24E','#F0D0A0','#F4EBD8'], ops: [0.78, 0.42], acMid: 48,
+    acCx: 25, acCy: 62, acR: 52, crCx: 60, crCy: 40, crR: 65,
+    mask: [0, 0, 1, 0],
+  },
+  listen: {
+    accent: ['#E9796F','#F0B5A7','#F4EBD8'], ops: [0.72, 0.38], acMid: 48,
+    acCx: 78, acCy: 58, acR: 54, crCx: 42, crCy: 38, crR: 68,
+    mask: [1, 0, 0, 0],
+  },
+  strategy: {
+    accent: ['#B8C97B','#D8DDB2','#F4EBD8'], ops: [0.68, 0.36], acMid: 50,
+    acCx: 58, acCy: 78, acR: 55, crCx: 48, crCy: 35, crR: 70,
+    mask: [0, 1, 0, 0],
+  },
+  design: {
+    accent: ['#A78BD6','#CDBBE4','#F4EBD8'], ops: [0.72, 0.38], acMid: 50,
+    acCx: 28, acCy: 72, acR: 56, crCx: 62, crCy: 38, crR: 68,
+    mask: [0, 1, 1, 0],
+  },
+};
+
+function orbSVG(id, v) {
+  const [mx1,my1,mx2,my2] = v.mask;
+  // Asymmetric blur. Two filter passes on the same circle, but the lightly
+  // blurred copy is masked to only show on the sharp side:
+  //   • blOut (~32px) — the heavy halo. Unmasked, paints everywhere, so the
+  //     dissolve side is just this dispersed cream + colored streak.
+  //   • blIn  (~3px)  — the defined body. Masked by a linear gradient so it
+  //     fades from full opacity on the sharp side to 0 on the dissolve side.
+  // Result: sharp side reads as a feathered cream body sitting in a soft
+  // glow; dissolve side has no body at all, just the heavy halo dispersing.
+  // The two sides have visibly different effective blur.
+  return `<svg viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;overflow:visible;display:block">
+  <defs>
+    <filter id="blOut${id}" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="18"/></filter>
+    <filter id="blIn${id}" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="3"/></filter>
+    <radialGradient id="cr${id}" cx="${v.crCx}%" cy="${v.crCy}%" r="${v.crR}%">
+      <stop offset="0%" stop-color="#F8F1DF"/><stop offset="62%" stop-color="#EEE5CC"/><stop offset="100%" stop-color="#D8CDAF"/>
+    </radialGradient>
+    <radialGradient id="ac${id}" cx="${v.acCx}%" cy="${v.acCy}%" r="${v.acR + 30}%">
+      <stop offset="0%" stop-color="${v.accent[0]}" stop-opacity="1"/>
+      <stop offset="${v.acMid}%" stop-color="${v.accent[1]}" stop-opacity="0.85"/>
+      <stop offset="75%" stop-color="${v.accent[1]}" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="${v.accent[2]}" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="mk${id}" x1="${mx1}" y1="${my1}" x2="${mx2}" y2="${my2}">
+      <stop offset="0%" stop-color="black"/>
+      <stop offset="35%" stop-color="black"/>
+      <stop offset="80%" stop-color="white"/>
+      <stop offset="100%" stop-color="white"/>
+    </linearGradient>
+    <mask id="sh${id}"><rect width="220" height="220" fill="url(#mk${id})"/></mask>
+  </defs>
+  <circle cx="110" cy="110" r="74" fill="url(#cr${id})" filter="url(#blOut${id})"/>
+  <circle cx="110" cy="110" r="74" fill="url(#ac${id})" filter="url(#blOut${id})"/>
+  <g mask="url(#sh${id})">
+    <circle cx="110" cy="110" r="74" fill="url(#cr${id})" filter="url(#blIn${id})"/>
+    <circle cx="110" cy="110" r="74" fill="url(#ac${id})" opacity="0.7" filter="url(#blIn${id})"/>
+  </g>
+</svg>`;
+}
+
+// Two-layer split: the slot owns transform + opacity (and will-change),
+// the inner .proc-circle stays untransformed so the SVG feGaussianBlur halo
+// isn't clipped by Chrome's GPU compositing layer.
 const circleEls = procOrbitStage ? CIRCLES.map((c) => {
+  const slot = document.createElement('div');
+  slot.className = 'proc-circle-slot';
+  slot.style.cssText = `width:${CIRCLE_SIZE}px;height:${CIRCLE_SIZE}px;left:calc(50% - ${CIRCLE_SIZE / 2}px);top:calc(50% - ${CIRCLE_SIZE / 2}px);opacity:0;`;
+
   const wrap = document.createElement('div');
   wrap.className = 'proc-circle';
-  wrap.style.cssText = `width:${CIRCLE_SIZE}px;height:${CIRCLE_SIZE}px;left:calc(50% - ${CIRCLE_SIZE / 2}px);top:calc(50% - ${CIRCLE_SIZE / 2}px);opacity:0;`;
 
   const orb = document.createElement('div');
   orb.className = 'proc-circle-orb';
-  orb.style.background = c.bg;
+  orb.innerHTML = orbSVG(c.variant, ORB_SVG[c.variant]);
 
   const label = document.createElement('span');
+  label.className = 'orb-content';
   label.innerHTML = c.label.replace('\n', '<br>');
 
   wrap.appendChild(orb);
   wrap.appendChild(label);
-  procOrbitStage.appendChild(wrap);
-  return wrap;
+  slot.appendChild(wrap);
+  procOrbitStage.appendChild(slot);
+  return slot;
 }) : [];
 
 // Orbit state — driven by scroll progress via proxy
