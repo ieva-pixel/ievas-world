@@ -50,22 +50,10 @@ const PROJECTS = [
 ];
 
 const CIRCLES = [
-  {
-    label: 'Listen &\ndefine',
-    bg:    'radial-gradient(circle at 30% 30%, #FF6B5A 0%, rgba(255,107,90,0.7) 35%, rgba(255,107,90,0.0) 70%), radial-gradient(circle at 70% 70%, #B585DC 0%, rgba(181,133,220,0.7) 35%, rgba(181,133,220,0.0) 70%)',
-  },
-  {
-    label: 'Strategy &\nplan',
-    bg:    'radial-gradient(circle at 30% 30%, #5DCC9A 0%, rgba(93,204,154,0.7) 35%, rgba(93,204,154,0.0) 70%), radial-gradient(circle at 70% 70%, #88B8E0 0%, rgba(136,184,224,0.7) 35%, rgba(136,184,224,0.0) 70%)',
-  },
-  {
-    label: 'Design &\nrefine',
-    bg:    'radial-gradient(circle at 30% 30%, #A48AE0 0%, rgba(164,138,224,0.7) 35%, rgba(164,138,224,0.0) 70%), radial-gradient(circle at 70% 70%, #E89AC0 0%, rgba(232,154,192,0.7) 35%, rgba(232,154,192,0.0) 70%)',
-  },
-  {
-    label: 'Build &\ntest',
-    bg:    'radial-gradient(circle at 30% 30%, #F4A93A 0%, rgba(244,169,58,0.7) 35%, rgba(244,169,58,0.0) 70%), radial-gradient(circle at 70% 70%, #95C088 0%, rgba(149,192,136,0.7) 35%, rgba(149,192,136,0.0) 70%)',
-  },
+  { label: 'Listen &\ndefine',  variant: 'listen'   },
+  { label: 'Strategy &\nplan',  variant: 'strategy' },
+  { label: 'Design &\nrefine',  variant: 'design'   },
+  { label: 'Build &\ntest',     variant: 'build'    },
 ];
 
 /* ─── 2. BUILD ────────────────────────────────────────────────────────── */
@@ -90,17 +78,24 @@ buildHeroLine('world',  heroLine2El);
 // 2b. Project cards — stacked, JS swaps them on scroll
 const workCardsEl   = document.getElementById('workCards');
 const workProgressEl = document.getElementById('workProgress');
+const workVisualEl  = document.getElementById('workVisual');
 
+// Visual items — live in the persistent rounded frame, slide in/out independently
+const workVisualEls = workVisualEl ? PROJECTS.map((p) => {
+  const item = document.createElement('div');
+  item.className = 'work-visual-item';
+  item.innerHTML = `<div class="thumb" style="background:${p.bg}"><div class="thumb-glow" style="background:${p.accent}"></div></div>`;
+  item.style.transform = 'translateY(100%)';
+  workVisualEl.appendChild(item);
+  return item;
+}) : [];
+
+// Text cards — no visual inside, positioned right of the frame
 const workCardEls = PROJECTS.map((p) => {
   const card = document.createElement('div');
   card.className = 'work-card';
-  card.style.cssText = 'opacity:0;transition:none;';
+  card.style.cssText = 'opacity:1;transition:none;';
   card.innerHTML = `
-    <div class="work-card-visual">
-      <div class="thumb" style="background:${p.bg}">
-        <div class="thumb-glow" style="background:${p.accent}"></div>
-      </div>
-    </div>
     <div class="work-card-meta">
       <div class="work-card-counter">${p.num}&thinsp;/&thinsp;${p.total}</div>
       <h2 class="project-title">${p.title}</h2>
@@ -128,23 +123,103 @@ procRingEl.className = 'proc-ring';
 procRingEl.style.cssText = `width:${ORBIT_R * 2}px;height:${ORBIT_R * 2}px;left:calc(50% - ${ORBIT_R}px);top:calc(50% - ${ORBIT_R}px);`;
 if (procOrbitStage) procOrbitStage.appendChild(procRingEl);
 
-// Circle blobs — two-layer: sharp core + directional glow
+const ORB_SVG = {
+  build: {
+    accent: ['#E6A24E','#F0D0A0','#F4EBD8'], ops: [0.78, 0.42], acMid: 48,
+    acCx: 25, acCy: 62, acR: 52, crCx: 60, crCy: 40, crR: 65,
+    mask: [0, 0, 1, 0],
+  },
+  listen: {
+    accent: ['#E9796F','#F0B5A7','#F4EBD8'], ops: [0.72, 0.38], acMid: 48,
+    acCx: 78, acCy: 58, acR: 54, crCx: 42, crCy: 38, crR: 68,
+    mask: [1, 0, 0, 0],
+  },
+  strategy: {
+    accent: ['#B8C97B','#D8DDB2','#F4EBD8'], ops: [0.68, 0.36], acMid: 50,
+    acCx: 58, acCy: 78, acR: 55, crCx: 48, crCy: 35, crR: 70,
+    mask: [0, 1, 0, 0],
+  },
+  design: {
+    accent: ['#A78BD6','#CDBBE4','#F4EBD8'], ops: [0.72, 0.38], acMid: 50,
+    acCx: 28, acCy: 72, acR: 56, crCx: 62, crCy: 38, crR: 68,
+    mask: [0, 1, 1, 0],
+  },
+};
+
+function orbSVG(id, v) {
+  const [mx1,my1,mx2,my2] = v.mask;
+  // Shift the heavy-halo circles toward the dissolve side so the glow
+  // concentrates there rather than ringing uniformly.
+  const HALO_SHIFT = 16;
+  const cdx = (mx1 - mx2) * HALO_SHIFT;
+  const cdy = (my1 - my2) * HALO_SHIFT;
+  return `<svg viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;overflow:visible;display:block">
+  <defs>
+    <filter id="blOut${id}" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="22"/></filter>
+    <filter id="blIn${id}" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="8"/></filter>
+    <radialGradient id="cr${id}" cx="${v.crCx}%" cy="${v.crCy}%" r="${v.crR}%">
+      <stop offset="0%" stop-color="#F8F1DF"/><stop offset="62%" stop-color="#EEE5CC"/><stop offset="100%" stop-color="#D8CDAF"/>
+    </radialGradient>
+    <radialGradient id="ac${id}" cx="${v.acCx}%" cy="${v.acCy}%" r="${v.acR + 30}%">
+      <stop offset="0%" stop-color="${v.accent[0]}" stop-opacity="1"/>
+      <stop offset="${v.acMid}%" stop-color="${v.accent[1]}" stop-opacity="0.85"/>
+      <stop offset="75%" stop-color="${v.accent[1]}" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="${v.accent[2]}" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="mk${id}" x1="${mx1}" y1="${my1}" x2="${mx2}" y2="${my2}">
+      <stop offset="0%" stop-color="black"/>
+      <stop offset="25%" stop-color="black"/>
+      <stop offset="60%" stop-color="white"/>
+      <stop offset="85%" stop-color="white"/>
+      <stop offset="100%" stop-color="#707070"/>
+    </linearGradient>
+    <mask id="sh${id}"><rect width="220" height="220" fill="url(#mk${id})"/></mask>
+  </defs>
+  <circle cx="${110 + cdx}" cy="${110 + cdy}" r="60" fill="url(#cr${id})" filter="url(#blOut${id})"/>
+  <circle cx="${110 + cdx}" cy="${110 + cdy}" r="60" fill="url(#ac${id})" filter="url(#blOut${id})"/>
+  <g mask="url(#sh${id})">
+    <circle cx="110" cy="110" r="74" fill="url(#cr${id})" filter="url(#blIn${id})"/>
+    <circle cx="110" cy="110" r="74" fill="url(#ac${id})" opacity="0.7" filter="url(#blIn${id})"/>
+  </g>
+</svg>`;
+}
+
+// Two-layer split: the slot owns transform + opacity (and will-change),
+// the inner .proc-circle stays untransformed so the SVG feGaussianBlur halo
+// isn't clipped by Chrome's GPU compositing layer.
+// Sharp-side angle (radians, screen y-down) for each variant's SVG gradient.
+// Used to compute comet rotation: rotate so sharp side faces direction of travel.
+const ORB_SHARP_ANGLE = {
+  build:    0,              // gradient (0,0)→(1,0): sharp = right
+  listen:   Math.PI,        // gradient (1,0)→(0,0): sharp = left
+  strategy: -Math.PI / 2,   // gradient (0,1)→(0,0): sharp = up
+  design:   -Math.PI / 4,   // gradient (0,1)→(1,0): sharp = upper-right
+};
+
+const orbEls = [];  // parallel array of .proc-circle-orb divs, cached for ticker
+
 const circleEls = procOrbitStage ? CIRCLES.map((c) => {
+  const slot = document.createElement('div');
+  slot.className = 'proc-circle-slot';
+  slot.style.cssText = `width:${CIRCLE_SIZE}px;height:${CIRCLE_SIZE}px;left:calc(50% - ${CIRCLE_SIZE / 2}px);top:calc(50% - ${CIRCLE_SIZE / 2}px);opacity:0;`;
+
   const wrap = document.createElement('div');
   wrap.className = 'proc-circle';
-  wrap.style.cssText = `width:${CIRCLE_SIZE}px;height:${CIRCLE_SIZE}px;left:calc(50% - ${CIRCLE_SIZE / 2}px);top:calc(50% - ${CIRCLE_SIZE / 2}px);opacity:0;`;
 
   const orb = document.createElement('div');
   orb.className = 'proc-circle-orb';
-  orb.style.background = c.bg;
+  orb.innerHTML = orbSVG(c.variant, ORB_SVG[c.variant]);
+  orbEls.push(orb);
 
   const label = document.createElement('span');
+  label.className = 'orb-content';
   label.innerHTML = c.label.replace('\n', '<br>');
 
   wrap.appendChild(orb);
   wrap.appendChild(label);
-  procOrbitStage.appendChild(wrap);
-  return wrap;
+  slot.appendChild(wrap);
+  procOrbitStage.appendChild(slot);
+  return slot;
 }) : [];
 
 // Orbit state — driven by scroll progress via proxy
@@ -194,6 +269,12 @@ gsap.ticker.add(() => {
     const a = (i / N) * Math.PI * 2 + orbitBaseAngle + orbitState.angleOffset;
     el.style.transform = `translate(${(Math.cos(a) * orbitState.radius).toFixed(2)}px,${(Math.sin(a) * orbitState.radius).toFixed(2)}px)`;
     el.style.opacity   = orbitState.alpha;
+
+    // Comet: rotate orb so its sharp side faces the direction of travel.
+    // Travel tangent for clockwise orbit at angle a = atan2(cos(a), -sin(a)).
+    const travelDeg = Math.atan2(Math.cos(a), -Math.sin(a)) * 180 / Math.PI;
+    const sharpDeg  = ORB_SHARP_ANGLE[CIRCLES[i].variant] * 180 / Math.PI;
+    if (orbEls[i]) orbEls[i].style.transform = `rotate(${(travelDeg - sharpDeg).toFixed(1)}deg)`;
   });
 
   // Slide procSection over the still-pinned statement.
@@ -444,7 +525,7 @@ function onWorkScroll() {
   const globalP     = clamp01(-rect.top / totalScroll);
 
   // Background cream → olive during last 18%
-  const bgOutP = clamp01((globalP - 0.82) / 0.18);
+  const bgOutP = clamp01((globalP - 0.86) / 0.14);
   const r = Math.round(240 + (33 - 240) * bgOutP);
   const g = Math.round(239 + (46 - 239) * bgOutP);
   const b = Math.round(233 + (2  - 233) * bgOutP);
@@ -454,7 +535,7 @@ function onWorkScroll() {
   const headerInP  = smooth(approachInP(workPinWrap, 1.2));
   // Cards use a tighter approach — they wait for the header to clear
   const entryInP   = smooth(approachInP(workPinWrap, 0.60));
-  const cardsExitP = clamp01((globalP - 0.88) / 0.12);
+  const cardsExitP = clamp01((globalP - 0.91) / 0.09);
   if (workCardsEl) {
     workCardsEl.style.filter    = `blur(${(cardsExitP * 10).toFixed(1)}px)`;
     workCardsEl.style.transform = `translateY(${(-cardsExitP * 25).toFixed(1)}px)`;
@@ -473,7 +554,7 @@ function onWorkScroll() {
   // vh units ensure cards are fully off-screen before the next appears
   const n          = PROJECTS.length;
   const CARD_START = 0.10;
-  const CARD_END   = 0.90;
+  const CARD_END   = 0.93;
   const TRANS      = 0.025;  // shorter = snappier wipe
   const cardBand   = (CARD_END - CARD_START) / n;
 
@@ -485,11 +566,11 @@ function onWorkScroll() {
 
     let op, ty;
     if (globalP <= entryS) {
-      op = 0; ty = 100;                              // waiting below
+      op = 1; ty = 100;                              // waiting below (clipped by overflow:hidden)
     } else if (globalP < entryE) {
       const t = (globalP - entryS) / (TRANS * 2);
       const e = 1 - Math.pow(1 - t, 2.5);           // ease-out snap up
-      op = e;
+      op = 1;
       ty = (1 - e) * 100;                            // 100vh → 0
     } else if (globalP < exitS) {
       op = 1; ty = 0;                                // dwell
@@ -505,6 +586,11 @@ function onWorkScroll() {
     card.style.opacity      = op;
     card.style.transform    = `translateY(${ty.toFixed(2)}vh)`;
     card.style.pointerEvents = op > 0.5 ? 'auto' : 'none';
+
+    // Visual frame: same timing, translateY in % (clipped by frame overflow:hidden)
+    if (workVisualEls[i]) {
+      workVisualEls[i].style.transform = `translateY(${ty.toFixed(2)}%)`;
+    }
   });
 
   const activeIdx = Math.min(n - 1, Math.floor(clamp01((globalP - CARD_START) / (CARD_END - CARD_START)) * n));
@@ -523,7 +609,12 @@ function onAboutScroll() {
   const wh = window.innerHeight;
 
   if (aboutWrap && aboutContent) {
-    applyTimeline(pinExitP(aboutWrap, 0.15), aboutContent, [], approachInP(aboutWrap, 0.70));
+    const inP  = approachInP(aboutWrap, 0.90);
+    const d    = clamp01((inP - 0.08) / 0.92);
+    const ease = 1 - Math.pow(1 - d, 2);
+    aboutContent.style.opacity   = ease;
+    aboutContent.style.filter    = `blur(${((1 - ease) * 10).toFixed(1)}px)`;
+    aboutContent.style.transform = `translateY(${((1 - ease) * 28).toFixed(1)}px)`;
   }
 
   if (workExitStarsEl && workPinWrap) {
