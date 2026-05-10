@@ -496,20 +496,23 @@ section { position: relative; }
   overflow: hidden;
   z-index: 2;
 }
-.work-card {
+.work-visual-frame {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 58%;
+  height: 100%;
+  border-radius: 0 1.5rem 1.5rem 0;
+  overflow: hidden;
+  z-index: 2;
+  pointer-events: none;
+}
+.work-visual-item {
   position: absolute;
   inset: 0;
-  display: flex;
-  pointer-events: none;
-  will-change: opacity, transform;
+  will-change: transform;
 }
-.work-card-visual {
-  width: 58%;
-  flex-shrink: 0;
-  position: relative;
-  overflow: hidden;
-}
-.work-card-visual .thumb {
+.work-visual-item .thumb {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -517,8 +520,18 @@ section { position: relative; }
   aspect-ratio: unset;
   border-radius: 0;
 }
+.work-card {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  will-change: opacity, transform;
+}
 .work-card-meta {
-  flex: 1;
+  position: absolute;
+  left: 58%;
+  right: 0;
+  top: 0;
+  bottom: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -588,16 +601,18 @@ section { position: relative; }
 }
 
 /* ═══ ABOUT TEASER ════════════════════════════════════════════════════════ */
-#about-wrap { height: 150vh; background: var(--olive-deep); }
+#about-wrap { background: var(--olive-deep); }
 .about-scene {
   background: var(--olive-deep);
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 100vh;
 }
 #about {
   background: var(--olive-deep);
   padding: 9rem 4rem;
+  width: 100%;
 }
 .about-grid {
   display: grid;
@@ -614,6 +629,11 @@ section { position: relative; }
 .about-grid.visible { opacity: 1; transform: translateY(0); }
 .about-grid > div:first-child { padding-top: 0.5rem; }
 .about-bio { color: var(--cream); margin-bottom: 2.5rem; opacity: .88; line-height: 1.6; max-width: none; }
+.testimonial-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
 .testimonial-block {
   border-left: 1px solid rgba(240,239,233,.2);
   padding-left: 2.5rem;
@@ -696,6 +716,7 @@ section { position: relative; }
   letter-spacing: -.025em;
   max-width: 14ch;
   margin: 0;
+  padding-bottom: 0.18em;
 }
 .contact-sub {
   font-family: var(--ff-serif);

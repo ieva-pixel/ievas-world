@@ -78,17 +78,24 @@ buildHeroLine('world',  heroLine2El);
 // 2b. Project cards — stacked, JS swaps them on scroll
 const workCardsEl   = document.getElementById('workCards');
 const workProgressEl = document.getElementById('workProgress');
+const workVisualEl  = document.getElementById('workVisual');
 
+// Visual items — live in the persistent rounded frame, slide in/out independently
+const workVisualEls = workVisualEl ? PROJECTS.map((p) => {
+  const item = document.createElement('div');
+  item.className = 'work-visual-item';
+  item.innerHTML = `<div class="thumb" style="background:${p.bg}"><div class="thumb-glow" style="background:${p.accent}"></div></div>`;
+  item.style.transform = 'translateY(100%)';
+  workVisualEl.appendChild(item);
+  return item;
+}) : [];
+
+// Text cards — no visual inside, positioned right of the frame
 const workCardEls = PROJECTS.map((p) => {
   const card = document.createElement('div');
   card.className = 'work-card';
-  card.style.cssText = 'opacity:0;transition:none;';
+  card.style.cssText = 'opacity:1;transition:none;';
   card.innerHTML = `
-    <div class="work-card-visual">
-      <div class="thumb" style="background:${p.bg}">
-        <div class="thumb-glow" style="background:${p.accent}"></div>
-      </div>
-    </div>
     <div class="work-card-meta">
       <div class="work-card-counter">${p.num}&thinsp;/&thinsp;${p.total}</div>
       <h2 class="project-title">${p.title}</h2>
@@ -518,7 +525,7 @@ function onWorkScroll() {
   const globalP     = clamp01(-rect.top / totalScroll);
 
   // Background cream → olive during last 18%
-  const bgOutP = clamp01((globalP - 0.82) / 0.18);
+  const bgOutP = clamp01((globalP - 0.86) / 0.14);
   const r = Math.round(240 + (33 - 240) * bgOutP);
   const g = Math.round(239 + (46 - 239) * bgOutP);
   const b = Math.round(233 + (2  - 233) * bgOutP);
@@ -528,7 +535,7 @@ function onWorkScroll() {
   const headerInP  = smooth(approachInP(workPinWrap, 1.2));
   // Cards use a tighter approach — they wait for the header to clear
   const entryInP   = smooth(approachInP(workPinWrap, 0.60));
-  const cardsExitP = clamp01((globalP - 0.88) / 0.12);
+  const cardsExitP = clamp01((globalP - 0.91) / 0.09);
   if (workCardsEl) {
     workCardsEl.style.filter    = `blur(${(cardsExitP * 10).toFixed(1)}px)`;
     workCardsEl.style.transform = `translateY(${(-cardsExitP * 25).toFixed(1)}px)`;
@@ -547,7 +554,7 @@ function onWorkScroll() {
   // vh units ensure cards are fully off-screen before the next appears
   const n          = PROJECTS.length;
   const CARD_START = 0.10;
-  const CARD_END   = 0.90;
+  const CARD_END   = 0.93;
   const TRANS      = 0.025;  // shorter = snappier wipe
   const cardBand   = (CARD_END - CARD_START) / n;
 
@@ -559,11 +566,11 @@ function onWorkScroll() {
 
     let op, ty;
     if (globalP <= entryS) {
-      op = 0; ty = 100;                              // waiting below
+      op = 1; ty = 100;                              // waiting below (clipped by overflow:hidden)
     } else if (globalP < entryE) {
       const t = (globalP - entryS) / (TRANS * 2);
       const e = 1 - Math.pow(1 - t, 2.5);           // ease-out snap up
-      op = e;
+      op = 1;
       ty = (1 - e) * 100;                            // 100vh → 0
     } else if (globalP < exitS) {
       op = 1; ty = 0;                                // dwell
@@ -579,6 +586,11 @@ function onWorkScroll() {
     card.style.opacity      = op;
     card.style.transform    = `translateY(${ty.toFixed(2)}vh)`;
     card.style.pointerEvents = op > 0.5 ? 'auto' : 'none';
+
+    // Visual frame: same timing, translateY in % (clipped by frame overflow:hidden)
+    if (workVisualEls[i]) {
+      workVisualEls[i].style.transform = `translateY(${ty.toFixed(2)}%)`;
+    }
   });
 
   const activeIdx = Math.min(n - 1, Math.floor(clamp01((globalP - CARD_START) / (CARD_END - CARD_START)) * n));
@@ -597,7 +609,12 @@ function onAboutScroll() {
   const wh = window.innerHeight;
 
   if (aboutWrap && aboutContent) {
-    applyTimeline(pinExitP(aboutWrap, 0.15), aboutContent, [], approachInP(aboutWrap, 0.70));
+    const inP  = approachInP(aboutWrap, 0.90);
+    const d    = clamp01((inP - 0.08) / 0.92);
+    const ease = 1 - Math.pow(1 - d, 2);
+    aboutContent.style.opacity   = ease;
+    aboutContent.style.filter    = `blur(${((1 - ease) * 10).toFixed(1)}px)`;
+    aboutContent.style.transform = `translateY(${((1 - ease) * 28).toFixed(1)}px)`;
   }
 
   if (workExitStarsEl && workPinWrap) {
