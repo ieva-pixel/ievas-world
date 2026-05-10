@@ -40,22 +40,23 @@ Recompute these if you change wrap heights — handful of magic numbers depend o
 |---|---|---|
 | stmt pin start | 1120 | stmtWrap top hits viewport top |
 | slide window start | ~1833 | stmtP = 0.6 (`SLIDE_START`) |
-| stmt pin end | ~2309 | stmtWrap bottom hits viewport bottom; slide window end (slideP = 1) |
-| procWrap pin start | ~3300 | procWrap top hits viewport top |
+| stmt pin end / procWrap pin start | ~2309 | stmtWrap bottom hits viewport bottom; **also** procWrap rendered top hits viewport top (these are now aligned — see "JS hold zone elimination" below) |
 | procWrap pin end | ~5183 | procWrap bottom hits viewport bottom |
 
-Wrap heights: `#statement-wrap` 220vh, `#process-wrap` 290vh ([styles.css:347](site/styles.css:347), [styles.css:367](site/styles.css:367)).
+Wrap heights: `#statement-wrap` 220vh, `#process-wrap` 290vh + **`margin-top: -100vh`** ([styles.css:347](site/styles.css:347), [styles.css:367](site/styles.css:367)). The negative margin pulls procWrap up by one viewport so its rendered offsetTop coincides with stmt pin end.
 
 ### Slide-on-top — implementation details
 
-**CSS** ([styles.css:367-373](site/styles.css:367)):
+**CSS** ([styles.css:367](site/styles.css:367)):
 ```css
 #statement-wrap { background: #F1F0EA; height: 220vh; }   /* was 150vh */
+#process-wrap { background: var(--olive-deep); height: 290vh; margin-top: -100vh; }
 #process { background: var(--olive-deep); padding: 0; z-index: 2; will-change: transform; }
 ```
-`#process` z-index bumped to 2 so it renders above `#statement` (z-index 1) when their viewport space overlaps.
+- `#process` z-index 2 so it renders above `#statement` (z-index 1) where they overlap.
+- `#process-wrap` `margin-top: -100vh` is load-bearing (see JS hold zone section below).
 
-**JS** ([scripts.js:399-446](site/scripts.js:399), inside `onPinnedScroll`):
+**JS — stmt drift** ([scripts.js, inside `onPinnedScroll`]):
 
 - `SLIDE_START = 0.6` — slide begins at 60% through stmt pin progress.
 - `slideP = clamp01((stmtP - SLIDE_START) / (1 - SLIDE_START))` — drives both the stmt drift and the proc translation. Same source = synced timing.
@@ -64,30 +65,54 @@ Wrap heights: `#statement-wrap` 220vh, `#process-wrap` 290vh ([styles.css:347](s
   - `translateY: (1 - _in) * 60 - slideE * 40` → -40 at slideP=1
   - `blur: (1 - _in) * 20 + slideE * 14` → +14 at slideP=1
   - `slideE = pow(slideP, 1.6)` (gentle ease-in)
-- Proc translation:
-  ```js
-  if (procRectTop > 0) {
-    const target = (1 - slideP) * wh;             // vh → 0 as slideP 0 → 1
-    procSection.style.transform = `translateY(${target - procRectTop}px)`;
-  } else {
-    procSection.style.transform = '';             // procWrap pinned, let sticky handle it
+
+**JS — proc translation** (lives in `gsap.ticker.add(...)` alongside the orb positions, **NOT** in the scroll listener):
+
+```js
+gsap.ticker.add(() => {
+  // ...orb positions...
+
+  if (procWrap && procSection && stmtWrap) {
+    const procRectTop = procWrap.getBoundingClientRect().top;
+    if (procRectTop > 0) {
+      const stmtP  = sceneProg(stmtWrap);
+      const slideP = clamp01((stmtP - 0.6) / 0.4);
+      const target = (1 - slideP) * window.innerHeight;
+      procSection.style.transform = `translateY(${(target - procRectTop).toFixed(1)}px)`;
+    } else if (procSection.style.transform) {
+      procSection.style.transform = '';
+    }
   }
-  ```
-  `procRectTop` is `procWrap.getBoundingClientRect().top`. After slideP=1 (stmt pin ended), `slideP` stays clamped at 1 because `sceneProg(stmtWrap)` clamps at 1, so `target = 0` and `translateY = -procRectTop` keeps procSection glued to viewport top through the [stmt-end, procWrap-pin] window.
+});
+```
+
+Two reasons it's on `gsap.ticker` instead of the scroll listener:
+1. **Paint-coupling.** Scroll events can lag a frame behind macOS trackpad's compositor scrolling, which on aggressive flicks would leave the transform stale and flash a cream gap above procSection. `gsap.ticker` runs on rAF — always fresh for the next paint.
+2. **It's already running.** The orb positions are updated there too; consolidating avoids two separate per-frame loops.
+
+### JS hold zone elimination — the `margin-top: -100vh` trick
+
+Original geometry had a ~991px gap between `stmt pin end` (scrollY 2309) and `procWrap pin start` (scrollY 3300). During this gap, procSection was held at viewport top:0 by JS-driven `translateY = -procRectTop` (since `slideP = 1, target = 0`). This put the orbit's entry phase fully inside the JS-controlled zone — every frame of scroll required JS to recompute and apply transform.
+
+Even with paint-coupled `gsap.ticker`, fast trackpad scrolls would still flicker because reading `getBoundingClientRect()` and writing `style.transform` happens on the main thread, while macOS compositor scroll runs ahead. Result: orbs/title bouncing up-down by ~50-100px on aggressive scrolls during orbit entry.
+
+`margin-top: -100vh` on `#process-wrap` shifts its rendered offsetTop up by exactly one viewport — so procWrap's natural sticky-pin starts at scrollY 2309 instead of 3300. The gap zone no longer exists. JS transform is only active during the slide window itself (scrollY 1833 → 2309). Once the slide ends, sticky takes over with zero JS positioning, and orbit entry/orbit/exit all play out flicker-free.
+
+**Don't undo the negative margin without redesigning the slide handoff.** It's the keystone that aligns slide-end with sticky-pin-start.
 
 ### Orbit animation — slower, smoother
 
-**ScrollTrigger** ([scripts.js:215-221](site/scripts.js:215)):
+**ScrollTrigger** ([scripts.js, inside `window.addEventListener('load', ...)`]):
 ```js
 ScrollTrigger.create({
   trigger:   '#process-wrap',
-  start:     'top bottom',     // was 'top top'
+  start:     'top top',
   end:       'bottom bottom',
   scrub:     2.0,              // was 1.4
   animation: orbitScrollTl,
 });
 ```
-`start: 'top bottom'` is critical now — procSection is *visually* in view from slide-end onward (scrollY ~2309), even though procWrap doesn't pin until ~3300. If you leave `start: 'top top'`, the orbit only starts at ~3300 and the user sees a static "How I work" for ~991px before any motion.
+`start: 'top top'` works correctly because `margin-top: -100vh` on procWrap aligns procWrap's pin start with stmt's pin end. The orbit animation plays from scrollY 2309 (slide complete, procWrap pinning) to scrollY 5183 (procWrap unpinning) — covers the full visible-procSection range without any "static How I work" zone.
 
 **Phase angle math** ([scripts.js:171-200](site/scripts.js:171)):
 ```js
@@ -146,14 +171,24 @@ The old `.proc-circle-core` and `.proc-circle-glow` CSS classes and DOM elements
 
 ### Tried and reverted this session
 
-Nothing reverted in session 3. Three iterations on the orb visual but each was a deliberate progression, not a rollback.
+Nothing reverted in session 3. Iterations:
+- Orb visual went through three deliberate stages (3D-shaded → core+glow watercolor → flat single-layer).
+- Slide-on-top went through three corrections:
+  1. Initial implementation: JS transform from inside scroll listener, ScrollTrigger `start: 'top bottom'`. Worked but had cream-flash on aggressive scroll-up (scroll-event lag).
+  2. Moved transform to `gsap.ticker` (paint-coupled). Cream gap reduced but bouncing/flickering during orbit entry still happened — JS was still doing per-frame transform during the [stmt-end → procWrap-pin] gap zone.
+  3. Added `margin-top: -100vh` on procWrap to eliminate the gap entirely. Reverted ScrollTrigger `start` back to `'top top'`. Final state — orbit entry has zero JS positioning, no flicker.
 
 ### Open / worth verifying
 
 - **Static pin time before the slide.** With `SLIDE_START = 0.6` and 220vh wrap (~120vh of pin), the stmt sits unmoving for ~72vh before the slide starts. Reading time is good but if it feels "long-paused" in real scrolling, lower `SLIDE_START` to 0.4-0.5.
-- **Slide is geometry-coupled.** `target = (1-slideP) * wh` assumes `slideP` reaches 1 exactly when `procRectTop` reaches `wh` (i.e. the slide-end moment is also the moment procSection naturally enters viewport bottom). This is true *only because* stmt pin ends exactly when procWrap.offsetTop is reached. Don't add a gap between stmt-wrap and proc-wrap or this will desync.
+- **Slide handoff is geometry-coupled.** Three values must stay in agreement or the slide-end → sticky-pin handoff will tear:
+  1. Stmt pin must end exactly when procWrap pins.
+  2. `target = (1-slideP) * wh` formula assumes slideP=1 coincides with procRectTop=0.
+  3. `margin-top: -100vh` on procWrap is what makes (1) and (2) line up.
+  Don't change wrap heights, the slide formula, or the negative margin in isolation.
 - **Orbit phase split.** `ENTRY_END = 0.25, ORBIT_END = 0.75` is unchanged; tweak only if you want longer/shorter intro spirals. The angle continuity holds for any split because `EDGE_ANGLE = ORBIT_ANGLE/4` was derived from `ENTRY_END = 0.25` specifically — if you change phase fractions, redo the math.
-- **About scene** still uses the old `applyTimeline` + `pinExitP` pattern. If consistency with the new slide-on-top transition matters, the about scene is the next candidate for the same treatment.
+- **About scene** still uses the old `applyTimeline` + `pinExitP` pattern. If consistency with the new slide-on-top transition matters, the about scene is the next candidate for the same treatment. Same `margin-top: -100vh` trick would apply if the about scene also gets a slide-on-top.
+- **Scroll listener vs ticker for proc bg color.** The procSection bg fade (olive → cream as work approaches) still lives in the scroll listener, NOT the ticker. It hasn't shown flicker because it's a slow color interpolation — but if you ever see flashing during the proc → work transition, move it to the ticker too.
 
 ---
 
