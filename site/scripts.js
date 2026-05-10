@@ -141,38 +141,35 @@ const ORB_SVG = {
 
 function orbSVG(id, v) {
   const [mx1,my1,mx2,my2] = v.mask;
-  // Asymmetric blur. Two filter passes on the same circle, but the lightly
-  // blurred copy is masked to only show on the sharp side:
-  //   • blOut (~32px) — the heavy halo. Unmasked, paints everywhere, so the
-  //     dissolve side is just this dispersed cream + colored streak.
-  //   • blIn  (~3px)  — the defined body. Masked by a linear gradient so it
-  //     fades from full opacity on the sharp side to 0 on the dissolve side.
-  // Result: sharp side reads as a feathered cream body sitting in a soft
-  // glow; dissolve side has no body at all, just the heavy halo dispersing.
-  // The two sides have visibly different effective blur.
+  // Shift the heavy-halo circles toward the dissolve side so the glow
+  // concentrates there rather than ringing uniformly.
+  const HALO_SHIFT = 16;
+  const cdx = (mx1 - mx2) * HALO_SHIFT;
+  const cdy = (my1 - my2) * HALO_SHIFT;
   return `<svg viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;overflow:visible;display:block">
   <defs>
-    <filter id="blOut${id}" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="18"/></filter>
-    <filter id="blIn${id}" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="3"/></filter>
+    <filter id="blOut${id}" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="22"/></filter>
+    <filter id="blIn${id}" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="8"/></filter>
     <radialGradient id="cr${id}" cx="${v.crCx}%" cy="${v.crCy}%" r="${v.crR}%">
       <stop offset="0%" stop-color="#F8F1DF"/><stop offset="62%" stop-color="#EEE5CC"/><stop offset="100%" stop-color="#D8CDAF"/>
     </radialGradient>
     <radialGradient id="ac${id}" cx="${v.acCx}%" cy="${v.acCy}%" r="${v.acR + 30}%">
       <stop offset="0%" stop-color="${v.accent[0]}" stop-opacity="1"/>
       <stop offset="${v.acMid}%" stop-color="${v.accent[1]}" stop-opacity="0.85"/>
-      <stop offset="75%" stop-color="${v.accent[1]}" stop-opacity="0.4"/>
+      <stop offset="75%" stop-color="${v.accent[1]}" stop-opacity="0.55"/>
       <stop offset="100%" stop-color="${v.accent[2]}" stop-opacity="0"/>
     </radialGradient>
     <linearGradient id="mk${id}" x1="${mx1}" y1="${my1}" x2="${mx2}" y2="${my2}">
       <stop offset="0%" stop-color="black"/>
-      <stop offset="35%" stop-color="black"/>
-      <stop offset="80%" stop-color="white"/>
-      <stop offset="100%" stop-color="white"/>
+      <stop offset="25%" stop-color="black"/>
+      <stop offset="60%" stop-color="white"/>
+      <stop offset="85%" stop-color="white"/>
+      <stop offset="100%" stop-color="#707070"/>
     </linearGradient>
     <mask id="sh${id}"><rect width="220" height="220" fill="url(#mk${id})"/></mask>
   </defs>
-  <circle cx="110" cy="110" r="74" fill="url(#cr${id})" filter="url(#blOut${id})"/>
-  <circle cx="110" cy="110" r="74" fill="url(#ac${id})" filter="url(#blOut${id})"/>
+  <circle cx="${110 + cdx}" cy="${110 + cdy}" r="60" fill="url(#cr${id})" filter="url(#blOut${id})"/>
+  <circle cx="${110 + cdx}" cy="${110 + cdy}" r="60" fill="url(#ac${id})" filter="url(#blOut${id})"/>
   <g mask="url(#sh${id})">
     <circle cx="110" cy="110" r="74" fill="url(#cr${id})" filter="url(#blIn${id})"/>
     <circle cx="110" cy="110" r="74" fill="url(#ac${id})" opacity="0.7" filter="url(#blIn${id})"/>
@@ -183,6 +180,17 @@ function orbSVG(id, v) {
 // Two-layer split: the slot owns transform + opacity (and will-change),
 // the inner .proc-circle stays untransformed so the SVG feGaussianBlur halo
 // isn't clipped by Chrome's GPU compositing layer.
+// Sharp-side angle (radians, screen y-down) for each variant's SVG gradient.
+// Used to compute comet rotation: rotate so sharp side faces direction of travel.
+const ORB_SHARP_ANGLE = {
+  build:    0,              // gradient (0,0)→(1,0): sharp = right
+  listen:   Math.PI,        // gradient (1,0)→(0,0): sharp = left
+  strategy: -Math.PI / 2,   // gradient (0,1)→(0,0): sharp = up
+  design:   -Math.PI / 4,   // gradient (0,1)→(1,0): sharp = upper-right
+};
+
+const orbEls = [];  // parallel array of .proc-circle-orb divs, cached for ticker
+
 const circleEls = procOrbitStage ? CIRCLES.map((c) => {
   const slot = document.createElement('div');
   slot.className = 'proc-circle-slot';
@@ -194,6 +202,7 @@ const circleEls = procOrbitStage ? CIRCLES.map((c) => {
   const orb = document.createElement('div');
   orb.className = 'proc-circle-orb';
   orb.innerHTML = orbSVG(c.variant, ORB_SVG[c.variant]);
+  orbEls.push(orb);
 
   const label = document.createElement('span');
   label.className = 'orb-content';
@@ -253,6 +262,12 @@ gsap.ticker.add(() => {
     const a = (i / N) * Math.PI * 2 + orbitBaseAngle + orbitState.angleOffset;
     el.style.transform = `translate(${(Math.cos(a) * orbitState.radius).toFixed(2)}px,${(Math.sin(a) * orbitState.radius).toFixed(2)}px)`;
     el.style.opacity   = orbitState.alpha;
+
+    // Comet: rotate orb so its sharp side faces the direction of travel.
+    // Travel tangent for clockwise orbit at angle a = atan2(cos(a), -sin(a)).
+    const travelDeg = Math.atan2(Math.cos(a), -Math.sin(a)) * 180 / Math.PI;
+    const sharpDeg  = ORB_SHARP_ANGLE[CIRCLES[i].variant] * 180 / Math.PI;
+    if (orbEls[i]) orbEls[i].style.transform = `rotate(${(travelDeg - sharpDeg).toFixed(1)}deg)`;
   });
 
   // Slide procSection over the still-pinned statement.
