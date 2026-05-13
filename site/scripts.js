@@ -50,10 +50,10 @@ const PROJECTS = [
 ];
 
 const CIRCLES = [
-  { label: 'Listen &\ndefine',  variant: 'listen'   },
-  { label: 'Strategy &\nplan',  variant: 'strategy' },
-  { label: 'Design &\nrefine',  variant: 'design'   },
-  { label: 'Build &\ntest',     variant: 'build'    },
+  { label: 'Listen and\ndefine',  variant: 'listen'   },
+  { label: 'Strategy and\nplan',  variant: 'strategy' },
+  { label: 'Design and\nrefine',  variant: 'design'   },
+  { label: 'Build and\ntest',     variant: 'build'    },
 ];
 
 /* ─── 2. BUILD ────────────────────────────────────────────────────────── */

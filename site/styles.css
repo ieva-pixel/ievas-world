@@ -1,10 +1,118 @@
+/* ═══ TT RAMILLAS FONT FAMILY ═════════════════════════════════════════════ */
+
+/* Variable — Roman (covers all weights 200–900 upright) */
+@font-face {
+  font-family: 'TT Ramillas';
+  src: url('fonts/tt-ramillas/TT Ramillas Trial Variable Roman.ttf') format('truetype');
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Variable — Italic (covers all weights 200–900 italic) */
+@font-face {
+  font-family: 'TT Ramillas';
+  src: url('fonts/tt-ramillas/TT Ramillas Trial Variable Italic.ttf') format('truetype');
+  font-weight: 200 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Initials — decorative drop-cap / display variant */
+@font-face {
+  font-family: 'TT Ramillas Initials';
+  src: url('fonts/tt-ramillas/TT Ramillas Initials Trial Variable.ttf') format('truetype');
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Decor — outline / ornamental variant */
+@font-face {
+  font-family: 'TT Ramillas Decor';
+  src: url('fonts/tt-ramillas/TT Ramillas Trial Black Decor.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'TT Ramillas Decor';
+  src: url('fonts/tt-ramillas/TT Ramillas Trial Black Decor Italic.ttf') format('truetype');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Outline — another ornamental variant */
+@font-face {
+  font-family: 'TT Ramillas Outline';
+  src: url('fonts/tt-ramillas/TT Ramillas Trial Black Outline.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'TT Ramillas Outline';
+  src: url('fonts/tt-ramillas/TT Ramillas Trial Black Outline Italic.ttf') format('truetype');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ═══ TT INTERPHASES PRO FONT FAMILY ══════════════════════════════════════ */
+
+/* Variable — Roman (covers all weights upright) */
+@font-face {
+  font-family: 'TT Interphases Pro';
+  src: url('fonts/tt-interphases-pro/TT Interphases Pro Trial Variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Condensed — static weights (no variable available) */
+@font-face { font-family: 'TT Interphases Pro Condensed'; src: url('fonts/tt-interphases-pro/TT Interphases Pro Trial Condensed Thin.ttf') format('truetype'); font-weight: 100; font-style: normal; font-display: swap; }
+@font-face { font-family: 'TT Interphases Pro Condensed'; src: url('fonts/tt-interphases-pro/TT Interphases Pro Trial Condensed Thin Italic.ttf') format('truetype'); font-weight: 100; font-style: italic; font-display: swap; }
+@font-face { font-family: 'TT Interphases Pro Condensed'; src: url('fonts/tt-interphases-pro/TT Interphases Pro Trial Condensed ExtraLight.ttf') format('truetype'); font-weight: 200; font-style: normal; font-display: swap; }
+@font-face { font-family: 'TT Interphases Pro Condensed'; src: url('fonts/tt-interphases-pro/TT Interphases Pro Trial Condensed ExtraLight Italic.ttf') format('truetype'); font-weight: 200; font-style: italic; font-display: swap; }
+@font-face { font-family: 'TT Interphases Pro Condensed'; src: url('fonts/tt-interphases-pro/TT Interphases Pro Trial Condensed Light.ttf') format('truetype'); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: 'TT Interphases Pro Condensed'; src: url('fonts/tt-interphases-pro/TT Interphases Pro Trial Condensed Light Italic.ttf') format('truetype'); font-weight: 300; font-style: italic; font-display: swap; }
+@font-face { font-family: 'TT Interphases Pro Condensed'; src: url('fonts/tt-interphases-pro/TT Interphases Pro Trial Condensed Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'TT Interphases Pro Condensed'; src: url('fonts/tt-interphases-pro/TT Interphases Pro Trial Condensed Italic.ttf') format('truetype'); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: 'TT Interphases Pro Condensed'; src: url('fonts/tt-interphases-pro/TT Interphases Pro Trial Condensed Medium.ttf') format('truetype'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'TT Interphases Pro Condensed'; src: url('fonts/tt-interphases-pro/TT Interphases Pro Trial Condensed Medium Italic.ttf') format('truetype'); font-weight: 500; font-style: italic; font-display: swap; }
+@font-face { font-family: 'TT Interphases Pro Condensed'; src: url('fonts/tt-interphases-pro/TT Interphases Pro Trial Condensed DemiBold.ttf') format('truetype'); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: 'TT Interphases Pro Condensed'; src: url('fonts/tt-interphases-pro/TT Interphases Pro Trial Condensed DemiBold Italic.ttf') format('truetype'); font-weight: 600; font-style: italic; font-display: swap; }
+@font-face { font-family: 'TT Interphases Pro Condensed'; src: url('fonts/tt-interphases-pro/TT Interphases Pro Trial Condensed Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'TT Interphases Pro Condensed'; src: url('fonts/tt-interphases-pro/TT Interphases Pro Trial Condensed Bold Italic.ttf') format('truetype'); font-weight: 700; font-style: italic; font-display: swap; }
+@font-face { font-family: 'TT Interphases Pro Condensed'; src: url('fonts/tt-interphases-pro/TT Interphases Pro Trial Condensed ExtraBold.ttf') format('truetype'); font-weight: 800; font-style: normal; font-display: swap; }
+@font-face { font-family: 'TT Interphases Pro Condensed'; src: url('fonts/tt-interphases-pro/TT Interphases Pro Trial Condensed ExtraBold Italic.ttf') format('truetype'); font-weight: 800; font-style: italic; font-display: swap; }
+@font-face { font-family: 'TT Interphases Pro Condensed'; src: url('fonts/tt-interphases-pro/TT Interphases Pro Trial Condensed Black.ttf') format('truetype'); font-weight: 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'TT Interphases Pro Condensed'; src: url('fonts/tt-interphases-pro/TT Interphases Pro Trial Condensed Black Italic.ttf') format('truetype'); font-weight: 900; font-style: italic; font-display: swap; }
+
+/* Mono — variable */
+@font-face {
+  font-family: 'TT Interphases Pro Mono';
+  src: url('fonts/tt-interphases-pro/TT Interphases Pro Mono Trial Var Roman.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'TT Interphases Pro Mono';
+  src: url('fonts/tt-interphases-pro/TT Interphases Pro Mono Trial Var Italic.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
 /* ═══ RESET & BASE ════════════════════════════════════════════════════════ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
 body {
   background: var(--olive-deep);
   color: #F0EFE9;
-  font-family: 'Instrument Serif', Georgia, serif;
+  font-family: var(--ff-sans);
   overflow-x: hidden;
 }
 a { text-decoration: none; color: inherit; }
@@ -16,8 +124,9 @@ a { text-decoration: none; color: inherit; }
   --olive:        #3A4A16;
   --olive-deep:   #212E02;
   --muted:        #8F8F8E;
-  --ff-serif:     'Instrument Serif', Georgia, serif;
-  --ff-sans:      'Jost', system-ui, sans-serif;
+  --ff-display:   'Instrument Serif', Georgia, serif;
+  --ff-serif:     'TT Ramillas', 'Instrument Serif', Georgia, serif;
+  --ff-sans:      'TT Interphases Pro', 'Jost', system-ui, sans-serif;
   --ease-out:     cubic-bezier(.4,0,.2,1);
   --ease-expo:    cubic-bezier(.16,1,.3,1);
 }
@@ -43,7 +152,7 @@ a { text-decoration: none; color: inherit; }
 
 /* ═══ TYPE SCALES ═════════════════════════════════════════════════════════ */
 .hero-display {
-  font-family: var(--ff-serif);
+  font-family: var(--ff-display);
   font-size: clamp(4rem, 12vw, 11rem);
   font-style: italic;
   font-weight: 400;
@@ -51,10 +160,10 @@ a { text-decoration: none; color: inherit; }
   letter-spacing: -0.025em;
 }
 .body-ed {
-  font-family: var(--ff-serif);
-  font-size: clamp(1.25rem, 1.8vw, 1.7rem);
+  font-family: var(--ff-sans);
+  font-size: clamp(1rem, 1.35vw, 1.25rem);
   font-weight: 400;
-  line-height: 1.58;
+  line-height: 1.6;
 }
 .body-ed-light {
   color: rgba(240,239,233,.65);
@@ -96,14 +205,14 @@ a { text-decoration: none; color: inherit; }
   border-color: var(--cream);
 }
 .pill-dark {
-  color: var(--olive);
-  border-color: rgba(58,74,22,.4);
+  color: #4D4B45;
+  border-color: #8B8A80;
   background: transparent;
 }
 .pill-dark:hover {
-  background: var(--olive);
+  background: #4D4B45;
   color: var(--cream);
-  border-color: var(--olive);
+  border-color: #4D4B45;
 }
 
 /* ═══ PAGE TRANSITION OVERLAY ═════════════════════════════════════════════ */
@@ -148,7 +257,7 @@ a { text-decoration: none; color: inherit; }
 }
 #logo {
   top: 2rem; left: 2rem;
-  font-family: var(--ff-serif);
+  font-family: var(--ff-display);
   font-style: italic;
   font-size: 1rem;
   line-height: 1.1;
@@ -160,15 +269,16 @@ a { text-decoration: none; color: inherit; }
   right: 2rem;
   top: 50%; transform: translateY(-50%);
   display: flex; flex-direction: column; gap: .75rem;
+  mix-blend-mode: normal;
 }
 .nav-item {
   font-family: var(--ff-sans);
   font-size: .68rem;
   letter-spacing: .14em;
   text-transform: uppercase;
-  color: var(--cream);
-  opacity: .38;
-  transition: opacity 220ms var(--ease-out);
+  color: #A7A297;
+  opacity: .55;
+  transition: opacity 220ms var(--ease-out), color 220ms var(--ease-out);
   display: flex; align-items: center; gap: .3em; justify-content: flex-end;
 }
 .nav-item.active { opacity: 1; }
@@ -403,7 +513,7 @@ section { position: relative; }
   padding: 0;
   z-index: 2;
   will-change: transform;
-  overflow: visible;
+  overflow: hidden;
 }
 .process-content {
   width: 100%;
@@ -470,8 +580,9 @@ section { position: relative; }
   z-index: 3;
   font-family: var(--ff-serif);
   font-style: italic;
+  font-weight: 400;
   font-size: clamp(0.78rem, 1.15vw, 0.94rem);
-  color: var(--olive-deep);
+  color: rgba(8, 12, 0, 0.6);
   text-align: center;
   line-height: 1.3;
   padding: 0 0.6em;
@@ -601,12 +712,13 @@ section { position: relative; }
   margin-bottom: 1.4rem;
 }
 .project-desc {
-  font-family: var(--ff-serif);
-  font-size: clamp(1.1rem, 1.5vw, 1.45rem);
-  color: var(--olive);
-  max-width: 36ch;
+  font-family: var(--ff-sans);
+  font-weight: 400;
+  font-size: clamp(0.95rem, 1.2vw, 1.2rem);
+  color: #5C5A54;
+  max-width: 38ch;
   margin-bottom: 2.5rem;
-  line-height: 1.55;
+  line-height: 1.6;
 }
 .thumb {
   width: 100%;
@@ -672,13 +784,13 @@ section { position: relative; }
   padding-left: 2.5rem;
 }
 .testimonial-text {
-  font-family: var(--ff-serif);
-  font-style: italic;
-  font-size: clamp(1.05rem, 1.7vw, 1.45rem);
+  font-family: var(--ff-sans);
+  font-style: normal;
+  font-size: clamp(0.95rem, 1.35vw, 1.15rem);
   color: var(--cream);
-  line-height: 1.58;
+  line-height: 1.65;
   margin-bottom: 1.4rem;
-  opacity: .86;
+  opacity: .82;
 }
 .testimonial-attr {
   font-family: var(--ff-sans);
@@ -752,12 +864,12 @@ section { position: relative; }
   padding-bottom: 0.18em;
 }
 .contact-sub {
-  font-family: var(--ff-serif);
-  font-size: clamp(1.1rem, 1.6vw, 1.5rem);
-  color: rgba(240,239,233,.58);
-  max-width: 42ch;
+  font-family: var(--ff-sans);
+  font-size: clamp(0.95rem, 1.3vw, 1.2rem);
+  color: rgba(240,239,233,.65);
+  max-width: 46ch;
   margin-bottom: 3.5rem;
-  line-height: 1.56;
+  line-height: 1.6;
 }
 .pill-row {
   display: flex; gap: 1rem; flex-wrap: wrap;
