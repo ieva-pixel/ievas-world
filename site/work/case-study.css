@@ -187,7 +187,6 @@ body.cs-body #location { color: var(--olive-deep); mix-blend-mode: normal; }
   letter-spacing: -0.025em;
   color: var(--olive-deep);
   margin: 0;
-  padding-bottom: 0.18em;
   position: relative;
 }
 .cs-hero-title-accent {

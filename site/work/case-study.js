@@ -113,7 +113,8 @@ function initCursor() {
 /* ─── 3. SPLIT TEXT ───────────────────────────────────────────────────────── */
 // Split into character spans (for hero title burst)
 function splitChars(el) {
-  const txt = el.textContent;
+  const preserved = Array.from(el.children);
+  const txt = el.textContent.trim();
   el.textContent = '';
   el.classList.add('cs-split-chars');
   const out = [];
@@ -124,6 +125,7 @@ function splitChars(el) {
     el.appendChild(span);
     out.push(span);
   }
+  preserved.forEach(c => el.appendChild(c));
   return out;
 }
 
