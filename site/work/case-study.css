@@ -183,7 +183,7 @@ body.cs-body #location { color: var(--olive-deep); mix-blend-mode: normal; }
   font-style: italic;
   font-weight: 400;
   font-size: clamp(3.5rem, 11vw, 11rem);
-  line-height: 1.05;
+  line-height: 1.2;
   letter-spacing: -0.025em;
   color: var(--olive-deep);
   margin: 0;
