@@ -691,3 +691,37 @@ document.querySelectorAll('[data-nav-section]').forEach(el => sectionObs.observe
 window.addEventListener('load', () => {
   allLetterEls.slice(0, 3).forEach(el => el.classList.add('lit'));
 });
+
+/* ─── 6. PAGE TRANSITION ─────────────────────────────────────────────────── */
+const pageOverlay      = document.getElementById('pageOverlay');
+const pageOverlayLabel = document.getElementById('pageOverlayLabel');
+
+function navigateWithTransition(href, label) {
+  if (!pageOverlay) { window.location.href = href; return; }
+  if (pageOverlayLabel && label) pageOverlayLabel.textContent = label;
+  pageOverlay.classList.add('active');
+  setTimeout(() => { window.location.href = href; }, 900);
+}
+
+// Map of link slugs to readable labels for the overlay
+const TRANSITION_LABELS = {
+  'work/pwc-bridge/':       'PwC Bridge',
+  'work/hey-honey/':        'Hey Honey',
+  'work/certifaction/':     'Certifaction',
+  'work/share-your-bag/':   'Share Your Bag',
+  'work/illustrations.html':'Illustrations',
+};
+
+// Intercept any same-origin link that points into /work/
+document.addEventListener('click', (e) => {
+  const a = e.target.closest('a[href^="work/"]');
+  if (!a) return;
+  const href = a.getAttribute('href');
+  if (!href) return;
+  if (a.target === '_blank' || e.metaKey || e.ctrlKey || e.shiftKey) return;
+  e.preventDefault();
+  const label = TRANSITION_LABELS[href] ||
+    (a.querySelector('.project-title')?.textContent.trim()) ||
+    'Loading';
+  navigateWithTransition(href, label);
+});
