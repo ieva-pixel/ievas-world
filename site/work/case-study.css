@@ -183,23 +183,11 @@ body.cs-body #location { color: var(--olive-deep); mix-blend-mode: normal; }
   font-style: italic;
   font-weight: 400;
   font-size: clamp(3.5rem, 11vw, 11rem);
-  line-height: .92;
+  line-height: 1.05;
   letter-spacing: -0.025em;
   color: var(--olive-deep);
   margin: 0;
   position: relative;
-}
-.cs-hero-title-accent {
-  position: absolute;
-  bottom: 0.55em;
-  left: -1.5rem;
-  width: 0.8em;
-  height: 0.8em;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, var(--cs-accent) 0%, var(--cs-tint) 70%);
-  opacity: 0;
-  filter: blur(2px);
-  pointer-events: none;
 }
 .cs-hero-tagline {
   font-family: var(--ff-serif);

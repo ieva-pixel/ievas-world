@@ -44,9 +44,7 @@ function playEntry() {
     .from('.cs-hero-visual', {
       yPercent: 8, opacity: 0, duration: 1, ease: 'expo.out',
     }, 0.85)
-    .to('.cs-hero-title-accent', {
-      opacity: 0.85, duration: 1, ease: 'power2.out',
-    }, 1.0);
+;
   return tl;
 }
 
