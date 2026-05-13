@@ -598,7 +598,8 @@ section { position: relative; }
 /* ═══ FEATURED WORK — pinned card-swap ════════════════════════════════════ */
 #work-pin-wrap {
   position: relative;
-  height: 500vh;
+  height: 800vh;
+  z-index: 1;
 }
 #work {
   background: var(--cream);
@@ -746,13 +747,21 @@ section { position: relative; }
 }
 
 /* ═══ ABOUT TEASER ════════════════════════════════════════════════════════ */
-#about-wrap { background: var(--olive-deep); }
+#about-wrap {
+  background: var(--olive-deep);
+  margin-top: -100vh;
+  position: relative;
+  z-index: 2;
+  height: 200vh;
+}
 .about-scene {
   background: var(--olive-deep);
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  position: sticky;
+  top: 0;
+  height: 100vh;
 }
 #about {
   background: var(--olive-deep);

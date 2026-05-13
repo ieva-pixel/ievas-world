@@ -524,22 +524,23 @@ function onWorkScroll() {
   const totalScroll = workPinWrap.offsetHeight - wh;
   const globalP     = clamp01(-rect.top / totalScroll);
 
-  // Background cream → olive during last 18%
-  const bgOutP = clamp01((globalP - 0.86) / 0.14);
-  const r = Math.round(240 + (33 - 240) * bgOutP);
-  const g = Math.round(239 + (46 - 239) * bgOutP);
-  const b = Math.round(233 + (2  - 233) * bgOutP);
-  if (workSection) workSection.style.background = `rgb(${r},${g},${b})`;
+  // No work-section fade-out — the about-wrap slides up over it (margin-top: -100vh)
+  // Work stays pinned until about fully covers (matched timing).
+  if (workSection) workSection.style.background = '';
 
   // Header has a larger approach distance so it starts appearing as process exits
   const headerInP  = smooth(approachInP(workPinWrap, 1.2));
   // Cards use a tighter approach — they wait for the header to clear
   const entryInP   = smooth(approachInP(workPinWrap, 0.60));
-  const cardsExitP = clamp01((globalP - 0.91) / 0.09);
+  // As about slides in over the last ~14% of work scroll (100vh of 700vh totalScroll),
+  // blur and scale the card content down (rather than letting it slide up — work stays in place).
+  const aboutInP = clamp01((globalP - 0.857) / 0.143);
   if (workCardsEl) {
-    workCardsEl.style.filter    = `blur(${(cardsExitP * 10).toFixed(1)}px)`;
-    workCardsEl.style.transform = `translateY(${(-cardsExitP * 25).toFixed(1)}px)`;
-    workCardsEl.style.opacity   = entryInP * (1 - cardsExitP);
+    const blur  = aboutInP * 8;
+    const scale = 1 - aboutInP * 0.06;
+    workCardsEl.style.filter    = aboutInP > 0 ? `blur(${blur.toFixed(2)}px)` : '';
+    workCardsEl.style.transform = aboutInP > 0 ? `scale(${scale.toFixed(3)})` : '';
+    workCardsEl.style.opacity   = entryInP;
   }
 
   // Header: fades in on approach (early), then out as first card enters
@@ -551,16 +552,22 @@ function onWorkScroll() {
   }
 
   // Directional card swap — enter from below, exit upward (Marimba-style)
-  // vh units ensure cards are fully off-screen before the next appears
+  // vh units ensure cards are fully off-screen before the next appears.
+  // Last card gets a wider band so its pure-dwell (before about slides in) matches the
+  // dwell of the previous cards.
   const n          = PROJECTS.length;
   const CARD_START = 0.10;
-  const CARD_END   = 0.93;
-  const TRANS      = 0.025;  // shorter = snappier wipe
-  const cardBand   = (CARD_END - CARD_START) / n;
+  const CARD_END   = 1.0;
+  const TRANS      = 0.025;
+  const lastBoost  = 1.5;  // last card cardBand is 1.5x the others
+  const stdBand    = (CARD_END - CARD_START) / (n - 1 + lastBoost);
+  const lastBand   = stdBand * lastBoost;
 
+  const lastIdx = workCardEls.length - 1;
   workCardEls.forEach((card, i) => {
-    const cs     = CARD_START + i * cardBand;
-    const ce     = cs + cardBand;
+    const isLast = i === lastIdx;
+    const cs     = CARD_START + i * stdBand;
+    const ce     = isLast ? cs + lastBand : cs + stdBand;
     const entryS = cs - TRANS, entryE = cs + TRANS;
     const exitS  = ce - TRANS, exitE  = ce + TRANS;
 
@@ -575,12 +582,21 @@ function onWorkScroll() {
     } else if (globalP < exitS) {
       op = 1; ty = 0;                                // dwell
     } else if (globalP < exitE) {
-      const t = (globalP - exitS) / (TRANS * 2);
-      const e = Math.pow(t, 2);                      // ease-in push out
-      op = 1 - e * 0.35;
-      ty = -e * 100;                                 // 0 → -100vh
+      // Last card stays in place; about-wrap slides up over it (blur+scale handles fade)
+      if (isLast) {
+        op = 1; ty = 0;
+      } else {
+        const t = (globalP - exitS) / (TRANS * 2);
+        const e = Math.pow(t, 2);                    // ease-in push out
+        op = 1 - e * 0.35;
+        ty = -e * 100;                               // 0 → -100vh
+      }
     } else {
-      op = 0; ty = -100;                             // gone above
+      if (isLast) {
+        op = 1; ty = 0;                              // last card holds in place
+      } else {
+        op = 0; ty = -100;                           // gone above
+      }
     }
 
     card.style.opacity      = op;
