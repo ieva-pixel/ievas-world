@@ -189,14 +189,14 @@ body.cs-body #location { color: var(--olive-deep); mix-blend-mode: normal; }
   margin: 0;
   position: relative;
 }
-.cs-hero-tagline {
+.cs-hero .cs-hero-tagline {
   font-family: var(--ff-sans);
   font-style: normal;
   font-size: clamp(1rem, 1.4vw, 1.3rem);
   font-weight: 400;
   color: #5C5A54;
   max-width: 42ch;
-  margin-top: 1rem;
+  margin-top: 2rem;
   line-height: 1.55;
 }
 .cs-hero-info {
@@ -336,6 +336,8 @@ body.cs-body #location { color: var(--olive-deep); mix-blend-mode: normal; }
 }
 .cs-cols-equal { grid-template-columns: 1fr 1fr; }
 .cs-cols-flip  { grid-template-columns: 1.4fr 1fr; }
+.cs-col-center { align-self: center; }
+.cs-col-end    { align-self: end; }
 @media (max-width: 900px) {
   .cs-cols, .cs-cols-equal, .cs-cols-flip { grid-template-columns: 1fr; gap: 3rem; }
 }
@@ -556,7 +558,6 @@ body.cs-body #location { color: var(--olive-deep); mix-blend-mode: normal; }
 }
 .cs-pin-text {
   position: relative;
-  max-width: 38ch;
   min-height: 60vh;
 }
 .cs-pin-phases {
@@ -786,10 +787,9 @@ body.cs-body #location { color: var(--olive-deep); mix-blend-mode: normal; }
 .cs-note {
   border: 1px solid rgba(58,74,22,.2);
   border-radius: 1rem;
-  padding: 1.5rem 2rem;
+  padding: 1rem 2rem;
   background: rgba(240,239,233,.55);
-  margin: 2rem 0;
-  max-width: 56ch;
+  margin-bottom: 80px;
 }
 .cs-note-eyebrow {
   font-family: var(--ff-sans);
@@ -805,8 +805,9 @@ body.cs-body #location { color: var(--olive-deep); mix-blend-mode: normal; }
   font-style: normal;
   font-size: 0.9rem;
   font-weight: 400;
-  line-height: 1.65;
+  line-height: 1.55;
   color: #5C5A54;
+  max-width: none;
   margin: 0;
 }
 
