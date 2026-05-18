@@ -33,7 +33,7 @@ const PROJECTS = [
   },
   {
     num: '03', total: '04',
-    eyebrow: '2023 · UX/UI · Certifaction AG',
+    eyebrow: '2021 · UX/UI · Certifaction AG',
     title:   'Certifaction',
     desc:    "A 3-month sprint at Switzerland's leading eSignature provider. Onboarding redesign took task completion from 3/10 to 7/10.",
     bg:      'linear-gradient(135deg,#0a1520 0%,#162436 100%)',
