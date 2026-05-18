@@ -722,17 +722,17 @@ body.cs-body #location { color: var(--olive-deep); mix-blend-mode: normal; }
 .cs-gallery-wrap ~ section.cs-section:not(.cs-section-dark) {
   background: var(--cream);
 }
-/* The immediate next section (outcomes) overlaps the gallery's tail and is
-   slid up over it (matches homepage statement → process overlap). Overlap =
-   TRANSITION (1) + HOLD (0.5) = 1.5 viewports — gallery pin releases at the
-   start of RELEASE so it scrolls up alongside this section during the last
-   phase. Bumped to z-index 3 so it stays on top of the section after it
-   when its transform pushes it into that region during HOLD. Math must
-   stay in sync with case-study.js. */
+/* The immediate next section (outcomes) is pinned via ScrollTrigger.pin
+   for ~1 viewport of scroll. The 100vh min-height + flex centering makes
+   it fill the viewport cleanly when pinned. Once the pin releases, the
+   next section (learnings) scrolls in below — natural, simple, no
+   transforms fighting each other. */
 .cs-gallery-wrap + section {
   z-index: 3;
-  margin-top: -220vh; /* = 1 (TRANSITION) + 1.2 (HOLD) viewports; stays in sync with case-study.js */
-  will-change: transform;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .cs-gallery-pin {
   position: sticky;
@@ -753,26 +753,34 @@ body.cs-body #location { color: var(--olive-deep); mix-blend-mode: normal; }
   max-width: 720px;
 }
 .cs-gallery-item .cs-img-slot { aspect-ratio: 4 / 3; }
-/* Gallery slot with a real image: keep the green-tint gradient backdrop and
-   ambient accent glow, hide the placeholder label, and inset the image with
-   24px rounded corners so it sits ON the bg like a framed screen. */
+/* Gallery slot with a real image: no frame, no padding, no bg.
+   Just the screen with rounded corners. All screens share the SAME HEIGHT,
+   widths vary per the natural aspect ratio of each screenshot. No cropping. */
 .cs-gallery-item .cs-img-slot:has(img) {
-  aspect-ratio: 16 / 10;   /* matches the screenshot aspect — no letterboxing inside the rounded image */
-  padding: 2.5rem;
-  /* Subtle warm cream frame instead of the heavy olive — lets the screens be the focal point */
-  background: color-mix(in srgb, var(--cream) 88%, var(--olive-deep) 12%);
+  aspect-ratio: auto;
+  height: clamp(380px, 60vh, 580px);
+  width: auto;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  overflow: visible;
 }
 .cs-gallery-item .cs-img-slot:has(img)::before,
 .cs-gallery-item .cs-img-slot:has(img)::after { content: none; }
 .cs-gallery-item .cs-img-slot img {
-  position: relative;
-  z-index: 2;
-  width: 100%;
   height: 100%;
-  object-fit: cover;       /* fills the rounded frame edge-to-edge; minimal (~1%) top/bottom crop, screens stay readable */
+  width: auto;
+  object-fit: contain;
   display: block;
   border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+  box-shadow: 0 8px 28px rgba(0,0,0,.12);
+}
+/* When a gallery item contains a real image, size the item to its content
+   so widths vary naturally instead of being clamped to a fixed 50vw flex
+   basis (which would force letterboxing). */
+.cs-gallery-item:has(img) {
+  flex: 0 0 auto;
+  max-width: none;
 }
 .cs-gallery-caption {
   display: flex;

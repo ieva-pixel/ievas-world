@@ -304,22 +304,13 @@ function initGallery() {
   // We translate the track left by (track scrollWidth - viewport width)
   const computeDistance = () => track.scrollWidth - window.innerWidth;
 
-  // Wrap height = horizontal scrub + three vertical phases:
-  //   TRANSITION: next section slides up from below to top (natural scroll;
-  //               works because the section overlaps via margin-top in CSS)
-  //   HOLD:       next section stays pinned at top (transform compensates
-  //               for natural scroll)
-  //   RELEASE:    transform animates back to 0 so subsequent sections lay
-  //               out correctly without permanent transform residue
-  const TRANSITION_VH = 1.0;
-  const HOLD_VH      = 1.2; // bumped — outcomes is now obviously held at top
-  const RELEASE_VH   = 0.6;
-  // Sticky pin only holds through TRANSITION + HOLD. The gallery releases at
-  // the start of RELEASE so it scrolls up alongside the next section instead
-  // of lingering pinned underneath it.
-  const PIN_VH = TRANSITION_VH + HOLD_VH;
+  // Gallery wrap is just tall enough for the horizontal scrub + 1 viewport.
+  // Sticky pin window = wrap.height - 100vh = computeDistance. Gallery releases
+  // exactly when the horizontal scrub completes. Outcomes pinning is handled
+  // separately by ScrollTrigger.pin — see further down.
+  const HOLD_VH = 1.0; // outcomes pinned for ~1 viewport of scroll
   const syncWrapHeight = () => {
-    wrap.style.height = (computeDistance() + window.innerHeight * (1 + PIN_VH)) + 'px';
+    wrap.style.height = (computeDistance() + window.innerHeight) + 'px';
   };
   syncWrapHeight();
   window.addEventListener('resize', () => { syncWrapHeight(); ScrollTrigger.refresh(); });
@@ -343,59 +334,37 @@ function initGallery() {
   // .cs-fade elsewhere on the page. Fires once when the item crosses into view
   // horizontally (containerAnimation tracks horizontal scrub position).
   items.forEach((item) => {
-    gsap.set(item, { opacity: 0, y: 40 });
-    gsap.to(item, {
-      opacity: 1, y: 0,
-      duration: 0.85,
-      ease: 'expo.out',
-      scrollTrigger: {
-        trigger: item,
-        containerAnimation: trackTween,  // pass the tween itself, not its scrollTrigger
-        start: 'left 90%',
-        once: true,
-      },
-    });
+    gsap.fromTo(item,
+      { opacity: 0, y: 60 },
+      {
+        opacity: 1, y: 0,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: item,
+          containerAnimation: trackTween,
+          start: 'left 95%',  // when the item starts entering from the right
+          end:   'left 55%',  // finishes by the time it's near centre
+          scrub: true,         // ties the fade to scroll position so the user sees it
+        },
+      }
+    );
   });
 
-  // Transition / HOLD / RELEASE for the next section.
-  //   TRANSITION  — CSS handles it (margin-top overlap + natural scroll).
-  //   HOLD        — pin next section at top via transform compensation.
-  //   RELEASE     — ease transform back to 0 so layout below lays out cleanly.
-  // Two separate scroll triggers (not a timeline) because GSAP timelines with
-  // function-based tween values + scrollTrigger don't always register their
-  // ScrollTrigger reliably; separate tweens are bulletproof.
+  // Pin the next section (outcomes) for HOLD_VH viewports of scroll. Uses
+  // ScrollTrigger's native pin — single source of truth, no transforms to
+  // fight each other, no jitter. Learnings (and anything below) only appears
+  // after this pin releases.
   const nextSection = wrap.nextElementSibling;
   if (nextSection && nextSection.tagName === 'SECTION') {
-    // HOLD: 0 → HOLD_VH*vh as scroll moves through the HOLD range.
-    gsap.fromTo(nextSection,
-      { y: 0 },
-      {
-        y: () => window.innerHeight * HOLD_VH,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: wrap,
-          start: () => `top+=${computeDistance() + window.innerHeight * TRANSITION_VH} top`,
-          end:   () => `top+=${computeDistance() + window.innerHeight * (TRANSITION_VH + HOLD_VH)} top`,
-          scrub: 0.4,
-          invalidateOnRefresh: true,
-        },
-      }
-    );
-    // RELEASE: HOLD_VH*vh → 0 as scroll continues into the RELEASE range.
-    gsap.fromTo(nextSection,
-      { y: () => window.innerHeight * HOLD_VH },
-      {
-        y: 0,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: wrap,
-          start: () => `top+=${computeDistance() + window.innerHeight * (TRANSITION_VH + HOLD_VH)} top`,
-          end:   () => `top+=${computeDistance() + window.innerHeight * (TRANSITION_VH + HOLD_VH + RELEASE_VH)} top`,
-          scrub: 0.4,
-          invalidateOnRefresh: true,
-        },
-      }
-    );
+    ScrollTrigger.create({
+      trigger: nextSection,
+      start: 'top top',
+      end:   () => `+=${window.innerHeight * HOLD_VH}`,
+      pin: true,
+      pinSpacing: true,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
+    });
   }
 }
 

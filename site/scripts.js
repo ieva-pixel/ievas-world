@@ -653,6 +653,76 @@ function onScroll() {
   onPinnedScroll();
   onWorkScroll();
   onAboutScroll();
+  scheduleWorkAutoScrollCheck();
+}
+
+/* Auto-scroll past the "My projects" title screen.
+   Triggers: (a) when the user lands on the title and stops scrolling for ~400ms,
+   (b) when they click the "Work" nav item. Uses a custom JS animation with
+   adjustable duration so the scroll feels slow and deliberate, not abrupt. */
+const _prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const WORK_AUTOSCROLL_DURATION = 1800; // ms — slower, more cinematic
+let workIdleTimer = null;
+let workAutoScrolling = false;
+
+function smoothScrollToY(targetY, duration) {
+  const startY    = window.scrollY;
+  const distance  = targetY - startY;
+  if (Math.abs(distance) < 2) return;
+  const startTime = performance.now();
+  workAutoScrolling = true;
+  function step(now) {
+    if (!workAutoScrolling) return; // aborted (user took over)
+    const elapsed  = now - startTime;
+    const t        = Math.min(elapsed / duration, 1);
+    // ease-in-out cubic for a calm, deliberate motion
+    const eased    = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    window.scrollTo(0, startY + distance * eased);
+    if (t < 1) requestAnimationFrame(step);
+    else workAutoScrolling = false;
+  }
+  requestAnimationFrame(step);
+}
+
+// Cancel the programmatic scroll if the user manually takes over.
+['wheel','touchstart','keydown'].forEach(evt => {
+  window.addEventListener(evt, () => {
+    if (workAutoScrolling) workAutoScrolling = false;
+  }, { passive: true });
+});
+
+function scheduleWorkAutoScrollCheck() {
+  if (!workPinWrap || _prefersReducedMotion) return;
+  if (workAutoScrolling) return; // don't re-trigger during our own programmatic scroll
+  clearTimeout(workIdleTimer);
+  workIdleTimer = setTimeout(checkWorkAutoScroll, 400);
+}
+
+function checkWorkAutoScroll() {
+  if (!workPinWrap || _prefersReducedMotion || workAutoScrolling) return;
+  const rect = workPinWrap.getBoundingClientRect();
+  const wh   = window.innerHeight;
+  // Are we currently parked on the title area? (wrap top near or just past viewport top,
+  // and we're within the first ~8% of the wrap — i.e. still on the title, not into cards.)
+  const inTitle = rect.top <= 0 && rect.top > -(workPinWrap.offsetHeight - wh) * 0.08;
+  if (!inTitle) return;
+  triggerWorkAutoScroll();
+}
+
+function triggerWorkAutoScroll() {
+  if (!workPinWrap || _prefersReducedMotion) return;
+  const totalScroll = workPinWrap.offsetHeight - window.innerHeight;
+  const target      = workPinWrap.offsetTop + totalScroll * 0.12;
+  smoothScrollToY(target, WORK_AUTOSCROLL_DURATION);
+}
+
+// Hook the "Work" nav item: after the browser jumps to #work, fire the auto-scroll.
+const workNavItem = document.querySelector('[data-nav="work"]');
+if (workNavItem) {
+  workNavItem.addEventListener('click', () => {
+    // Wait for browser anchor navigation to settle, then advance past the title.
+    setTimeout(triggerWorkAutoScroll, 250);
+  });
 }
 
 // Init hidden states
