@@ -25,3 +25,6 @@ dist/
 
 # Local dev helpers (not part of the deployed site)
 site/_serve.py
+
+# Image backup folder (created during optimization passes)
+**/_originals/

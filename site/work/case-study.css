@@ -247,6 +247,10 @@ body.cs-body #location { color: var(--olive-deep); mix-blend-mode: normal; }
   opacity: .85;
   mix-blend-mode: screen;
 }
+.cs-hero-mockup { background: transparent; border-radius: 0; overflow: visible; height: auto; }
+.cs-hero-mockup::after { content: none; }
+.cs-hero-mockup .cs-img-slot.cs-img-full { height: auto; }
+.cs-hero-mockup img { height: auto; object-fit: unset; }
 .cs-img-slot-label {
   position: absolute;
   bottom: 1.5rem;
@@ -439,15 +443,6 @@ body.cs-body #location { color: var(--olive-deep); mix-blend-mode: normal; }
   transition: border-color 380ms var(--ease-expo), transform 380ms var(--ease-expo);
 }
 .cs-card:hover { border-color: var(--cs-accent); transform: translateY(-4px); }
-.cs-card::before {
-  content: '';
-  position: absolute;
-  top: 0; right: 0;
-  width: 6rem; height: 6rem;
-  background: radial-gradient(circle, color-mix(in srgb, var(--cs-accent) 35%, transparent) 0%, transparent 70%);
-  filter: blur(20px);
-  opacity: .6;
-}
 .cs-card-eyebrow {
   font-family: var(--ff-sans);
   font-size: .65rem;
@@ -510,6 +505,10 @@ body.cs-body #location { color: var(--olive-deep); mix-blend-mode: normal; }
 .cs-img-slot.cs-img-tall  { aspect-ratio: 3 / 4; }
 .cs-img-slot.cs-img-wide  { aspect-ratio: 16 / 9; }
 .cs-img-slot.cs-img-full  { aspect-ratio: auto; height: 80vh; }
+.cs-img-slot.cs-img-mockup { background: transparent; }
+.cs-img-slot.cs-img-mockup::before,
+.cs-img-slot.cs-img-mockup::after { content: none; }
+.cs-img-slot.cs-img-mockup img { width: 100%; height: 100%; object-fit: contain; display: block; }
 
 /* Image reveal motif: clipping wipe */
 .cs-img-reveal {
@@ -558,24 +557,28 @@ body.cs-body #location { color: var(--olive-deep); mix-blend-mode: normal; }
 }
 .cs-pin-text {
   position: relative;
-  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 70vh;
 }
 .cs-pin-phases {
   position: relative;
-  min-height: 50vh;
+  display: grid;
+  /* All phases share a single grid cell so they stack on top of each other.
+     Container takes the natural height of the tallest phase — no forced
+     min-height creating a gap between the eyebrow and the title. */
 }
 .cs-pin-phase {
-  position: absolute;
-  inset: 0;
+  grid-area: 1 / 1;
+  position: relative;
   opacity: 0;
-  transform: translateY(24px);
-  will-change: opacity, transform;
-  transition: opacity .55s var(--ease-out), transform .65s var(--ease-expo);
+  will-change: opacity;
+  transition: opacity .45s var(--ease-out);
 }
 .cs-pin-phase.is-active {
   opacity: 1;
-  transform: translateY(0);
-  transition: opacity .7s var(--ease-out), transform .8s var(--ease-expo);
+  transition: opacity .55s var(--ease-out);
 }
 .cs-pin-text h2 {
   font-family: var(--ff-serif);
@@ -595,6 +598,8 @@ body.cs-body #location { color: var(--olive-deep); mix-blend-mode: normal; }
   color: rgba(240,239,233,.78);
   margin: 0 0 1rem;
 }
+.cs-pin-text strong { color: var(--cream); font-weight: 500; }
+.cs-pin-text em     { color: rgba(240,239,233,.9); font-style: italic; }
 .cs-pin-eyebrow {
   font-family: var(--ff-sans);
   font-size: .68rem;
@@ -624,13 +629,16 @@ body.cs-body #location { color: var(--olive-deep); mix-blend-mode: normal; }
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transform: scale(1.04);
+  transform: translateY(-70px);
   will-change: opacity, transform;
-  transition: opacity .65s var(--ease-out), transform .85s var(--ease-expo);
+  transition: opacity .35s var(--ease-out), transform .45s var(--ease-out);
+}
+.cs-pin-frame.is-active ~ .cs-pin-frame {
+  transform: translateY(70px);
 }
 .cs-pin-frame.is-active {
   opacity: 1;
-  transform: scale(1);
+  transform: translateY(0);
 }
 .cs-pin-frame::after {
   content: '';
@@ -643,6 +651,22 @@ body.cs-body #location { color: var(--olive-deep); mix-blend-mode: normal; }
   opacity: .8;
   mix-blend-mode: screen;
 }
+.cs-pin-frame-matrix { background: transparent; padding: 0; }
+.cs-pin-frame-matrix::after { content: none; }
+.cs-svg-matrix { display: block; background: var(--cream); border-radius: 1rem; width: 100%; max-width: 560px; aspect-ratio: 600 / 520; height: auto; padding: 1rem; box-sizing: border-box; }
+.cs-svg-matrix .m-title { font-family: var(--ff-serif); font-style: italic; font-size: 17px; fill: var(--olive-deep); }
+.cs-svg-matrix .m-quad { font-family: var(--ff-sans); font-size: 9px; letter-spacing: .18em; text-transform: uppercase; fill: rgba(33,46,2,.5); }
+.cs-svg-matrix .m-ax { font-family: var(--ff-sans); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; fill: rgba(33,46,2,.7); }
+.cs-svg-matrix .m-border { fill: none; stroke: rgba(33,46,2,.18); stroke-width: 1; }
+.cs-svg-matrix .m-divider { stroke: rgba(33,46,2,.18); stroke-width: 1; stroke-dasharray: 2 4; }
+.cs-svg-matrix .m-fill-a { fill: rgba(33,46,2,.025); }
+.cs-svg-matrix .m-fill-b { fill: rgba(33,46,2,.05); }
+.cs-svg-matrix .m-fill-c { fill: rgba(33,46,2,.01); }
+.cs-svg-matrix .m-dot { fill: var(--cs-accent, #8FA96B); }
+.cs-svg-matrix .m-halo { fill: var(--cs-accent, #8FA96B); fill-opacity: .18; }
+.cs-svg-matrix .m-label { font-family: var(--ff-sans); font-size: 11px; font-weight: 500; fill: var(--olive-deep); }
+.cs-pin-img { display: block; width: 100%; max-width: none; height: auto; }
+
 .cs-pin-frame-label {
   font-family: var(--ff-sans);
   font-size: .68rem;
@@ -680,7 +704,35 @@ body.cs-body #location { color: var(--olive-deep); mix-blend-mode: normal; }
 .cs-gallery-wrap {
   background: var(--cream);
   position: relative;
+  z-index: 1;
   height: 360vh;
+}
+/* ALL sections after the gallery need to paint above it. Without an
+   explicit z-index, static sections paint UNDER positioned elements (the
+   gallery has z-index 1), which lets the gallery show through the gap
+   between the outcomes section and the next one. They also need an
+   explicit background — .cs-section is transparent by default and relies
+   on body cream showing through, but once a section becomes a positioned
+   stacking-context layer, "transparent" lets the gallery layer below
+   bleed through instead of the body. */
+.cs-gallery-wrap ~ section {
+  position: relative;
+  z-index: 2;
+}
+.cs-gallery-wrap ~ section.cs-section:not(.cs-section-dark) {
+  background: var(--cream);
+}
+/* The immediate next section (outcomes) overlaps the gallery's tail and is
+   slid up over it (matches homepage statement → process overlap). Overlap =
+   TRANSITION (1) + HOLD (0.5) = 1.5 viewports — gallery pin releases at the
+   start of RELEASE so it scrolls up alongside this section during the last
+   phase. Bumped to z-index 3 so it stays on top of the section after it
+   when its transform pushes it into that region during HOLD. Math must
+   stay in sync with case-study.js. */
+.cs-gallery-wrap + section {
+  z-index: 3;
+  margin-top: -220vh; /* = 1 (TRANSITION) + 1.2 (HOLD) viewports; stays in sync with case-study.js */
+  will-change: transform;
 }
 .cs-gallery-pin {
   position: sticky;
@@ -701,6 +753,27 @@ body.cs-body #location { color: var(--olive-deep); mix-blend-mode: normal; }
   max-width: 720px;
 }
 .cs-gallery-item .cs-img-slot { aspect-ratio: 4 / 3; }
+/* Gallery slot with a real image: keep the green-tint gradient backdrop and
+   ambient accent glow, hide the placeholder label, and inset the image with
+   24px rounded corners so it sits ON the bg like a framed screen. */
+.cs-gallery-item .cs-img-slot:has(img) {
+  aspect-ratio: 16 / 10;   /* matches the screenshot aspect — no letterboxing inside the rounded image */
+  padding: 2.5rem;
+  /* Subtle warm cream frame instead of the heavy olive — lets the screens be the focal point */
+  background: color-mix(in srgb, var(--cream) 88%, var(--olive-deep) 12%);
+}
+.cs-gallery-item .cs-img-slot:has(img)::before,
+.cs-gallery-item .cs-img-slot:has(img)::after { content: none; }
+.cs-gallery-item .cs-img-slot img {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;       /* fills the rounded frame edge-to-edge; minimal (~1%) top/bottom crop, screens stay readable */
+  display: block;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+}
 .cs-gallery-caption {
   display: flex;
   justify-content: space-between;
@@ -774,6 +847,7 @@ body.cs-body #location { color: var(--olive-deep); mix-blend-mode: normal; }
 .cs-section-dark .cs-eyebrow       { color: rgba(240,239,233,.55); opacity: 1; }
 .cs-section-dark .cs-body p        { color: rgba(240,239,233,.72); }
 .cs-section-dark .cs-body strong   { color: var(--cream); }
+.cs-section-dark .cs-body em      { color: rgba(240,239,233,.85); }
 .cs-section-dark .cs-lede          { color: var(--cream); }
 .cs-section-dark .cs-num-item      { border-top-color: rgba(240,239,233,.15); }
 .cs-section-dark .cs-num-item h3   { color: var(--cream); }
@@ -833,6 +907,7 @@ body.cs-body #location { color: var(--olive-deep); mix-blend-mode: normal; }
   padding-bottom: 0.12em;
 }
 .cs-section-dark .cs-kpi-num { color: var(--cs-accent); }
+.cs-kpis-stack .cs-kpi-num { font-size: clamp(2.5rem, 4.5vw, 4rem); margin-bottom: .25rem; }
 .cs-kpi-label {
   font-family: var(--ff-sans);
   font-size: .7rem;
@@ -896,13 +971,13 @@ body.cs-body #location { color: var(--olive-deep); mix-blend-mode: normal; }
   transform: translateY(-0.18em);
   color: var(--cs-accent);
 }
-.cs-next-meta {
+.cs-next .cs-next-meta {
   font-family: var(--ff-sans);
   font-style: normal;
   font-size: 0.95rem;
   font-weight: 400;
-  color: rgba(240,239,233,.65);
-  margin-top: .5rem;
+  color: rgba(240,239,233,.85);
+  margin-top: 1rem;
 }
 .cs-next-bg {
   position: absolute;

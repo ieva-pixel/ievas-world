@@ -73,8 +73,10 @@
         </div>
       </div>
 
-      <div class="cs-hero-visual cs-img-reveal" data-speed="0.4">
-        <div class="cs-img-slot cs-img-full" data-label="Hero — Bridge workspace overview"></div>
+      <div class="cs-hero-visual cs-img-reveal cs-hero-mockup" data-speed="0.4">
+        <div class="cs-img-slot cs-img-full cs-img-mockup">
+          <img src="hero-mockup.png" alt="PwC Bridge workspace overview" />
+        </div>
       </div>
     </section>
 
@@ -105,7 +107,7 @@
           <div class="cs-eyebrow">Context</div>
           <h2 class="cs-section-title">From idea to interface — my first UX leadership role.</h2>
         </div>
-        <div class="cs-body cs-fade">
+        <div class="cs-body cs-fade cs-col-center">
           <p class="cs-lede">
             In January 2024, I was invited to join Project Bridge — an internal initiative to consolidate fragmented tools and information into a single, role-aware platform.
           </p>
@@ -174,14 +176,102 @@
         </div>
         <div class="cs-pin-visual">
           <div class="cs-pin-frames">
-            <div class="cs-pin-frame">
-              <span class="cs-pin-frame-label">User-stakeholder map</span>
+            <div class="cs-pin-frame cs-pin-frame-matrix">
+              <svg viewBox="0 0 600 520" xmlns="http://www.w3.org/2000/svg" class="cs-svg-matrix" preserveAspectRatio="xMidYMid meet" role="img" aria-label="User-stakeholder power and interest matrix">
+                <!-- Quadrant fills -->
+                <rect x="60" y="64" width="250" height="190" class="m-fill-a"/>
+                <rect x="310" y="64" width="250" height="190" class="m-fill-b"/>
+                <rect x="60" y="254" width="250" height="190" class="m-fill-c"/>
+                <rect x="310" y="254" width="250" height="190" class="m-fill-a"/>
+                <!-- Plot border -->
+                <rect x="60" y="64" width="500" height="380" class="m-border"/>
+                <!-- Mid dividers -->
+                <line x1="310" y1="64" x2="310" y2="444" class="m-divider"/>
+                <line x1="60" y1="254" x2="560" y2="254" class="m-divider"/>
+                <!-- Title -->
+                <text x="300" y="36" class="m-title" text-anchor="middle">Power × Interest</text>
+                <!-- Quadrant labels -->
+                <text x="72" y="84" class="m-quad">Keep satisfied</text>
+                <text x="548" y="84" class="m-quad" text-anchor="end">Manage closely</text>
+                <text x="72" y="436" class="m-quad">Monitor</text>
+                <text x="548" y="436" class="m-quad" text-anchor="end">Keep informed</text>
+                <!-- Axis labels -->
+                <text x="300" y="478" class="m-ax" text-anchor="middle">Interest →</text>
+                <text x="34" y="254" class="m-ax" text-anchor="middle" transform="rotate(-90 34 254)">Power →</text>
+                <!-- Stakeholders -->
+                <g>
+                  <circle cx="485" cy="102" r="18" class="m-halo"/>
+                  <circle cx="485" cy="102" r="10" class="m-dot"/>
+                  <text x="485" y="138" class="m-label" text-anchor="middle">Tax partners</text>
+                </g>
+                <g>
+                  <circle cx="498" cy="186" r="18" class="m-halo"/>
+                  <circle cx="498" cy="186" r="10" class="m-dot"/>
+                  <text x="481" y="190" class="m-label" text-anchor="end">PM / Lead</text>
+                </g>
+                <g>
+                  <circle cx="535" cy="246" r="18" class="m-halo"/>
+                  <circle cx="535" cy="246" r="10" class="m-dot"/>
+                  <text x="518" y="250" class="m-label" text-anchor="end">Tax &amp; Tech team</text>
+                </g>
+                <g>
+                  <circle cx="235" cy="132" r="18" class="m-halo"/>
+                  <circle cx="235" cy="132" r="10" class="m-dot"/>
+                  <text x="252" y="136" class="m-label">Risk / Governance</text>
+                </g>
+              </svg>
             </div>
-            <div class="cs-pin-frame">
-              <span class="cs-pin-frame-label">Decision matrix · governance vs. user need</span>
+            <div class="cs-pin-frame cs-pin-frame-matrix">
+              <svg viewBox="0 0 600 520" xmlns="http://www.w3.org/2000/svg" class="cs-svg-matrix" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Decision matrix — governance constraint versus user need">
+                <!-- Quadrant fills -->
+                <rect x="60" y="64" width="250" height="190" class="m-fill-c"/>
+                <rect x="310" y="64" width="250" height="190" class="m-fill-b"/>
+                <rect x="60" y="254" width="250" height="190" class="m-fill-c"/>
+                <rect x="310" y="254" width="250" height="190" class="m-fill-a"/>
+                <!-- Plot border -->
+                <rect x="60" y="64" width="500" height="380" class="m-border"/>
+                <!-- Mid dividers -->
+                <line x1="310" y1="64" x2="310" y2="444" class="m-divider"/>
+                <line x1="60" y1="254" x2="560" y2="254" class="m-divider"/>
+                <!-- Title -->
+                <text x="300" y="36" class="m-title" text-anchor="middle">Governance × User need</text>
+                <!-- Quadrant labels -->
+                <text x="72" y="84" class="m-quad">Park / declined</text>
+                <text x="548" y="84" class="m-quad" text-anchor="end">Fight to ship</text>
+                <text x="72" y="436" class="m-quad">Backlog</text>
+                <text x="548" y="436" class="m-quad" text-anchor="end">Quick wins</text>
+                <!-- Axis labels -->
+                <text x="300" y="478" class="m-ax" text-anchor="middle">User need →</text>
+                <text x="34" y="254" class="m-ax" text-anchor="middle" transform="rotate(-90 34 254)">Governance →</text>
+                <!-- Decisions -->
+                <g>
+                  <circle cx="460" cy="121" r="18" class="m-halo"/>
+                  <circle cx="460" cy="121" r="10" class="m-dot"/>
+                  <text x="460" y="156" class="m-label" text-anchor="middle">Custom components</text>
+                </g>
+                <g>
+                  <circle cx="185" cy="102" r="18" class="m-halo"/>
+                  <circle cx="185" cy="102" r="10" class="m-dot"/>
+                  <text x="185" y="136" class="m-label" text-anchor="middle">Typography swap</text>
+                </g>
+                <g>
+                  <circle cx="435" cy="292" r="18" class="m-halo"/>
+                  <circle cx="435" cy="292" r="10" class="m-dot"/>
+                  <text x="418" y="296" class="m-label" text-anchor="end">Tool launcher</text>
+                </g>
+                <g>
+                  <circle cx="535" cy="360" r="18" class="m-halo"/>
+                  <circle cx="535" cy="360" r="10" class="m-dot"/>
+                  <text x="535" y="394" class="m-label" text-anchor="middle">Role-aware home</text>
+                </g>
+              </svg>
             </div>
-            <div class="cs-pin-frame">
-              <span class="cs-pin-frame-label">Pilot dashboard · launch screen</span>
+            <div class="cs-pin-frame cs-pin-frame-matrix">
+              <img src="hero-mockup-sm.png"
+                   srcset="hero-mockup-sm.png 1200w, hero-mockup.png 2400w"
+                   sizes="(max-width: 900px) 100vw, 40vw"
+                   alt="Pilot dashboard · launch screen"
+                   class="cs-pin-img" />
             </div>
           </div>
         </div>
@@ -195,28 +285,34 @@
         <div class="cs-gallery-header">Selected screens · conceptual redesign</div>
         <div class="cs-gallery-track">
           <div class="cs-gallery-item">
-            <div class="cs-img-slot" data-label="Workspace home — role-aware dashboard"></div>
-            <div class="cs-gallery-caption"><span>Workspace home</span><span>01 / 06</span></div>
+            <div class="cs-img-slot">
+              <img src="Client dashboard.jpg"
+                   srcset="Client dashboard-small.jpg 800w, Client dashboard.jpg 1600w"
+                   sizes="(max-width: 900px) 100vw, 50vw"
+                   alt="Workspace home — role-aware dashboard"
+                   loading="lazy" />
+            </div>
+            <div class="cs-gallery-caption"><span>Workspace home</span><span>01 / 03</span></div>
           </div>
           <div class="cs-gallery-item">
-            <div class="cs-img-slot" data-label="Engagement detail · status & risk"></div>
-            <div class="cs-gallery-caption"><span>Engagement detail</span><span>02 / 06</span></div>
+            <div class="cs-img-slot">
+              <img src="Client List.jpg"
+                   srcset="Client List-small.jpg 800w, Client List.jpg 1600w"
+                   sizes="(max-width: 900px) 100vw, 50vw"
+                   alt="Client overview — linked entities"
+                   loading="lazy" />
+            </div>
+            <div class="cs-gallery-caption"><span>Client overview</span><span>02 / 03</span></div>
           </div>
           <div class="cs-gallery-item">
-            <div class="cs-img-slot" data-label="Client overview · linked entities"></div>
-            <div class="cs-gallery-caption"><span>Client overview</span><span>03 / 06</span></div>
-          </div>
-          <div class="cs-gallery-item">
-            <div class="cs-img-slot" data-label="Engagement letter · initiation flow"></div>
-            <div class="cs-gallery-caption"><span>Engagement letter</span><span>04 / 06</span></div>
-          </div>
-          <div class="cs-gallery-item">
-            <div class="cs-img-slot" data-label="Tool launcher · cross-system navigation"></div>
-            <div class="cs-gallery-caption"><span>Tool launcher</span><span>05 / 06</span></div>
-          </div>
-          <div class="cs-gallery-item">
-            <div class="cs-img-slot" data-label="Risk status · live monitoring"></div>
-            <div class="cs-gallery-caption"><span>Risk status</span><span>06 / 06</span></div>
+            <div class="cs-img-slot">
+              <img src="client list plus moidal.jpg"
+                   srcset="client list plus moidal-small.jpg 800w, client list plus moidal.jpg 1600w"
+                   sizes="(max-width: 900px) 100vw, 50vw"
+                   alt="Engagement letter — initiation flow"
+                   loading="lazy" />
+            </div>
+            <div class="cs-gallery-caption"><span>Engagement letter</span><span>03 / 03</span></div>
           </div>
         </div>
       </div>
@@ -316,6 +412,6 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="../case-study.js" defer></script>
+  <script src="../case-study.js?v=12" defer></script>
 </body>
 </html>
