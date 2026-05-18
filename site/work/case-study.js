@@ -369,20 +369,12 @@ function initGallery() {
 }
 
 /* ─── 7. NEXT PROJECT ────────────────────────────────────────────────────── */
-function initNext() {
-  const orb = document.querySelector('.cs-next-bg-orb');
-  if (!orb || reduce) return;
-  gsap.to(orb, {
-    yPercent: -30,
-    ease: 'none',
-    scrollTrigger: {
-      trigger: '.cs-next',
-      start: 'top bottom',
-      end:   'bottom top',
-      scrub: 0.6,
-    },
-  });
-}
+// initNext() previously animated a radial-gradient orb in the .cs-next
+// footer. The orb was removed by design direction — no glow/gradient
+// accent in the next-case-study section. The hook stays as a no-op so the
+// kickoff sequence doesn't break, and so a future, non-gradient embellishment
+// can plug in here if needed.
+function initNext() {}
 
 /* ─── 8. PARALLAX (data-speed) ───────────────────────────────────────────── */
 function initParallax() {
@@ -453,6 +445,55 @@ function initStars() {
   ]);
 }
 
+/* ─── 9b. CLICK-TO-ZOOM LIGHTBOX ─────────────────────────────────────────── */
+function initLightbox() {
+  const triggers = $$('.cs-pin-img-zoom');
+  if (!triggers.length) return;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'cs-lightbox';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.setAttribute('aria-hidden', 'true');
+  overlay.setAttribute('tabindex', '-1');
+  overlay.innerHTML = `
+    <button type="button" class="cs-lightbox-close" aria-label="Close">Close ✕</button>
+    <img alt="" />
+  `;
+  document.body.appendChild(overlay);
+
+  const overlayImg = overlay.querySelector('img');
+  const closeBtn   = overlay.querySelector('.cs-lightbox-close');
+
+  function openLightbox(src, alt) {
+    overlayImg.src = src;
+    overlayImg.alt = alt || '';
+    overlay.classList.add('is-open');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    // Focus the dialog container (not the Close button) so a :focus-visible
+    // ring never appears on the button on open. Escape is wired to document,
+    // and the user can Tab into the button if they want.
+    overlay.focus({ preventScroll: true });
+  }
+  function closeLightbox() {
+    overlay.classList.remove('is-open');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  triggers.forEach(img => {
+    img.addEventListener('click', () => openLightbox(img.currentSrc || img.src, img.alt));
+  });
+  overlay.addEventListener('click', (e) => {
+    // Click outside the inner image (or on close button) closes
+    if (e.target === overlay || e.target === closeBtn) closeLightbox();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeLightbox();
+  });
+}
+
 /* ─── 10. KICKOFF ────────────────────────────────────────────────────────── */
 window.addEventListener('DOMContentLoaded', () => {
   initStars();
@@ -474,6 +515,7 @@ window.addEventListener('DOMContentLoaded', () => {
     initGallery();
     initNext();
     initParallax();
+    initLightbox();
     ScrollTrigger.refresh();
   });
 });

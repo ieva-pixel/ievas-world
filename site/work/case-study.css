@@ -140,16 +140,28 @@ body.cs-body #location { color: var(--olive-deep); mix-blend-mode: normal; }
   padding-bottom: 0;
 }
 .cs-section {
-  padding: 8rem var(--page-gutter);
+  /* Padding-trick: gutter expands on ultra-wide so content centres within
+     a 1800px max while section bg (cream or dark) stays full-width. */
+  padding: 8rem max(var(--page-gutter), calc((100% - 1800px) / 2));
   position: relative;
 }
 .cs-section.cs-section-tight  { padding-top: 4rem; padding-bottom: 4rem; }
 .cs-section.cs-section-narrow { max-width: 1200px; margin: 0 auto; }
+/* Vertical-centre modifier: useful for ScrollTrigger-pinned sections that
+   are forced to a fixed (viewport) height — without this the content sits
+   at the top of the pinned area. */
+.cs-section.cs-section-vcenter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
 /* ─── HERO ───────────────────────────────────────────────────────────────── */
 .cs-hero {
   min-height: 100vh;
-  padding: 12rem var(--page-gutter) 6rem;
+  /* Padding-trick keeps the cream bg full-width while content centres
+     within a 1800px max on ultra-wide screens. */
+  padding: 12rem max(var(--page-gutter), calc((100% - 1800px) / 2)) 6rem;
   display: grid;
   grid-template-columns: 1fr;
   gap: 4rem;
@@ -247,7 +259,7 @@ body.cs-body #location { color: var(--olive-deep); mix-blend-mode: normal; }
   opacity: .85;
   mix-blend-mode: screen;
 }
-.cs-hero-mockup { background: transparent; border-radius: 0; overflow: visible; height: auto; }
+.cs-hero-mockup { background: transparent; border-radius: 0; overflow: visible; height: auto; max-width: 1100px; margin-left: auto; margin-right: auto; }
 .cs-hero-mockup::after { content: none; }
 .cs-hero-mockup .cs-img-slot.cs-img-full { height: auto; }
 .cs-hero-mockup img { height: auto; object-fit: unset; }
@@ -541,7 +553,9 @@ body.cs-body #location { color: var(--olive-deep); mix-blend-mode: normal; }
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  padding: 0 var(--page-gutter);
+  /* Padding expands beyond the gutter on ultra-wide screens so content stays
+     centred within a 1800px max-width without the dark wrap showing gaps. */
+  padding: 0 max(var(--page-gutter), calc((100% - 1800px) / 2));
   overflow: hidden;
   gap: 4rem;
 }
@@ -632,7 +646,11 @@ body.cs-body #location { color: var(--olive-deep); mix-blend-mode: normal; }
   transform: translateY(-70px);
   will-change: opacity, transform;
   transition: opacity .35s var(--ease-out), transform .45s var(--ease-out);
+  /* Inactive frames stack on top via DOM order — disable hit testing so
+     clicks fall through to the visible (.is-active) frame's image. */
+  pointer-events: none;
 }
+.cs-pin-frame.is-active { pointer-events: auto; }
 .cs-pin-frame.is-active ~ .cs-pin-frame {
   transform: translateY(70px);
 }
@@ -665,7 +683,77 @@ body.cs-body #location { color: var(--olive-deep); mix-blend-mode: normal; }
 .cs-svg-matrix .m-dot { fill: var(--cs-accent, #8FA96B); }
 .cs-svg-matrix .m-halo { fill: var(--cs-accent, #8FA96B); fill-opacity: .18; }
 .cs-svg-matrix .m-label { font-family: var(--ff-sans); font-size: 11px; font-weight: 500; fill: var(--olive-deep); }
-.cs-pin-img { display: block; width: 100%; max-width: none; height: auto; }
+.cs-pin-img { display: block; width: 100%; max-width: none; height: auto; border-radius: 24px; }
+.cs-pin-img-contain { width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 24px; }
+/* Tall variant: portrait images fill width and anchor to the top so the
+   table header stays visible while the bottom clips into the frame.
+   Use together with a lightbox (.cs-pin-img-zoom) so the full image is
+   one click away. */
+.cs-pin-img-tall {
+  width: 100%;
+  height: auto;
+  align-self: flex-start;
+  border-radius: 24px;
+}
+.cs-pin-img-zoom {
+  cursor: zoom-in;
+  transition: transform .45s var(--ease-out);
+}
+.cs-pin-img-zoom:hover { transform: scale(1.015); }
+
+/* Click-to-zoom lightbox shared across case studies */
+.cs-lightbox {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+  background: rgba(33, 46, 2, 0.94);
+  z-index: 1000;
+  cursor: zoom-out;
+  opacity: 0;
+  transition: opacity .35s var(--ease-out);
+}
+.cs-lightbox.is-open { display: flex; opacity: 1; }
+.cs-lightbox:focus { outline: none; }
+.cs-lightbox img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+  cursor: default;
+}
+.cs-lightbox-close {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  background: transparent;
+  border: 1px solid rgba(240, 239, 233, 0.3);
+  color: var(--cream);
+  font-family: var(--ff-sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 0.65rem 1.2rem;
+  border-radius: 999px;
+  transition: background .25s var(--ease-out), border-color .25s var(--ease-out);
+}
+.cs-lightbox-close:hover {
+  background: rgba(240, 239, 233, 0.08);
+  border-color: rgba(240, 239, 233, 0.6);
+}
+/* Suppress the default focus ring on programmatic focus (we call .focus()
+   when opening the lightbox so Escape works without an extra tab). The
+   ring still appears for keyboard users via :focus-visible. */
+.cs-lightbox-close:focus { outline: none; }
+.cs-lightbox-close:focus-visible {
+  outline: 2px solid rgba(240, 239, 233, 0.7);
+  outline-offset: 3px;
+}
 
 .cs-pin-frame-label {
   font-family: var(--ff-sans);
@@ -860,6 +948,11 @@ body.cs-body #location { color: var(--olive-deep); mix-blend-mode: normal; }
 .cs-section-dark .cs-num-item      { border-top-color: rgba(240,239,233,.15); }
 .cs-section-dark .cs-num-item h3   { color: var(--cream); }
 .cs-section-dark .cs-num-item p    { color: rgba(240,239,233,.7); }
+/* The default .cs-num style uses brightness(.7) on the accent colour to
+   sit quietly in cream sections. On dark sections the accent dims below
+   WCAG-readable contrast — use a cream tone with no brightness filter so
+   the eyebrow numbers (01, 02, 03…) read clearly. */
+.cs-section-dark .cs-num             { color: rgba(240,239,233,.7); filter: none; }
 .cs-section-dark .cs-kv-list,
 .cs-section-dark .cs-kv-list li    { border-color: rgba(240,239,233,.15); }
 .cs-section-dark .cs-kv-key        { color: rgba(240,239,233,.5); }
@@ -940,7 +1033,8 @@ body.cs-body #location { color: var(--olive-deep); mix-blend-mode: normal; }
 .cs-next {
   background: var(--olive-deep);
   color: var(--cream);
-  padding: 10rem var(--page-gutter);
+  /* Padding-trick keeps olive bg full-width while content centres at 1800px on ultra-wide. */
+  padding: 10rem max(var(--page-gutter), calc((100% - 1800px) / 2));
   position: relative;
   overflow: hidden;
 }
@@ -987,21 +1081,9 @@ body.cs-body #location { color: var(--olive-deep); mix-blend-mode: normal; }
   color: rgba(240,239,233,.85);
   margin-top: 1rem;
 }
-.cs-next-bg {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-.cs-next-bg-orb {
-  position: absolute;
-  width: 28rem; height: 28rem;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, var(--cs-accent) 0%, transparent 65%);
-  filter: blur(60px);
-  opacity: .35;
-  top: 10%; right: -8rem;
-  will-change: transform;
-}
+/* The .cs-next-bg-orb radial-gradient glow was removed (per design direction).
+   The .cs-next section now uses a flat olive background — do not reintroduce
+   accent-tinted orbs/glows in the next-case-study footer. */
 
 /* ─── FOOTER ─────────────────────────────────────────────────────────────── */
 .cs-footer {

@@ -686,8 +686,10 @@ function smoothScrollToY(targetY, duration) {
     if (!workAutoScrolling) return; // aborted (user took over)
     const elapsed  = now - startTime;
     const t        = Math.min(elapsed / duration, 1);
-    // ease-in-out cubic for a calm, deliberate motion
-    const eased    = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    // ease-out cubic: responsive immediate start, gentle deceleration into
+    // the destination. The previous in-out cubic felt sluggish at the start
+    // (no perceived response to the click for the first ~200ms).
+    const eased    = 1 - Math.pow(1 - t, 3);
     window.scrollTo(0, startY + distance * eased);
     if (t < 1) requestAnimationFrame(step);
     else workAutoScrolling = false;
@@ -696,15 +698,19 @@ function smoothScrollToY(targetY, duration) {
 }
 
 // Cancel the programmatic scroll if the user manually takes over.
+let workNavPhase2Timer = null;
 ['wheel','touchstart','keydown'].forEach(evt => {
   window.addEventListener(evt, () => {
     if (workAutoScrolling) workAutoScrolling = false;
+    // Also cancel a pending click-initiated Phase 2 if the user grabs scroll.
+    if (workNavPhase2Timer) { clearTimeout(workNavPhase2Timer); workNavPhase2Timer = null; }
   }, { passive: true });
 });
 
 function scheduleWorkAutoScrollCheck() {
   if (!workPinWrap || _prefersReducedMotion) return;
   if (workAutoScrolling) return; // don't re-trigger during our own programmatic scroll
+  if (workNavPhase2Timer) return; // a click-initiated Phase 2 is already scheduled
   clearTimeout(workIdleTimer);
   workIdleTimer = setTimeout(checkWorkAutoScroll, 400);
 }
@@ -727,12 +733,34 @@ function triggerWorkAutoScroll() {
   smoothScrollToY(target, WORK_AUTOSCROLL_DURATION);
 }
 
-// Hook the "Work" nav item: after the browser jumps to #work, fire the auto-scroll.
+// Hook the "Work" nav item — two-phase scroll:
+//
+//   PHASE 1: native browser smooth-scroll to the top of the work pin-wrap
+//            (the "My projects" title). Same mechanism, speed and easing as
+//            the other homepage anchors.
+//
+//   PAUSE:   ~1.8s on the title before advancing — deliberate beat, feels
+//            intentional. Total click → first project ≈ 2.4s.
+//
+//   PHASE 2: fast smooth-scroll past the title to the first project card.
+//            Short duration (~700ms) so the advance feels snappy, not the
+//            slow cinematic 1.8s used by the idle auto-scroll.
+const WORK_NAV_PHASE2_DELAY    = 1300; // ms to wait on the title before advancing
+const WORK_NAV_PHASE2_DURATION = 700;  // ms duration of the advance itself
 const workNavItem = document.querySelector('[data-nav="work"]');
-if (workNavItem) {
-  workNavItem.addEventListener('click', () => {
-    // Wait for browser anchor navigation to settle, then advance past the title.
-    setTimeout(triggerWorkAutoScroll, 250);
+if (workNavItem && workPinWrap) {
+  workNavItem.addEventListener('click', (e) => {
+    e.preventDefault();
+    history.replaceState(null, '', '#work');
+    window.scrollTo({ top: workPinWrap.offsetTop, behavior: 'smooth' });
+    if (workNavPhase2Timer) clearTimeout(workNavPhase2Timer);
+    workNavPhase2Timer = setTimeout(() => {
+      workNavPhase2Timer = null;
+      if (!workPinWrap || _prefersReducedMotion) return;
+      const totalScroll = workPinWrap.offsetHeight - window.innerHeight;
+      const target      = workPinWrap.offsetTop + totalScroll * 0.12;
+      smoothScrollToY(target, WORK_NAV_PHASE2_DURATION);
+    }, WORK_NAV_PHASE2_DELAY);
   });
 }
 

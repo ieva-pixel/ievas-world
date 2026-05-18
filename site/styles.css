@@ -375,7 +375,9 @@ section { position: relative; }
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 0 4rem 6rem;
+  /* Padding-trick keeps olive bg full-width while hero content centres
+     within a 1800px max on ultra-wide screens. */
+  padding: 0 max(4rem, calc((100% - 1800px) / 2)) 6rem;
   overflow: hidden;
 }
 .hero-sub {
