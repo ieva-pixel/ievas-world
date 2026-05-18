@@ -159,6 +159,10 @@ a { text-decoration: none; color: inherit; }
   line-height: 0.95;
   letter-spacing: -0.025em;
 }
+/* FOUT prevention: hide the hero text while fonts are loading so users
+   don't see Georgia → Instrument Serif swap. Auto-reveals once fonts
+   ready, or after a 1.2s safety timeout. */
+html.fonts-loading .hero-display { visibility: hidden; }
 .body-ed {
   font-family: var(--ff-sans);
   font-size: clamp(1rem, 1.35vw, 1.25rem);
@@ -664,6 +668,15 @@ section { position: relative; }
   height: 100%;
   aspect-ratio: unset;
   border-radius: 0;
+}
+.work-visual-item .thumb-image {
+  overflow: hidden;
+}
+.work-visual-item .thumb-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 .work-card {
   position: absolute;

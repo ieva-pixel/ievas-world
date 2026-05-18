@@ -13,18 +13,20 @@
 const PROJECTS = [
   {
     num: '01', total: '04',
-    eyebrow: '2024 — Present · Lead UX/UI · PwC Switzerland',
+    eyebrow: '2024-2025 · Lead UX/UI · PwC Switzerland',
     title:   'PwC Bridge',
     desc:    "Consolidating fragmented tools into a single role-aware workspace for PwC Switzerland's Tax & Technology teams.",
     bg:      'linear-gradient(135deg,#1e2c0e 0%,#2c3d12 100%)',
     accent:  '#8FA96B',
     href:    'work/pwc-bridge/',
+    image:   'work/pwc-bridge/pwc-bridge-hero.jpg',
+    imageFocal: '50% 70%', // laptop is in lower-middle of the image — shift visible window down to centre it
   },
   {
     num: '02', total: '04',
     eyebrow: '2025 · UX/UI · Personal',
     title:   'Hey Honey',
-    desc:    'A curated marketplace for high-quality, locally produced honey — mobile-first, subscription-friendly, gift-ready.',
+    desc:    'A curated marketplace for high-quality, locally produced honey: mobile-first, subscription-friendly, gift-ready.',
     bg:      'linear-gradient(135deg,#2e2208 0%,#4a3810 100%)',
     accent:  '#C8A84B',
     href:    'work/hey-honey/',
@@ -40,7 +42,7 @@ const PROJECTS = [
   },
   {
     num: '04', total: '04',
-    eyebrow: '2021 — 2026 · UX/UI · Personal',
+    eyebrow: '2021 to 2026 · UX/UI · Personal',
     title:   'Share Your Bag',
     desc:    'Revisiting my first UX project five years later, with a product mindset. A peer-to-peer marketplace for designer handbag rentals.',
     bg:      'linear-gradient(135deg,#22152a 0%,#36204a 100%)',
@@ -84,7 +86,16 @@ const workVisualEl  = document.getElementById('workVisual');
 const workVisualEls = workVisualEl ? PROJECTS.map((p) => {
   const item = document.createElement('div');
   item.className = 'work-visual-item';
-  item.innerHTML = `<div class="thumb" style="background:${p.bg}"><div class="thumb-glow" style="background:${p.accent}"></div></div>`;
+  // If the project has a hero image, show it; otherwise fall back to the
+  // gradient + accent glow used as a placeholder.
+  if (p.image) {
+    // No green fallback bg — image covers the frame fully. If the image
+    // doesn't load, the cream body shows through, not a stale gradient.
+    const focal = p.imageFocal || 'center';
+    item.innerHTML = `<div class="thumb thumb-image"><img src="${p.image}" alt="${p.title}" loading="lazy" style="object-position:${focal};"/></div>`;
+  } else {
+    item.innerHTML = `<div class="thumb" style="background:${p.bg}"><div class="thumb-glow" style="background:${p.accent}"></div></div>`;
+  }
   item.style.transform = 'translateY(100%)';
   workVisualEl.appendChild(item);
   return item;

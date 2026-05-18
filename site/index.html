@@ -3,15 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ieva's World — UX/UI Designer, Zürich</title>
-  <meta name="description" content="Ieva Kirdaikytė — UX/UI Designer based in Zürich. Designing products that feel obvious, one decision at a time." />
-  <meta property="og:title" content="Ieva's World — UX/UI Designer" />
+  <title>Ieva's World, UX/UI Designer, Zürich</title>
+  <meta name="description" content="Ieva Kirdaikytė, UX/UI Designer based in Zürich. Designing products that feel obvious, one decision at a time." />
+  <meta property="og:title" content="Ieva's World, UX/UI Designer" />
   <meta property="og:description" content="Portfolio of UX/UI design projects by Ieva Kirdaikytė, based in Zürich, Switzerland." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&family=Jost:wght@300;400;500&display=swap" />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <script>
+    // FOUT prevention: hold hero serif text until web fonts are ready,
+    // then reveal. Falls back gracefully if fonts.ready isn't supported.
+    document.documentElement.classList.add('fonts-loading');
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => {
+        document.documentElement.classList.remove('fonts-loading');
+        document.documentElement.classList.add('fonts-loaded');
+      });
+      // Safety net: if fonts hang, reveal after 1.2s anyway
+      setTimeout(() => {
+        document.documentElement.classList.remove('fonts-loading');
+      }, 1200);
+    } else {
+      document.documentElement.classList.remove('fonts-loading');
+    }
+  </script>
 </head>
 <body>
 
@@ -21,7 +39,7 @@
   </div>
 
   <!-- ═══ PERSISTENT UI ═════════════════════════════════════════════════════ -->
-  <a id="logo" class="persist" href="#home" aria-label="Ieva's World — home">
+  <a id="logo" class="persist" href="#home" aria-label="Ieva's World, home">
     <div>ieva's</div>
     <div><span class="indent">world</span></div>
   </a>
@@ -103,7 +121,7 @@
       <section id="statement" class="pin-scene col-lines" data-nav-section="home">
         <div class="statement-fade" id="statementText">
           <p class="statement-text">
-            "Designing products that feel obvious — one decision at a time."
+            "Designing products that feel obvious, one decision at a time."
           </p>
         </div>
         <div id="statementStars" class="decor-layer" aria-hidden="true"></div>
@@ -124,7 +142,7 @@
       </section>
     </div>
 
-    <!-- FEATURED WORK — pinned card-swap -->
+    <!-- FEATURED WORK, pinned card-swap -->
     <div id="work-pin-wrap" data-nav-section="work">
       <section id="work" class="col-lines" data-nav-section="work">
         <div id="workHeader" class="work-header" aria-hidden="true">
@@ -141,14 +159,14 @@
     <!-- WORK → ABOUT TRANSITION STARS -->
     <div id="workExitStars" aria-hidden="true"></div>
 
-    <!-- ABOUT TEASER — pin-wrap -->
+    <!-- ABOUT TEASER, pin-wrap -->
     <div id="about-wrap">
       <section id="about" class="about-scene" data-nav-section="about">
         <div class="about-grid" id="aboutContent">
           <div class="stagger-group">
             <div class="eyebrow eyebrow-light">About</div>
             <p class="body-ed body-ed-light about-bio">
-              I'm Ieva — a UX/UI designer originally from Lithuania, now based in Zürich. For the past few years I've been turning complex enterprise tools, e-commerce flows, and product ideas into interfaces people actually want to use.
+              I'm Ieva, a UX/UI designer originally from Lithuania, now based in Zürich. For the past few years I've been turning complex enterprise tools, e-commerce flows, and product ideas into interfaces people actually want to use.
             </p>
             <a href="about.html" class="pill pill-light reveal-pill">More about me</a>
           </div>
@@ -157,19 +175,19 @@
               <p class="testimonial-text">
                 "Ieva is an exceptional design professional who steadfastly commits to excellence in every aspect of her work."
               </p>
-              <p class="testimonial-attr">Christoph Schärer — Partner, PwC Switzerland</p>
+              <p class="testimonial-attr">Christoph Schärer, Partner, PwC Switzerland</p>
             </div>
             <div class="testimonial-block reveal reveal-d3">
               <p class="testimonial-text">
                 "I have had the pleasure to work with Ieva for many years and her experience and expertise in UX/UI has driven amazing results for our solutions."
               </p>
-              <p class="testimonial-attr">Jeremy Wikler — Senior Manager, PwC Switzerland</p>
+              <p class="testimonial-attr">Jeremy Wikler, Senior Manager, PwC Switzerland</p>
             </div>
             <div class="testimonial-block reveal reveal-d4">
               <p class="testimonial-text">
                 "Ieva effectively identifies user needs and design opportunities, transforming insights into practical solutions."
               </p>
-              <p class="testimonial-attr">Stuart Jones — Partner, PwC Switzerland</p>
+              <p class="testimonial-attr">Stuart Jones, Partner, PwC Switzerland</p>
             </div>
           </div>
         </div>
@@ -219,6 +237,6 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="scripts.js?v=3" defer></script>
+  <script src="scripts.js?v=7" defer></script>
 </body>
 </html>
