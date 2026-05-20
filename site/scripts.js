@@ -39,6 +39,7 @@ const PROJECTS = [
     bg:      'linear-gradient(135deg,#0a1520 0%,#162436 100%)',
     accent:  '#6B8FA9',
     href:    'work/certifaction/',
+    image:   'work/certifaction/Hero image.PNG',
   },
   {
     num: '04', total: '04',
