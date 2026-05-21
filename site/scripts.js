@@ -30,6 +30,8 @@ const PROJECTS = [
     bg:      'linear-gradient(135deg,#2e2208 0%,#4a3810 100%)',
     accent:  '#C8A84B',
     href:    'work/hey-honey/',
+    image:   'work/hey-honey/hero-homepage.png',
+    imageFocal: '50% 35%',
   },
   {
     num: '03', total: '04',
@@ -49,7 +51,7 @@ const PROJECTS = [
     bg:      'linear-gradient(135deg,#22152a 0%,#36204a 100%)',
     accent:  '#A98FA9',
     href:    'work/share-your-bag/',
-    image:   'work/share-your-bag/Main hero image.PNG',
+    image:   'work/share-your-bag/hero image home page.png',
     imageFocal: '50% 35%',
   },
 ];
