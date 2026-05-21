@@ -49,6 +49,8 @@ const PROJECTS = [
     bg:      'linear-gradient(135deg,#22152a 0%,#36204a 100%)',
     accent:  '#A98FA9',
     href:    'work/share-your-bag/',
+    image:   'work/share-your-bag/Main hero image.PNG',
+    imageFocal: '50% 35%',
   },
 ];
 
