@@ -801,10 +801,114 @@ a.cs-info-link:focus-visible {
   background: var(--cs-accent);
 }
 @media (max-width: 900px) {
-  .cs-pin-stage { grid-template-columns: 1fr; padding: 6rem var(--page-gutter) 4rem; height: auto; min-height: 100vh; }
-  .cs-pin-wrap  { height: auto; }
-  .cs-pin-stage { position: relative; }
-  .cs-pin-visual { height: 50vh; }
+  /* Unpin the pinned scene and inline every phase + frame pair */
+  .cs-pin-wrap { height: auto !important; }
+  .cs-pin-stage {
+    grid-template-columns: 1fr !important;
+    padding: 4rem var(--page-gutter) 4rem !important;
+    height: auto !important;
+    min-height: 0 !important;
+    position: relative !important;
+    display: grid !important;
+    gap: 2rem !important;
+  }
+
+  /* Flatten the text / visual / phases / frames wrappers so phases & frames
+     become direct grid children of .cs-pin-stage */
+  .cs-pin-text,
+  .cs-pin-phases,
+  .cs-pin-visual,
+  .cs-pin-frames {
+    display: contents !important;
+  }
+
+  .cs-pin-eyebrow {
+    grid-row: 1;
+    margin-bottom: 0.5rem !important;
+  }
+
+  /* Each phase becomes an inline block of text. The desktop rule sets
+     grid-area: 1 / 1 to stack all phases in one cell — we override per-phase
+     below using grid-row with !important to win specificity. */
+  .cs-pin-phase {
+    position: relative !important;
+    opacity: 1 !important;
+    transition: none !important;
+  }
+  .cs-pin-phase h2 { font-size: clamp(1.7rem, 6vw, 2.2rem); }
+
+  /* Each frame becomes an inline visual */
+  .cs-pin-frame {
+    position: relative !important;
+    inset: auto !important;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 4 / 3;
+    border-radius: 1.25rem !important;
+    pointer-events: auto !important;
+    margin: 0 !important;
+  }
+  .cs-pin-frame.cs-pin-frame-matrix { aspect-ratio: 4 / 3; }
+  .cs-pin-frame.is-active ~ .cs-pin-frame { transform: none !important; }
+  .cs-pin-frame::after { display: none !important; }
+
+  /* Pair phase N (row 2N) with frame N (row 2N+1). Up to 6 pairs. */
+  .cs-pin-phase:nth-child(1) { grid-row: 2 !important; }
+  .cs-pin-frame:nth-child(1) { grid-row: 3; }
+  .cs-pin-phase:nth-child(2) { grid-row: 4 !important; }
+  .cs-pin-frame:nth-child(2) { grid-row: 5; }
+  .cs-pin-phase:nth-child(3) { grid-row: 6 !important; }
+  .cs-pin-frame:nth-child(3) { grid-row: 7; }
+  .cs-pin-phase:nth-child(4) { grid-row: 8 !important; }
+  .cs-pin-frame:nth-child(4) { grid-row: 9; }
+  .cs-pin-phase:nth-child(5) { grid-row: 10 !important; }
+  .cs-pin-frame:nth-child(5) { grid-row: 11; }
+  .cs-pin-phase:nth-child(6) { grid-row: 12 !important; }
+  .cs-pin-frame:nth-child(6) { grid-row: 13; }
+
+  /* Hide the progress dot on mobile — it's tied to scrub-driven progress */
+  .cs-pin-progress { display: none !important; }
+
+  /* ── Horizontal-scrub gallery: stack vertically on mobile ── */
+  .cs-gallery-wrap {
+    height: auto !important;
+  }
+  .cs-gallery-pin {
+    position: relative !important;
+    top: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+    display: block !important;
+    padding: 4rem 0;
+  }
+  .cs-gallery-header {
+    padding: 0 var(--page-gutter);
+    margin-bottom: 2rem;
+  }
+  .cs-gallery-track {
+    flex-direction: column !important;
+    gap: 2.5rem !important;
+    padding: 0 var(--page-gutter) !important;
+    transform: none !important;
+    will-change: auto !important;
+  }
+  .cs-gallery-item,
+  .cs-gallery-item:has(img) {
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .cs-gallery-item .cs-img-slot:has(img) {
+    height: auto !important;
+    width: 100% !important;
+  }
+  .cs-gallery-item .cs-img-slot img {
+    width: 100% !important;
+    height: auto !important;
+  }
 }
 
 /* ─── HORIZONTAL GALLERY (pinned scrub) ──────────────────────────────────── */

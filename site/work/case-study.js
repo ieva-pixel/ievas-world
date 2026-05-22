@@ -250,6 +250,9 @@ function animateImageReveals() {
 function initPinnedStage() {
   const wrap = document.querySelector('.cs-pin-wrap');
   if (!wrap) return;
+  // On mobile, CSS shows every phase + frame inline. Skip the pin/scrub
+  // animation so it doesn't reset opacity or stack frames absolutely.
+  if (window.innerWidth <= 900) return;
   const stage = wrap.querySelector('.cs-pin-stage');
   const phases = $$('.cs-pin-phase', wrap);
   const frames = $$('.cs-pin-frame', wrap);
@@ -295,6 +298,9 @@ function initPinnedStage() {
 function initGallery() {
   const wrap  = document.querySelector('.cs-gallery-wrap');
   if (!wrap || reduce) return;
+  // On mobile, CSS shows the gallery as a stacked column. Skip the
+  // horizontal-scrub pin animation so it doesn't fight that layout.
+  if (window.innerWidth <= 900) return;
   const track = wrap.querySelector('.cs-gallery-track');
   if (!track) return;
 
