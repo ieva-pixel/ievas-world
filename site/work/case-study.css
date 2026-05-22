@@ -882,16 +882,16 @@ a.cs-info-link:focus-visible {
     height: auto !important;
     overflow: visible !important;
     display: block !important;
-    padding: 4rem 0;
+    padding: 3rem 0 4rem;
   }
   .cs-gallery-header {
-    padding: 0 var(--page-gutter);
-    margin-bottom: 2rem;
+    padding: 0 1.5rem;
+    margin-bottom: 1.5rem;
   }
   .cs-gallery-track {
     flex-direction: column !important;
     gap: 2.5rem !important;
-    padding: 0 var(--page-gutter) !important;
+    padding: 0 1.5rem !important;
     transform: none !important;
     will-change: auto !important;
   }
@@ -904,11 +904,39 @@ a.cs-info-link:focus-visible {
   .cs-gallery-item .cs-img-slot:has(img) {
     height: auto !important;
     width: 100% !important;
+    aspect-ratio: auto !important;
   }
   .cs-gallery-item .cs-img-slot img {
     width: 100% !important;
     height: auto !important;
+    max-width: 100% !important;
   }
+
+  /* Disable the desktop "next section pinned to 100vh and centered"
+     behavior on mobile — it creates big empty regions */
+  .cs-gallery-wrap + section {
+    min-height: 0 !important;
+    display: block !important;
+  }
+
+  /* ── Reduce cs-section padding on mobile (was 8rem, way too much
+     for an 812px viewport — created large empty regions between
+     sections) ── */
+  .cs-section {
+    padding: 4rem 1.5rem !important;
+  }
+  .cs-section.cs-section-vcenter { min-height: 0 !important; }
+  .cs-cols,
+  .cs-cols-equal,
+  .cs-cols-flip { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
+  .cs-section-title {
+    font-size: clamp(2rem, 8vw, 2.75rem) !important;
+  }
+  .cs-hero {
+    min-height: 0 !important;
+    padding: 6rem 1.5rem 3rem !important;
+  }
+  .cs-hero-title { font-size: clamp(3rem, 13vw, 5rem) !important; }
 }
 
 /* ─── HORIZONTAL GALLERY (pinned scrub) ──────────────────────────────────── */
