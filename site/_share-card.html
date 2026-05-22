@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    width: 1200px;
+    height: 630px;
+    background: #212E02;
+    color: #F0EFE9;
+    overflow: hidden;
+  }
+  .card {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0;
+    position: relative;
+  }
+  /* Subtle column lines like on the site */
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgba(240,239,233,.06) 1px, transparent 1px) 25% 0 / 1px 100% no-repeat,
+      linear-gradient(90deg, rgba(240,239,233,.06) 1px, transparent 1px) 50% 0 / 1px 100% no-repeat,
+      linear-gradient(90deg, rgba(240,239,233,.06) 1px, transparent 1px) 75% 0 / 1px 100% no-repeat;
+    pointer-events: none;
+  }
+  .wordmark {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 170px;
+    line-height: 0.92;
+    letter-spacing: -0.025em;
+    color: #F0EFE9;
+    text-align: left;
+    width: 100%;
+    padding-left: 80px;
+  }
+  .wordmark .indent { display: inline-block; padding-left: 1.6ch; }
+  .wordmark-row-2 { display: block; }
+  .subtitle {
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    font-size: 22px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(240,239,233,0.65);
+    margin-top: 36px;
+    text-align: left;
+    width: 100%;
+    padding-left: 80px;
+  }
+  .subtitle .name { color: #F0EFE9; font-weight: 500; }
+  .subtitle .sep { margin: 0 0.7em; opacity: 0.4; }
+  /* Decorative star bottom-right (matches the site's star-field motif) */
+  .star {
+    position: absolute;
+    bottom: 60px;
+    right: 80px;
+    width: 32px;
+    height: 32px;
+    color: rgba(240,239,233,0.32);
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="wordmark">
+      <span>ieva's</span>
+      <span class="wordmark-row-2"><span class="indent">world</span></span>
+    </div>
+    <div class="subtitle">
+      <span class="name">Ieva Kirdaikytė</span>
+      <span class="sep">·</span>
+      Turning user needs into digital ease
+    </div>
+    <svg class="star" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2L13.5 9.5L21 11L13.5 12.5L12 20L10.5 12.5L3 11L10.5 9.5L12 2Z"/>
+    </svg>
+  </div>
+</body>
+</html>
