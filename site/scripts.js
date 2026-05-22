@@ -535,6 +535,8 @@ function onPinnedScroll() {
 
 function onWorkScroll() {
   if (!workPinWrap || !workCardEls.length) return;
+  // Skip pinned-scroll animation on mobile — CSS handles a stacked layout.
+  if (window.innerWidth <= 900) return;
   const rect        = workPinWrap.getBoundingClientRect();
   const wh          = window.innerHeight;
   const totalScroll = workPinWrap.offsetHeight - wh;

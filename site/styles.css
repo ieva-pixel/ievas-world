@@ -934,13 +934,93 @@ section { position: relative; }
 @media (max-width: 900px) {
   .about-grid { grid-template-columns: 1fr; gap: 3rem; }
 }
-@media (max-width: 700px) {
-  #home, #disciplines, #statement, #process, #work, #about, #side, #contact {
+@media (max-width: 900px) {
+  #home, #disciplines, #statement, #process, #about, #side, #contact {
     padding-left: 1.5rem; padding-right: 1.5rem;
   }
-  .work-card { flex-direction: column; }
-  .work-card-visual { width: 100%; height: 40vh; flex-shrink: 0; }
-  .work-card-meta { margin-left: 0; padding: 2rem 1.5rem; }
+
+  /* ── Work section: unpin and stack visual + card pairs ── */
+  #work-pin-wrap { height: auto !important; }
+  #work {
+    position: relative !important;
+    top: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+    padding: 5rem 1.5rem 4rem !important;
+    display: grid !important;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  /* Header occupies row 1 */
+  .work-header {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    opacity: 1 !important;
+    padding: 0 !important;
+    margin: 0 0 1.5rem !important;
+    height: auto !important;
+    pointer-events: auto !important;
+    grid-row: 1;
+  }
+  .work-header-title { font-size: clamp(2.5rem, 11vw, 4rem); }
+
+  /* Decorative/utility children — hide or shrink so they don't add gaps */
+  #workProgress,
+  #workStarField,
+  #workExitStars { display: none !important; }
+
+  /* Flatten the visual + cards containers so their children become grid items of #work */
+  #workVisual,
+  #workCards {
+    display: contents !important;
+    position: static !important;
+  }
+
+  /* Each visual item shows inline as a card image */
+  .work-visual-item {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 4 / 3;
+    border-radius: 1.25rem;
+    overflow: hidden;
+  }
+  .work-visual-item .thumb,
+  .work-visual-item .thumb-image { border-radius: 0; }
+
+  /* Each work-card sits below its matching visual */
+  .work-card {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    margin: 0 !important;
+  }
+  .work-card-meta {
+    margin-left: 0 !important;
+    padding: 0 0 2rem !important;
+    min-height: auto !important;
+    justify-content: flex-start !important;
+  }
+  .work-card-cta { pointer-events: auto !important; }
+  .project-title { font-size: clamp(2.25rem, 9vw, 3.25rem); }
+
+  /* Pair visual N with card N. DOM order under #work:
+     workHeader(row 1) → workProgress (hidden) → workStarField (hidden) →
+     #workVisual (display:contents, 4 visuals) → #workCards (4 cards). */
+  .work-visual-item:nth-child(1) { grid-row: 2; }
+  .work-card:nth-child(1)        { grid-row: 3; }
+  .work-visual-item:nth-child(2) { grid-row: 4; }
+  .work-card:nth-child(2)        { grid-row: 5; }
+  .work-visual-item:nth-child(3) { grid-row: 6; }
+  .work-card:nth-child(3)        { grid-row: 7; }
+  .work-visual-item:nth-child(4) { grid-row: 8; }
+  .work-card:nth-child(4)        { grid-row: 9; }
 }
 
 /* ═══ REDUCED MOTION ══════════════════════════════════════════════════════ */
