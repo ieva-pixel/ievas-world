@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About, Ieva's World</title>
+  <meta name="description" content="Ieva Kirdaikytė — UX/UI designer based in Zürich. Previously lead designer on PwC Switzerland's Project Bridge and UX at Certifaction. Currently independent and building personal projects." />
+  <meta name="author" content="Ieva Kirdaikytė" />
+  <link rel="canonical" href="https://ievasworld.com/about.html" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="profile" />
+  <meta property="og:site_name" content="Ieva's World" />
+  <meta property="og:url" content="https://ievasworld.com/about.html" />
+  <meta property="og:title" content="About — Ieva Kirdaikytė, UX/UI Designer" />
+  <meta property="og:description" content="UX/UI designer based in Zürich. Previously lead designer on PwC Switzerland's Project Bridge and UX at Certifaction. Currently independent and building personal projects." />
+  <meta property="og:image" content="https://ievasworld.com/work/hey-honey/hero-homepage.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="About — Ieva Kirdaikytė, UX/UI Designer" />
+  <meta name="twitter:description" content="UX/UI designer based in Zürich. Previously lead designer on PwC Switzerland's Project Bridge and UX at Certifaction. Currently independent and building personal projects." />
+  <meta name="twitter:image" content="https://ievasworld.com/work/hey-honey/hero-homepage.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    /* ─── About page-specific styles ───────────────────────────────────── */
+    .about-body { background: var(--cream); color: var(--olive-deep); }
+    .about-main { display: flex; flex-direction: column; }
+
+    /* Hero */
+    .about-hero {
+      min-height: 80vh;
+      padding: 12rem var(--page-gutter) 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 1.25rem;
+    }
+    .about-hero .eyebrow { margin-bottom: 0; }
+    .about-headline {
+      font-family: var(--ff-serif, 'Instrument Serif', serif);
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(4rem, 11vw, 11rem);
+      line-height: 1;
+      letter-spacing: -0.01em;
+      color: var(--olive-deep);
+      margin: 0;
+    }
+    .about-sub {
+      font-family: var(--ff-sans, 'Jost', sans-serif);
+      font-size: clamp(1rem, 1.4vw, 1.25rem);
+      color: var(--olive-deep);
+      opacity: 0.7;
+      letter-spacing: 0.02em;
+    }
+
+    /* Bio section */
+    .about-bio-section {
+      padding: 6rem var(--page-gutter);
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      max-width: 1800px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .about-bio-body {
+      column-count: 2;
+      column-gap: 4rem;
+      column-fill: balance;
+    }
+    .about-bio-body p {
+      font-family: var(--ff-sans, 'Jost', sans-serif);
+      font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+      font-weight: 400;
+      line-height: 1.7;
+      margin: 0 0 1.4rem;
+      color: var(--olive-deep);
+      break-inside: avoid;
+    }
+    .about-bio-body p:last-child { margin-bottom: 0; }
+    .about-bio-body em { font-style: italic; color: var(--olive-deep); }
+    @media (max-width: 900px) {
+      .about-bio-body { column-count: 1; }
+    }
+
+    /* Highlights row */
+    .about-highlights {
+      padding: 4rem var(--page-gutter) 6rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+      max-width: 1800px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .about-highlight h3 {
+      font-family: var(--ff-serif, 'Instrument Serif', serif);
+      font-size: clamp(1.5rem, 2vw, 1.75rem);
+      font-weight: 400;
+      margin: 0.5rem 0 0.75rem;
+      color: var(--olive-deep);
+      line-height: 1.2;
+    }
+    .about-highlight p {
+      font-family: var(--ff-sans, 'Jost', sans-serif);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--olive-deep);
+      opacity: 0.78;
+      margin: 0;
+    }
+
+    /* Testimonials */
+    .about-quotes {
+      background: var(--olive-deep);
+      color: var(--cream);
+      padding: 7rem var(--page-gutter);
+    }
+    .about-quotes-inner {
+      max-width: 1800px;
+      margin: 0 auto;
+    }
+    .about-quotes-heading {
+      font-family: var(--ff-serif, 'Instrument Serif', serif);
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(2.25rem, 4vw, 3.5rem);
+      line-height: 1.1;
+      margin: 0.5rem 0 4rem;
+      color: var(--cream);
+    }
+    .about-quotes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+    }
+    .about-quotes-grid .testimonial-block {
+      padding: 0;
+      border: 0;
+    }
+    .about-quotes-grid .testimonial-text {
+      font-family: var(--ff-serif, 'Instrument Serif', serif);
+      font-style: italic;
+      font-size: 1.15rem;
+      line-height: 1.55;
+      color: var(--cream);
+      opacity: 0.92;
+      margin: 0 0 1.25rem;
+    }
+    .about-quotes-grid .testimonial-attr {
+      font-family: var(--ff-sans, 'Jost', sans-serif);
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.6;
+    }
+
+    /* Facts row — 4 columns aligned to the 25/50/75 col-lines markers */
+    .about-facts {
+      padding: 6rem 0;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      max-width: 1800px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .about-fact {
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+    }
+    .about-fact:first-child { padding-left: var(--page-gutter); }
+    .about-fact:last-child  { padding-right: var(--page-gutter); }
+    .about-fact .eyebrow { margin-bottom: 0.5rem; }
+    .about-fact p {
+      font-family: var(--ff-serif, 'Instrument Serif', serif);
+      font-size: 1.15rem;
+      line-height: 1.5;
+      color: var(--olive-deep);
+      margin: 0;
+    }
+
+    /* Contact */
+    .about-contact {
+      background: var(--olive-deep);
+      color: var(--cream);
+      padding: 8rem var(--page-gutter) 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-contact-inner {
+      max-width: 1800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .about-contact-heading {
+      font-family: var(--ff-serif, 'Instrument Serif', serif);
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(3rem, 6vw, 5rem);
+      line-height: 1;
+      margin: 0.75rem 0 1.5rem;
+      color: var(--cream);
+    }
+    .about-contact-sub {
+      font-family: var(--ff-serif, 'Instrument Serif', serif);
+      font-size: clamp(1.1rem, 1.4vw, 1.3rem);
+      max-width: 50ch;
+      color: var(--cream);
+      opacity: 0.78;
+      margin-bottom: 2.5rem;
+    }
+    .about-contact .pill-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 6rem;
+    }
+    .about-footer-base {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(240, 239, 233, 0.18);
+      font-family: var(--ff-sans, 'Jost', sans-serif);
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.55;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .about-hero { min-height: 70vh; padding: 9rem var(--page-gutter) 3rem; }
+      .about-bio-section,
+      .about-highlights,
+      .about-facts { grid-template-columns: 1fr; gap: 2rem; padding: 4rem var(--page-gutter); }
+      .about-quotes-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-quotes { padding: 5rem var(--page-gutter); }
+    }
+  </style>
+</head>
+<body class="about-body">
+
+  <!-- ═══ PERSISTENT UI ════════════════════════════════════════════════ -->
+  <a id="logo" class="persist" href="index.html" aria-label="Ieva's World, home">
+    <div>ieva's</div>
+    <div><span class="indent">world</span></div>
+  </a>
+
+  <nav id="sidenav" class="persist" aria-label="Section navigation">
+    <a href="index.html#home"    class="nav-item">                            <span class="nav-dot" style="display:none">•</span>Home</a>
+    <a href="index.html#work"    class="nav-item">                            <span class="nav-dot" style="display:none">•</span>Work</a>
+    <a href="about.html"         class="nav-item active">                     <span class="nav-dot">•</span>About</a>
+    <a href="index.html#contact" class="nav-item">                            <span class="nav-dot" style="display:none">•</span>Contact</a>
+  </nav>
+
+  <div id="location" class="persist">Zürich, CH</div>
+
+  <main class="about-main">
+
+    <!-- ═══ HERO ═══════════════════════════════════════════════════════ -->
+    <section class="about-hero col-lines">
+      <div class="eyebrow eyebrow-dark">About</div>
+      <h1 class="about-headline">Hi, I'm Ieva.</h1>
+      <p class="about-sub">UX/UI designer, based in Zürich.</p>
+    </section>
+
+    <!-- ═══ BIO ════════════════════════════════════════════════════════ -->
+    <section class="about-bio-section col-lines">
+      <div class="eyebrow eyebrow-dark">The story</div>
+      <div class="about-bio-body">
+        <p>
+          I'm Ieva — a UX/UI designer who moved from Lithuania to Zürich and stayed. For the past few years I've been working at the intersection of research, interaction design, and visual systems — most often on tools that need to be operationally clear before they can be visually beautiful.
+        </p>
+        <p>
+          My most defining project was PwC Switzerland's <em>Project Bridge</em>: a year-long effort to consolidate fragmented tools into one role-aware platform, where I was the lead and only designer working with developers, project managers, and stakeholders who were also our users. It taught me that strong UX leadership isn't about ideal processes — it's about advocating for clarity within real constraints.
+        </p>
+        <p>
+          Before that I shaped the early experience at <em>Certifaction</em>, a Swiss eSignature company, where my onboarding redesign took task completion from 3-out-of-10 to 7-out-of-10 in usability tests. Alongside client work I keep a running set of personal projects — <em>Hey Honey</em>, a marketplace for local Swiss honey producers, and <em>Share Your Bag</em>, a peer-to-peer luxury rental concept I've been refining since 2021.
+        </p>
+        <p>
+          Outside of design my time goes to snowboarding (still trying to land a clean 360), surfing (less skilled, more enthusiastic), tennis, hiking the Swiss alps, cooking, and baking. I share a flat with a Dalmatian named Mochi who is, without exaggeration, the best part of any day.
+        </p>
+      </div>
+    </section>
+
+    <!-- ═══ HIGHLIGHTS ═════════════════════════════════════════════════ -->
+    <section class="about-highlights col-lines">
+      <div class="about-highlight">
+        <div class="eyebrow eyebrow-dark">Most recent · 2022–2025</div>
+        <h3>Lead designer, PwC Switzerland</h3>
+        <p>Three years across Tax &amp; Technology. My biggest project was <em>Project Bridge</em> (2024–2025) — consolidated fragmented tools into a single role-aware workspace.</p>
+      </div>
+      <div class="about-highlight">
+        <div class="eyebrow eyebrow-dark">Earlier · 2021</div>
+        <h3>UX at Certifaction</h3>
+        <p>Onboarding redesign that took task completion from 3/10 to 7/10 in usability tests.</p>
+      </div>
+      <div class="about-highlight">
+        <div class="eyebrow eyebrow-dark">Ongoing</div>
+        <h3>Hey Honey · Share Your Bag</h3>
+        <p>Two end-to-end personal concepts I keep building on the side — marketplace and rental product thinking.</p>
+      </div>
+    </section>
+
+    <!-- ═══ TESTIMONIALS ═══════════════════════════════════════════════ -->
+    <section class="about-quotes">
+      <div class="about-quotes-inner">
+        <div class="eyebrow eyebrow-light">Kind words</div>
+        <h2 class="about-quotes-heading">From people I've worked with.</h2>
+        <div class="about-quotes-grid">
+          <div class="testimonial-block">
+            <p class="testimonial-text">
+              "Ieva is an exceptional design professional who steadfastly commits to excellence in every aspect of her work."
+            </p>
+            <p class="testimonial-attr">Christoph Schärer, Partner, PwC Switzerland</p>
+          </div>
+          <div class="testimonial-block">
+            <p class="testimonial-text">
+              "I have had the pleasure to work with Ieva for many years and her experience and expertise in UX/UI has driven amazing results for our solutions."
+            </p>
+            <p class="testimonial-attr">Jeremy Wikler, Senior Manager, PwC Switzerland</p>
+          </div>
+          <div class="testimonial-block">
+            <p class="testimonial-text">
+              "Ieva effectively identifies user needs and design opportunities, transforming insights into practical solutions."
+            </p>
+            <p class="testimonial-attr">Stuart Jones, Partner, PwC Switzerland</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ QUICK FACTS ════════════════════════════════════════════════ -->
+    <section class="about-facts col-lines">
+      <div class="about-fact">
+        <div class="eyebrow eyebrow-dark">Based</div>
+        <p>Zürich, CH</p>
+      </div>
+      <div class="about-fact">
+        <div class="eyebrow eyebrow-dark">Languages</div>
+        <p>English · Lithuanian</p>
+      </div>
+      <div class="about-fact">
+        <div class="eyebrow eyebrow-dark">Tools</div>
+        <p>Figma · Adobe&nbsp;CC · Miro · Jira · Material&nbsp;UI · Magic&nbsp;Patterns · Claude · WebAIM</p>
+      </div>
+      <div class="about-fact">
+        <div class="eyebrow eyebrow-dark">Status</div>
+        <p>Independent · open to roles &amp; projects</p>
+      </div>
+    </section>
+
+    <!-- ═══ CONTACT ════════════════════════════════════════════════════ -->
+    <section class="about-contact">
+      <div class="about-contact-inner">
+        <div class="eyebrow eyebrow-light">Contact</div>
+        <h2 class="about-contact-heading">Let's talk.</h2>
+        <p class="about-contact-sub">
+          Always open to good projects and full-time roles. Drop me a line — I reply quickly.
+        </p>
+        <div class="pill-row">
+          <a href="mailto:ievakirdaikyte@gmail.com" class="pill pill-light">Email</a>
+          <a href="https://www.linkedin.com/in/ievakirdaikyte" target="_blank" rel="noopener" class="pill pill-light">LinkedIn</a>
+        </div>
+        <div class="about-footer-base">
+          <span>© 2026 Ieva Kirdaikytė</span>
+          <span>ieva's world</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>

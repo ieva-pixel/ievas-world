@@ -13,7 +13,7 @@
 const PROJECTS = [
   {
     num: '01', total: '04',
-    eyebrow: '2024-2025 · Lead UX/UI · PwC Switzerland',
+    eyebrow: '2022–2025 · Lead UX/UI · PwC Switzerland',
     title:   'PwC Bridge',
     desc:    "Consolidating fragmented tools into a single role-aware workspace for PwC Switzerland's Tax & Technology teams.",
     bg:      'linear-gradient(135deg,#1e2c0e 0%,#2c3d12 100%)',
@@ -24,7 +24,7 @@ const PROJECTS = [
   },
   {
     num: '02', total: '04',
-    eyebrow: '2025 · UX/UI · Personal',
+    eyebrow: '2025 – 2026 · UX/UI · Personal',
     title:   'Hey Honey',
     desc:    'A curated marketplace for high-quality, locally produced honey: mobile-first, subscription-friendly, gift-ready.',
     bg:      'linear-gradient(135deg,#2e2208 0%,#4a3810 100%)',
