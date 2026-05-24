@@ -314,9 +314,17 @@ function initGallery() {
   // Sticky pin window = wrap.height - 100vh = computeDistance. Gallery releases
   // exactly when the horizontal scrub completes. Outcomes pinning is handled
   // separately by ScrollTrigger.pin — see further down.
-  const HOLD_VH = 1.0; // outcomes pinned for ~1 viewport of scroll
+  //
+  // GALLERY_HOLD_VH controls how long the final scrub state stays pinned
+  // before the next section can enter. Bumped from 1.0 → 2.0 because galleries
+  // with tall+narrow mobile mockups (Hey Honey, Share Your Bag) have very
+  // short scrub distances — the screens flash by and the next section
+  // arrives before you've absorbed the last frame. 2.0 buys roughly 1 extra
+  // viewport of dwell time on the final state.
+  const GALLERY_HOLD_VH = 2.0;
+  const HOLD_VH = 1.0; // outcomes pinned for ~1 viewport of scroll (next section)
   const syncWrapHeight = () => {
-    wrap.style.height = (computeDistance() + window.innerHeight) + 'px';
+    wrap.style.height = (computeDistance() + window.innerHeight * GALLERY_HOLD_VH) + 'px';
   };
   syncWrapHeight();
   window.addEventListener('resize', () => { syncWrapHeight(); ScrollTrigger.refresh(); });
