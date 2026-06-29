@@ -997,7 +997,11 @@ a.cs-info-link:focus-visible {
    widths vary per the natural aspect ratio of each screenshot. No cropping. */
 .cs-gallery-item .cs-img-slot:has(img) {
   aspect-ratio: auto;
-  height: clamp(380px, 60vh, 580px);
+  /* Bumped from clamp(380, 60vh, 580) → clamp(480, 78vh, 720) so items
+     fill more of the 100vh pin. Was creating a perception that the
+     gallery had unpinned early because of all the empty cream below
+     the smaller items. */
+  height: clamp(480px, 78vh, 720px);
   width: auto;
   background: transparent;
   padding: 0;
