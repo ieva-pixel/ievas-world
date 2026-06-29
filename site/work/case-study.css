@@ -1040,7 +1040,11 @@ a.cs-info-link:focus-visible {
 .cs-gallery-header {
   position: absolute;
   top: 6vh;
-  left: var(--page-gutter);
+  /* Inset further than the page gutter so the persistent #logo
+     (top:2rem; left:2rem) doesn't overlap the header text when the
+     gallery is pinned. The logo's right edge sits near 8rem; we
+     leave a small breathing gap beyond that. */
+  left: calc(var(--page-gutter) + 6rem);
   font-family: var(--ff-sans);
   font-size: .68rem;
   letter-spacing: .18em;
