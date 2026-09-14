@@ -19,8 +19,7 @@ const PROJECTS = [
     bg:      'linear-gradient(135deg,#1e2c0e 0%,#2c3d12 100%)',
     accent:  '#8FA96B',
     href:    'work/pwc-bridge/',
-    image:   'work/pwc-bridge/pwc-bridge-hero.jpg',
-    imageFocal: '50% 70%', // laptop is in lower-middle of the image — shift visible window down to centre it
+    image:   'work/pwc-bridge/pwc-bridge-hero-landscape.png',
   },
   {
     num: '02', total: '04',
@@ -30,8 +29,7 @@ const PROJECTS = [
     bg:      'linear-gradient(135deg,#2e2208 0%,#4a3810 100%)',
     accent:  '#C8A84B',
     href:    'work/hey-honey/',
-    image:   'work/hey-honey/hero-meadow.jpg',
-    imageFocal: '50% 35%',
+    image:   'work/hey-honey/hero-meadow-landscape.png',
   },
   {
     num: '03', total: '04',
@@ -41,7 +39,7 @@ const PROJECTS = [
     bg:      'linear-gradient(135deg,#0a1520 0%,#162436 100%)',
     accent:  '#6B8FA9',
     href:    'work/certifaction/',
-    image:   'work/certifaction/hero.jpg',
+    image:   'work/certifaction/hero-archive-landscape.png',
   },
   {
     num: '04', total: '04',
@@ -51,8 +49,7 @@ const PROJECTS = [
     bg:      'linear-gradient(135deg,#22152a 0%,#36204a 100%)',
     accent:  '#A98FA9',
     href:    'work/share-your-bag/',
-    image:   'work/share-your-bag/hero-card.jpg',
-    imageFocal: '50% 35%',
+    image:   'work/share-your-bag/hero-card-landscape.png',
   },
 ];
 
@@ -87,17 +84,15 @@ const workCardsEl   = document.getElementById('workCards');
 const workProgressEl = document.getElementById('workProgress');
 const workVisualEl  = document.getElementById('workVisual');
 
-// Visual items — live in the persistent rounded frame, slide in/out independently
+// Full-height visual slots travel with their text; only the images have rounded edges.
 const workVisualEls = workVisualEl ? PROJECTS.map((p) => {
   const item = document.createElement('div');
   item.className = 'work-visual-item';
   // If the project has a hero image, show it; otherwise fall back to the
   // gradient + accent glow used as a placeholder.
   if (p.image) {
-    // No green fallback bg — image covers the frame fully. If the image
-    // doesn't load, the cream body shows through, not a stale gradient.
-    const focal = p.imageFocal || 'center';
-    item.innerHTML = `<div class="thumb thumb-image"><img src="${p.image}" alt="${p.title}" loading="lazy" style="object-position:${focal};"/></div>`;
+    // Fit the complete cover inside the frame without viewport-dependent crops.
+    item.innerHTML = `<div class="thumb thumb-image"><img src="${p.image}" alt="${p.title}" loading="lazy"/></div>`;
   } else {
     item.innerHTML = `<div class="thumb" style="background:${p.bg}"><div class="thumb-glow" style="background:${p.accent}"></div></div>`;
   }
@@ -525,10 +520,10 @@ function onWorkScroll() {
     workCardsEl.style.opacity   = entryInP;
   }
 
-  // Header: fades in on approach (early), then out as first card enters
+  // Clear the title before the first card starts entering at progress 0.075.
   if (workHeaderEl) {
     const hIn  = 1 - Math.pow(1 - clamp01((headerInP - 0.08) / 0.92), 3);
-    const hOut = Math.pow(clamp01(globalP / 0.14), 1.8);
+    const hOut = smooth(clamp01((globalP - 0.015) / 0.06));
     workHeaderEl.style.opacity   = hIn * (1 - hOut);
     workHeaderEl.style.transform = `translateY(${((1 - hIn) * 40 - hOut * 50).toFixed(1)}px)`;
   }
@@ -585,9 +580,10 @@ function onWorkScroll() {
     card.style.transform    = `translateY(${ty.toFixed(2)}vh)`;
     card.style.pointerEvents = op > 0.5 ? 'auto' : 'none';
 
-    // Visual frame: same timing, translateY in % (clipped by frame overflow:hidden)
+    // Match the text's viewport-height travel exactly, including entry and exit.
     if (workVisualEls[i]) {
-      workVisualEls[i].style.transform = `translateY(${ty.toFixed(2)}%)`;
+      workVisualEls[i].style.transform = `translateY(${ty.toFixed(2)}vh)`;
+      workVisualEls[i].style.opacity = op;
     }
   });
 

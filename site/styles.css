@@ -654,7 +654,6 @@ section { position: relative; }
   top: 0;
   width: 58%;
   height: 100%;
-  border-radius: 0 1.5rem 1.5rem 0;
   overflow: hidden;
   z-index: 2;
   pointer-events: none;
@@ -673,12 +672,18 @@ section { position: relative; }
   border-radius: 0;
 }
 .work-visual-item .thumb-image {
-  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .work-visual-item .thumb-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: auto;
+  height: auto;
+  max-width: min(calc(100% - 3rem), 780px);
+  max-height: min(86vh, 850px);
+  border-radius: 1.5rem;
+  object-fit: contain;
+  object-position: center;
   display: block;
 }
 .work-card {
@@ -996,12 +1001,19 @@ section { position: relative; }
     transform: none !important;
     width: 100% !important;
     height: auto !important;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 3 / 4;
+    max-width: 600px;
+    justify-self: center;
     border-radius: 1.25rem;
     overflow: hidden;
   }
   .work-visual-item .thumb,
   .work-visual-item .thumb-image { border-radius: 0; }
+  .work-visual-item .thumb-image img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 1.25rem;
+  }
 
   /* Each work-card sits below its matching visual */
   .work-card {
