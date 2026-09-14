@@ -30,7 +30,7 @@ const PROJECTS = [
     bg:      'linear-gradient(135deg,#2e2208 0%,#4a3810 100%)',
     accent:  '#C8A84B',
     href:    'work/hey-honey/',
-    image:   'work/hey-honey/hero-card.jpg',
+    image:   'work/hey-honey/hero-meadow.jpg',
     imageFocal: '50% 35%',
   },
   {
