@@ -149,6 +149,20 @@
       height: 100vh;
       position: sticky;
       top: 0;
+      isolation: isolate;
+      overflow: hidden;
+    }
+    .about-quotes::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: url('blinds.jpg') right center / auto 120% no-repeat;
+      mix-blend-mode: soft-light;
+      opacity: 0.14;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 72%, transparent 100%);
+      mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 72%, transparent 100%);
+      pointer-events: none;
     }
     .about-quotes-inner {
       max-width: 1800px;

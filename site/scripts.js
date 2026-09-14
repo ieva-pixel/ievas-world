@@ -122,7 +122,7 @@ const workCardEls = PROJECTS.map((p) => {
 // 2c. Process orbit — circle blobs
 gsap.registerPlugin(ScrollTrigger);
 
-const CIRCLE_SIZE = 160;
+const CIRCLE_SIZE = Math.round(Math.min(210, window.innerWidth * 0.28, window.innerHeight * 0.29));
 const ORBIT_R = Math.round(Math.min(window.innerWidth * 0.21, window.innerHeight * 0.29, 230));
 const EXIT_R  = Math.hypot(window.innerWidth / 2, window.innerHeight / 2) + CIRCLE_SIZE;
 
@@ -134,51 +134,14 @@ procRingEl.className = 'proc-ring';
 procRingEl.style.cssText = `width:${ORBIT_R * 2}px;height:${ORBIT_R * 2}px;left:calc(50% - ${ORBIT_R}px);top:calc(50% - ${ORBIT_R}px);`;
 if (procOrbitStage) procOrbitStage.appendChild(procRingEl);
 
-const ORB_SVG = {
-  build: {
-    accent: ['#E6A24E','#F0D0A0','#F4EBD8'], ops: [0.78, 0.42], acMid: 48,
-    acCx: 25, acCy: 62, acR: 52, crCx: 60, crCy: 40, crR: 65,
-  },
-  listen: {
-    accent: ['#E9796F','#F0B5A7','#F4EBD8'], ops: [0.72, 0.38], acMid: 48,
-    acCx: 78, acCy: 58, acR: 54, crCx: 42, crCy: 38, crR: 68,
-  },
-  strategy: {
-    accent: ['#B8C97B','#D8DDB2','#F4EBD8'], ops: [0.68, 0.36], acMid: 50,
-    acCx: 58, acCy: 78, acR: 55, crCx: 48, crCy: 35, crR: 70,
-  },
-  design: {
-    accent: ['#A78BD6','#CDBBE4','#F4EBD8'], ops: [0.72, 0.38], acMid: 50,
-    acCx: 28, acCy: 72, acR: 56, crCx: 62, crCy: 38, crR: 68,
-  },
+// Reference circle textures; the fourth step reuses the warm circle.
+const PROCESS_SHAPES = {
+  build: 'images/process/shape-circle1.webp',
+  listen: 'images/process/shape-circle1.webp',
+  strategy: 'images/process/shape-circle3.webp',
+  design: 'images/process/shape-circle2.webp',
 };
 
-function orbSVG(id, v) {
-  // Keep every layer concentric and unmasked so the soft silhouette stays round.
-  return `<svg viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;overflow:visible;display:block">
-  <defs>
-    <filter id="blOut${id}" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="22"/></filter>
-    <filter id="blIn${id}" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="8"/></filter>
-    <radialGradient id="cr${id}" cx="${v.crCx}%" cy="${v.crCy}%" r="${v.crR}%">
-      <stop offset="0%" stop-color="#F8F1DF"/><stop offset="62%" stop-color="#EEE5CC"/><stop offset="100%" stop-color="#D8CDAF"/>
-    </radialGradient>
-    <radialGradient id="ac${id}" cx="${v.acCx}%" cy="${v.acCy}%" r="${v.acR + 30}%">
-      <stop offset="0%" stop-color="${v.accent[0]}" stop-opacity="1"/>
-      <stop offset="${v.acMid}%" stop-color="${v.accent[1]}" stop-opacity="0.85"/>
-      <stop offset="75%" stop-color="${v.accent[1]}" stop-opacity="0.55"/>
-      <stop offset="100%" stop-color="${v.accent[2]}" stop-opacity="0"/>
-    </radialGradient>
-  </defs>
-  <circle cx="110" cy="110" r="60" fill="url(#cr${id})" filter="url(#blOut${id})"/>
-  <circle cx="110" cy="110" r="60" fill="url(#ac${id})" filter="url(#blOut${id})"/>
-    <circle cx="110" cy="110" r="74" fill="url(#cr${id})" filter="url(#blIn${id})"/>
-    <circle cx="110" cy="110" r="74" fill="url(#ac${id})" opacity="0.7" filter="url(#blIn${id})"/>
-</svg>`;
-}
-
-// Two-layer split: the slot owns transform + opacity (and will-change),
-// the inner .proc-circle stays untransformed so the SVG feGaussianBlur halo
-// isn't clipped by Chrome's GPU compositing layer.
 const circleEls = procOrbitStage ? CIRCLES.map((c) => {
   const slot = document.createElement('div');
   slot.className = 'proc-circle-slot';
@@ -188,8 +151,12 @@ const circleEls = procOrbitStage ? CIRCLES.map((c) => {
   wrap.className = 'proc-circle';
 
   const orb = document.createElement('div');
-  orb.className = 'proc-circle-orb';
-  orb.innerHTML = orbSVG(c.variant, ORB_SVG[c.variant]);
+  orb.className = `proc-circle-orb proc-circle-orb--${c.variant}`;
+  const texture = document.createElement('img');
+  texture.src = PROCESS_SHAPES[c.variant];
+  texture.alt = '';
+  texture.setAttribute('aria-hidden', 'true');
+  orb.appendChild(texture);
 
   const label = document.createElement('span');
   label.className = 'orb-content';
