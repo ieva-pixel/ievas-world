@@ -143,32 +143,23 @@ const ORB_SVG = {
   build: {
     accent: ['#E6A24E','#F0D0A0','#F4EBD8'], ops: [0.78, 0.42], acMid: 48,
     acCx: 25, acCy: 62, acR: 52, crCx: 60, crCy: 40, crR: 65,
-    mask: [0, 0, 1, 0],
   },
   listen: {
     accent: ['#E9796F','#F0B5A7','#F4EBD8'], ops: [0.72, 0.38], acMid: 48,
     acCx: 78, acCy: 58, acR: 54, crCx: 42, crCy: 38, crR: 68,
-    mask: [1, 0, 0, 0],
   },
   strategy: {
     accent: ['#B8C97B','#D8DDB2','#F4EBD8'], ops: [0.68, 0.36], acMid: 50,
     acCx: 58, acCy: 78, acR: 55, crCx: 48, crCy: 35, crR: 70,
-    mask: [0, 1, 0, 0],
   },
   design: {
     accent: ['#A78BD6','#CDBBE4','#F4EBD8'], ops: [0.72, 0.38], acMid: 50,
     acCx: 28, acCy: 72, acR: 56, crCx: 62, crCy: 38, crR: 68,
-    mask: [0, 1, 1, 0],
   },
 };
 
 function orbSVG(id, v) {
-  const [mx1,my1,mx2,my2] = v.mask;
-  // Shift the heavy-halo circles toward the dissolve side so the glow
-  // concentrates there rather than ringing uniformly.
-  const HALO_SHIFT = 16;
-  const cdx = (mx1 - mx2) * HALO_SHIFT;
-  const cdy = (my1 - my2) * HALO_SHIFT;
+  // Keep every layer concentric and unmasked so the soft silhouette stays round.
   return `<svg viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;overflow:visible;display:block">
   <defs>
     <filter id="blOut${id}" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="22"/></filter>
@@ -182,38 +173,17 @@ function orbSVG(id, v) {
       <stop offset="75%" stop-color="${v.accent[1]}" stop-opacity="0.55"/>
       <stop offset="100%" stop-color="${v.accent[2]}" stop-opacity="0"/>
     </radialGradient>
-    <linearGradient id="mk${id}" x1="${mx1}" y1="${my1}" x2="${mx2}" y2="${my2}">
-      <stop offset="0%" stop-color="black"/>
-      <stop offset="25%" stop-color="black"/>
-      <stop offset="60%" stop-color="white"/>
-      <stop offset="85%" stop-color="white"/>
-      <stop offset="100%" stop-color="#707070"/>
-    </linearGradient>
-    <mask id="sh${id}"><rect width="220" height="220" fill="url(#mk${id})"/></mask>
   </defs>
-  <circle cx="${110 + cdx}" cy="${110 + cdy}" r="60" fill="url(#cr${id})" filter="url(#blOut${id})"/>
-  <circle cx="${110 + cdx}" cy="${110 + cdy}" r="60" fill="url(#ac${id})" filter="url(#blOut${id})"/>
-  <g mask="url(#sh${id})">
+  <circle cx="110" cy="110" r="60" fill="url(#cr${id})" filter="url(#blOut${id})"/>
+  <circle cx="110" cy="110" r="60" fill="url(#ac${id})" filter="url(#blOut${id})"/>
     <circle cx="110" cy="110" r="74" fill="url(#cr${id})" filter="url(#blIn${id})"/>
     <circle cx="110" cy="110" r="74" fill="url(#ac${id})" opacity="0.7" filter="url(#blIn${id})"/>
-  </g>
 </svg>`;
 }
 
 // Two-layer split: the slot owns transform + opacity (and will-change),
 // the inner .proc-circle stays untransformed so the SVG feGaussianBlur halo
 // isn't clipped by Chrome's GPU compositing layer.
-// Sharp-side angle (radians, screen y-down) for each variant's SVG gradient.
-// Used to compute comet rotation: rotate so sharp side faces direction of travel.
-const ORB_SHARP_ANGLE = {
-  build:    0,              // gradient (0,0)→(1,0): sharp = right
-  listen:   Math.PI,        // gradient (1,0)→(0,0): sharp = left
-  strategy: -Math.PI / 2,   // gradient (0,1)→(0,0): sharp = up
-  design:   -Math.PI / 4,   // gradient (0,1)→(1,0): sharp = upper-right
-};
-
-const orbEls = [];  // parallel array of .proc-circle-orb divs, cached for ticker
-
 const circleEls = procOrbitStage ? CIRCLES.map((c) => {
   const slot = document.createElement('div');
   slot.className = 'proc-circle-slot';
@@ -225,7 +195,6 @@ const circleEls = procOrbitStage ? CIRCLES.map((c) => {
   const orb = document.createElement('div');
   orb.className = 'proc-circle-orb';
   orb.innerHTML = orbSVG(c.variant, ORB_SVG[c.variant]);
-  orbEls.push(orb);
 
   const label = document.createElement('span');
   label.className = 'orb-content';
@@ -286,11 +255,6 @@ gsap.ticker.add(() => {
     el.style.transform = `translate(${(Math.cos(a) * orbitState.radius).toFixed(2)}px,${(Math.sin(a) * orbitState.radius).toFixed(2)}px)`;
     el.style.opacity   = orbitState.alpha;
 
-    // Comet: rotate orb so its sharp side faces the direction of travel.
-    // Travel tangent for clockwise orbit at angle a = atan2(cos(a), -sin(a)).
-    const travelDeg = Math.atan2(Math.cos(a), -Math.sin(a)) * 180 / Math.PI;
-    const sharpDeg  = ORB_SHARP_ANGLE[CIRCLES[i].variant] * 180 / Math.PI;
-    if (orbEls[i]) orbEls[i].style.transform = `rotate(${(travelDeg - sharpDeg).toFixed(1)}deg)`;
   });
 
   // Slide procSection over the still-pinned statement.
