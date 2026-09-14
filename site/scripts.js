@@ -20,6 +20,7 @@ const PROJECTS = [
     accent:  '#8FA96B',
     href:    'work/pwc-bridge/',
     image:   'work/pwc-bridge/pwc-bridge-hero.jpg',
+    imageFocal: '50% 70%', // laptop is in lower-middle of the image — shift visible window down to centre it
   },
   {
     num: '02', total: '04',
@@ -30,6 +31,7 @@ const PROJECTS = [
     accent:  '#C8A84B',
     href:    'work/hey-honey/',
     image:   'work/hey-honey/hero-meadow.jpg',
+    imageFocal: '50% 35%',
   },
   {
     num: '03', total: '04',
@@ -50,6 +52,7 @@ const PROJECTS = [
     accent:  '#A98FA9',
     href:    'work/share-your-bag/',
     image:   'work/share-your-bag/hero-card.jpg',
+    imageFocal: '50% 35%',
   },
 ];
 
@@ -91,8 +94,10 @@ const workVisualEls = workVisualEl ? PROJECTS.map((p) => {
   // If the project has a hero image, show it; otherwise fall back to the
   // gradient + accent glow used as a placeholder.
   if (p.image) {
-    // Fit the complete cover inside the frame without viewport-dependent crops.
-    item.innerHTML = `<div class="thumb thumb-image"><img src="${p.image}" alt="${p.title}" loading="lazy"/></div>`;
+    // No green fallback bg — image covers the frame fully. If the image
+    // doesn't load, the cream body shows through, not a stale gradient.
+    const focal = p.imageFocal || 'center';
+    item.innerHTML = `<div class="thumb thumb-image"><img src="${p.image}" alt="${p.title}" loading="lazy" style="object-position:${focal};"/></div>`;
   } else {
     item.innerHTML = `<div class="thumb" style="background:${p.bg}"><div class="thumb-glow" style="background:${p.accent}"></div></div>`;
   }
