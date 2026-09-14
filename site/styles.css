@@ -780,6 +780,17 @@ section { position: relative; }
   background: var(--olive-deep);
   padding: 9rem 4rem;
   width: 100%;
+  isolation: isolate;
+}
+#about::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: url('blinds.jpg') right center / auto 110% no-repeat;
+  mix-blend-mode: soft-light;
+  opacity: .16;
+  pointer-events: none;
 }
 .about-grid {
   display: grid;
