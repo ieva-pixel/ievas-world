@@ -503,12 +503,11 @@ section { position: relative; }
 }
 .statement-text {
   font-family: var(--ff-serif);
-  font-size: clamp(2.65rem, 6.2vw, 7.2rem);
+  font-size: clamp(2.35rem, 5.4vw, 6.25rem);
   font-style: italic;
   font-weight: 500;
   line-height: .94;
   letter-spacing: -.04em;
-  text-transform: uppercase;
   color: var(--olive);
   /* Keeps the authored desktop lines intact while retaining a comfortable
      reading measure on wide screens. */
@@ -516,11 +515,15 @@ section { position: relative; }
   margin: 0 auto;
 }
 .statement-line { display: block; }
-.statement-line--changing { white-space: nowrap; }
+.statement-line--changing {
+  white-space: nowrap;
+  /* Sentence case introduces descenders (such as the p in “complex”), so the
+     highlighted final line needs a little breathing room above it. */
+  margin-top: .14em;
+}
 .statement-word {
   position: relative;
   display: inline-grid;
-  min-width: 3.9em;
   margin-left: .08em;
   color: var(--cream);
   vertical-align: baseline;
@@ -530,7 +533,7 @@ section { position: relative; }
   position: absolute;
   /* Give the changing word an even, intentional breathing room on every
      side, including the tall italic capitals. */
-  inset: -.06em -.13em -.06em;
+  inset: -.03em -.10em -.04em;
   z-index: -1;
   border-radius: .1em;
   background: var(--olive);
@@ -1006,7 +1009,7 @@ section { position: relative; }
     padding-left: 1.5rem; padding-right: 1.5rem;
   }
   .statement-text {
-    font-size: clamp(2.35rem, 12.8vw, 4.75rem);
+    font-size: clamp(2.15rem, 10.8vw, 4.1rem);
     max-width: 10.6ch;
     line-height: .96;
   }
