@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hey Honey - doodle concept</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+  <style>
+    :root { --cream:#f7f2ed; --ink:#171513; --lav:#d8cfe9; --blue:#c8dff0; --yellow:#ffe08a; --pink:#efbdc9; --paper:#fffdf9; --line:rgba(23,21,19,.16); }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:var(--cream); font-family:"DM Sans",Arial,sans-serif; }
+    .board { min-height:100vh; padding:54px 42px 72px; overflow:hidden; background:radial-gradient(circle at 10% 24%,rgba(216,207,233,.36) 0 84px,transparent 85px),radial-gradient(circle at 91% 81%,rgba(255,224,138,.55) 0 130px,transparent 131px),var(--cream); }
+    .intro { max-width:1180px; margin:0 auto 31px; display:flex; justify-content:space-between; align-items:flex-end; gap:24px; }
+    .kicker { margin:0 0 8px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.16em; }
+    h1 { margin:0; font:28px/1.1 "Gloria Hallelujah","Comic Sans MS",cursive; letter-spacing:-.04em; }
+    .legend { margin:0; max-width:360px; font-size:13px; line-height:1.45; }
+    .phones { max-width:1120px; margin:0 auto; display:flex; justify-content:center; gap:64px; align-items:flex-start; }
+    .mockup { width:406px; position:relative; }
+    .label { display:flex; justify-content:space-between; margin:0 4px 12px; font-size:12px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; }
+    .label span { color:rgba(23,21,19,.56); font-weight:500; }
+    .phone { height:820px; border:8px solid var(--ink); border-radius:42px; overflow:hidden; background:var(--paper); box-shadow:12px 14px 0 rgba(23,21,19,.12); position:relative; }
+    .speaker { position:absolute; left:50%; transform:translateX(-50%); top:11px; width:92px; height:17px; border-radius:20px; background:var(--ink); z-index:5; }
+    .app { height:100%; overflow:hidden; position:relative; }
+    .top { height:106px; padding:43px 22px 15px; display:flex; align-items:center; justify-content:space-between; }
+    .brand { font:19px/1 "Gloria Hallelujah","Comic Sans MS",cursive; transform:rotate(-3deg); }
+    .brand b { font-weight:inherit; color:#ca8421; }
+    .tools { display:flex; align-items:center; gap:11px; }
+    .icon { position:relative; display:grid; place-items:center; width:25px; height:25px; font-size:20px; line-height:1; }
+    .bag { width:18px; height:18px; border:2px solid var(--ink); border-radius:2px; position:relative; }
+    .bag:before { content:""; width:7px; height:5px; border:2px solid var(--ink); border-bottom:0; border-radius:6px 6px 0 0; position:absolute; left:3px; top:-7px; }
+    .badge { position:absolute; width:14px; height:14px; right:-6px; top:-6px; padding-top:1px; border:1.5px solid var(--ink); border-radius:50%; background:var(--yellow); font-size:8px; font-weight:700; text-align:center; }
+    .menu { font:23px/1 Arial,sans-serif; transform:rotate(90deg); letter-spacing:-2px; }
+    .hero { margin:0 17px; height:258px; padding:27px 22px; background:var(--lav); border:2px solid var(--ink); border-radius:24px; position:relative; overflow:hidden; }
+    .hero:after, .note:after { content:""; position:absolute; right:0; bottom:0; width:0; height:0; border-style:solid; border-width:0 0 30px 30px; border-color:transparent transparent var(--cream) transparent; filter:drop-shadow(-1px -1px 0 var(--ink)); }
+    .hero .eyebrow { margin:0 0 7px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.11em; }
+    .hero h2 { position:relative; z-index:2; margin:0; max-width:198px; font:39px/.98 "Gloria Hallelujah","Comic Sans MS",cursive; letter-spacing:-.06em; }
+    .hero h2 em { font-style:normal; color:#c47a1b; }
+    .hero p { position:relative; z-index:2; max-width:175px; margin:13px 0 0; font-size:13px; line-height:1.3; }
+    .jar { position:absolute; width:142px; right:7px; bottom:12px; z-index:2; transform:rotate(8deg); filter:drop-shadow(5px 6px 0 rgba(23,21,19,.16)); }
+    .scribble { position:absolute; z-index:3; font:20px/1 "Gloria Hallelujah",cursive; }.bee { left:22px; bottom:18px; transform:rotate(-12deg); }
+    .deal { position:absolute; right:-7px; top:319px; z-index:4; padding:10px 12px; border:2px solid var(--ink); border-radius:15px 0 0 15px; background:var(--yellow); font:13px/1 "Gloria Hallelujah",cursive; transform:rotate(-2deg); }
+    .quick { display:flex; gap:10px; margin:17px; }
+    .quick a { min-width:0; flex:1; padding:12px 8px; border:2px solid var(--ink); border-radius:14px; color:var(--ink); text-align:center; text-decoration:none; font-size:13px; font-weight:700; box-shadow:3px 3px 0 rgba(23,21,19,.15); }
+    .quick a:first-child { background:var(--yellow); }.quick a:last-child { background:var(--blue); }
+    .section-title { display:flex; align-items:baseline; justify-content:space-between; margin:23px 20px 12px; }.section-title h3 { margin:0; font:20px/1 "Gloria Hallelujah","Comic Sans MS",cursive; }.section-title a { font-size:11px; font-weight:700; color:var(--ink); }
+    .story { display:grid; grid-template-columns:116px 1fr; gap:12px; margin:0 17px; padding:10px; background:var(--pink); border:2px solid var(--ink); border-radius:16px; position:relative; overflow:hidden; }.story img { width:116px; height:122px; object-fit:cover; border:2px solid var(--ink); border-radius:11px; }.story h4 { margin:10px 0 4px; font-size:14px; }.story p { margin:0; font-size:11px; line-height:1.35; }.story .heart { position:absolute; right:12px; bottom:12px; font:21px/1 Arial,sans-serif; }
+    .ripple { position:absolute; width:150px; height:150px; border:2px solid rgba(23,21,19,.18); border-radius:48% 52% 51% 49%; right:-82px; bottom:38px; transform:rotate(19deg); }.ripple:before { content:""; position:absolute; inset:14px; border:2px solid rgba(23,21,19,.18); border-radius:53% 47% 49% 51%; }.ripple:after { content:""; position:absolute; inset:28px; border:2px solid rgba(23,21,19,.18); border-radius:45% 55% 53% 47%; }
+    .search { margin:0 17px 15px; padding:11px 13px; display:flex; align-items:center; gap:8px; border:2px solid var(--ink); border-radius:14px; background:var(--paper); font-size:12px; }.mag { width:15px; height:15px; border:2px solid var(--ink); border-radius:50%; position:relative; }.mag:after { content:""; position:absolute; width:7px; border-top:2px solid var(--ink); right:-5px; bottom:-3px; transform:rotate(45deg); }.search span { color:rgba(23,21,19,.56); }
+    .shop-head { margin:0 20px 13px; display:flex; justify-content:space-between; align-items:end; }.shop-head h2 { margin:0; font:28px/1 "Gloria Hallelujah","Comic Sans MS",cursive; }.shop-head p { margin:0; font-size:11px; font-weight:700; }
+    .chips { display:flex; gap:9px; margin:0 17px 19px; overflow:hidden; }.chip { flex:0 0 auto; padding:9px 13px; border:2px solid var(--ink); border-radius:999px; font-size:12px; font-weight:700; }.chip:nth-child(1){background:var(--yellow)}.chip:nth-child(2){background:var(--pink)}.chip:nth-child(3){background:var(--blue)}
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:13px; padding:0 17px; }.product { padding:9px; min-height:245px; background:var(--note); border:2px solid var(--ink); border-radius:18px; position:relative; box-shadow:4px 5px 0 rgba(23,21,19,.11); }.product:after { content:""; position:absolute; right:0; bottom:0; border-style:solid; border-width:0 0 21px 21px; border-color:transparent transparent var(--cream) transparent; filter:drop-shadow(-1px -1px 0 var(--ink)); }.product img { width:100%; height:146px; object-fit:contain; }.product h3 { margin:7px 0 2px; font:15px/1.1 "Gloria Hallelujah","Comic Sans MS",cursive; }.product p { margin:0; font-size:10px; }.price { position:absolute; left:9px; bottom:10px; font-size:13px; font-weight:700; }.plus { position:absolute; z-index:3; right:9px; bottom:7px; width:29px; height:29px; border:2px solid var(--ink); border-radius:50%; background:var(--paper); font-size:23px; line-height:24px; text-align:center; }
+    .page-doodle { display:none; }
+    .annotation { margin:17px 5px 0; font-size:12px; line-height:1.45; }.annotation b { font-weight:700; }
+    @media (max-width:900px){ .board{padding:36px 22px 60px}.intro{margin-bottom:25px}.phones{gap:52px; flex-wrap:wrap}.mockup{width:min(406px,100%)} }
+    @media (max-width:550px){ .board{padding:28px 14px 50px}.intro{display:block}.legend{margin-top:12px}.phone{height:780px}.phones{gap:46px}.mockup{width:calc(100% - 28px)} }
+  </style>
+</head>
+<body>
+  <main class="board">
+    <header class="intro">
+      <div><p class="kicker">Concept 01 - visual direction</p><h1>Hey Honey, with the slide-deck energy</h1></div>
+      <p class="legend">Warm paper, folded sticky notes, blunt black outlines, and soft research-deck pastels.</p>
+    </header>
+    <section class="phones" aria-label="Two high fidelity Hey Honey mobile concepts">
+      <article class="mockup">
+        <div class="label"><b>01 / Home</b><span>discover</span></div>
+        <div class="phone"><div class="speaker"></div><div class="app">
+          <header class="top"><div class="brand">Hey <b>Honey</b></div><div class="tools"><span class="icon">♡</span><span class="icon"><i class="bag"></i><b class="badge">2</b></span><span class="menu">•••</span></div></header>
+          <section class="hero"><p class="eyebrow">From local hives</p><h2>Hello,<br><em>honey.</em></h2><img class="jar" src="v2/photos/jar-orange.jpg" alt="Hey Honey blossom jar"><span class="scribble bee">🐝</span></section>
+          <span class="deal">10% off</span>
+          <nav class="quick"><a href="#">Shop honey</a><a href="#">Our story</a></nav>
+          <div class="section-title"><h3>From our beekeepers</h3><a href="#">see all ↗</a></div>
+          <article class="story"><img src="v2/photos/beekeeper-portrait.jpg" alt="Beekeeper Tobias"><div><h4>Tobias, Zurich</h4><p>Alpine blossom honey</p></div><span class="heart">♡</span></article>
+          <span class="ripple"></span>
+        </div></div>
+        <p class="annotation"><b>Direction:</b> warm, editorial, and clear.</p>
+      </article>
+      <article class="mockup">
+        <div class="label"><b>02 / Shop</b><span>browse</span></div>
+        <div class="phone"><div class="speaker"></div><div class="app">
+          <header class="top"><div class="brand">Hey <b>Honey</b></div><div class="tools"><span class="icon">♡</span><span class="icon"><i class="bag"></i><b class="badge">2</b></span><span class="menu">•••</span></div></header>
+          <div class="search"><i class="mag"></i><span>Search the hive...</span></div>
+          <div class="shop-head"><h2>Pick your jar</h2><p>12 local honeys</p></div>
+          <div class="chips"><span class="chip">All jars</span><span class="chip">Floral</span></div>
+          <section class="grid">
+            <article class="product" style="--note:var(--yellow)"><img src="v2/photos/jar-orange.jpg" alt="Swiss Blossom honey"><h3>Swiss Blossom</h3><strong class="price">CHF 16</strong><span class="plus">+</span></article>
+            <article class="product" style="--note:var(--blue)"><img src="v2/photos/jar-pine.jpg" alt="Pine Tree honey"><h3>Pine Tree</h3><strong class="price">CHF 20</strong><span class="plus">+</span></article>
+            <article class="product" style="--note:var(--pink)"><img src="v2/photos/jar-blossom.jpg" alt="Cherry Blossom honey"><h3>Cherry Blossom</h3><strong class="price">CHF 18</strong><span class="plus">+</span></article>
+            <article class="product" style="--note:var(--lav)"><img src="v2/photos/jar-elder.jpg" alt="Elderflower honey"><h3>Elderflower</h3><strong class="price">CHF 19</strong><span class="plus">+</span></article>
+          </section>
+        </div></div>
+        <p class="annotation"><b>Direction:</b> colour helps scanning without crowding the products.</p>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

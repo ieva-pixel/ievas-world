@@ -1,0 +1,1740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hey Honey — low/mid fidelity mockups</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  /* =========================================================
+     Hey Honey — low/mid fidelity wireframes
+     Greyscale + single honey accent. Structure over polish.
+     ========================================================= */
+  :root {
+    --paper:        #F4F3EF;   /* page bg */
+    --frame-bg:     #FFFFFF;   /* phone interior */
+    --frame-soft:   #F7F6F2;   /* subtle surface */
+    --frame-fill:   #ECEAE3;   /* placeholder fill */
+
+    --ink:          #1A1A1A;
+    --ink-soft:     #555555;
+    --muted:        #8E8C85;
+    --hair:         #D9D6CD;
+    --hair-soft:    #E7E4DA;
+
+    /* Single accent — sparingly used to mark the primary action / selection */
+    --accent:       #E89B2A;
+    --accent-soft:  #FFEDC8;
+
+    --ff-display:   'Quicksand', system-ui, sans-serif;
+    --ff-sans:      'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--ff-sans);
+    color: var(--ink);
+    background: var(--paper);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.4;
+    min-height: 100vh;
+  }
+  img { display: block; max-width: 100%; }
+  button { font: inherit; padding: 0; border: 0; background: transparent; }
+  a { color: inherit; text-decoration: none; }
+
+  /* ─────────  Page head  ───────── */
+  .page-head {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 5rem 2rem 2rem;
+  }
+  .page-head .eyebrow {
+    font-size: .76rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: .85rem;
+  }
+  .page-head h1 {
+    font-family: var(--ff-display);
+    font-weight: 600;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    margin: 0 0 .9rem;
+    color: var(--ink);
+  }
+  .page-head h1 em {
+    font-style: normal;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .page-head p {
+    max-width: 640px;
+    font-size: .98rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0 0 1.2rem;
+  }
+  .page-head .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .45rem .55rem;
+    margin-top: .85rem;
+  }
+  .badge-key {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    padding: .35rem .7rem;
+    background: #fff;
+    border: 1px solid var(--hair);
+    border-radius: 999px;
+    font-size: .74rem;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+  .badge-key .dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--ink-soft);
+  }
+  .badge-key .dot.accent  { background: var(--accent); }
+  .badge-key .dot.fill    { background: var(--frame-fill); border: 1px solid var(--hair); }
+  .badge-key .dot.outline { background: transparent; border: 1.5px solid var(--ink); }
+
+  /* ─────────  Grid  ───────── */
+  .phones-grid {
+    max-width: 1320px;
+    margin: 1.5rem auto 6rem;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 3rem 2rem;
+    align-items: start;
+  }
+  @media (max-width: 600px) {
+    .page-head { padding: 3rem 1.25rem 1rem; }
+    .phones-grid { padding: 0 1.25rem; gap: 2rem; }
+  }
+
+  /* ─────────  Phone frame  ───────── */
+  .phone-card { display: flex; flex-direction: column; }
+  .phone-label {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: .85rem;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+  .phone-label b {
+    font-weight: 700; color: var(--ink);
+    font-size: 1rem;
+  }
+  .phone-label span {
+    font-size: .7rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .phone-notes {
+    margin-top: 1rem;
+    font-size: .82rem;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  .phone-notes ul { margin: 0; padding: 0 0 0 1.1rem; }
+  .phone-notes li { margin-bottom: .2rem; }
+  .phone-notes li b { color: var(--ink); }
+
+  .phone-frame {
+    width: 100%;
+    aspect-ratio: 9 / 19.5;
+    background: var(--frame-bg);
+    border: 1.5px solid var(--ink);
+    border-radius: 32px;
+    overflow: hidden;
+    position: relative;
+    contain: layout paint;
+  }
+
+  .status-bar {
+    height: 32px;
+    padding: 0 18px 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: .72rem;
+    font-weight: 600;
+    color: var(--ink);
+    border-bottom: 1px dashed var(--hair);
+  }
+  .status-right { display: flex; gap: 4px; align-items: center; color: var(--ink-soft); }
+  .home-indicator {
+    position: absolute;
+    bottom: 6px; left: 50%;
+    transform: translateX(-50%);
+    width: 30%; height: 3px; border-radius: 2px;
+    background: var(--ink);
+    opacity: .5;
+    z-index: 5;
+  }
+
+  .screen {
+    position: absolute;
+    inset: 32px 0 0 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: var(--frame-bg);
+  }
+  .screen-scroll { flex: 1; overflow: hidden; position: relative; }
+
+  /* ─────────  Shared bits  ───────── */
+  .ic    { width: 18px; height: 18px; display: block; }
+  .ic-sm { width: 14px; height: 14px; display: block; }
+  .ic-lg { width: 22px; height: 22px; display: block; }
+
+  /* Placeholder box — the iconic wireframe X */
+  .ph {
+    position: relative;
+    background: var(--frame-fill);
+    border: 1.5px solid var(--ink);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .ph::before, .ph::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top right, transparent calc(50% - 1px), var(--ink) calc(50% - 1px), var(--ink) calc(50% + 1px), transparent calc(50% + 1px));
+  }
+  .ph::after {
+    background: linear-gradient(to top left, transparent calc(50% - 1px), var(--ink) calc(50% - 1px), var(--ink) calc(50% + 1px), transparent calc(50% + 1px));
+  }
+  .ph .ph-label {
+    position: absolute;
+    inset: 0;
+    display: grid; place-items: center;
+    font-size: .68rem;
+    letter-spacing: .04em;
+    color: var(--ink-soft);
+    background: var(--frame-fill);
+    padding: 0 .5rem;
+    text-align: center;
+    z-index: 2;
+    margin: auto;
+    width: max-content;
+    height: max-content;
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+
+  /* ─────────  Top bar  ───────── */
+  .topbar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 14px 14px 8px;
+  }
+  .topbar .brand {
+    font-family: var(--ff-display);
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--ink);
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    margin-right: auto;
+  }
+  .topbar .icon-btn {
+    width: 30px; height: 30px;
+    display: grid; place-items: center;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--ink);
+    border: 0; cursor: pointer;
+    position: relative;
+  }
+  .back-row {
+    display: flex; align-items: center; gap: 6px;
+    padding: 14px 10px 8px;
+  }
+  .back-row .back {
+    display: grid; place-items: center;
+    width: 30px; height: 30px;
+    border: 0; background: transparent;
+    color: var(--ink);
+  }
+  .back-row .brand {
+    font-family: var(--ff-display);
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    margin-right: auto;
+    color: var(--ink);
+  }
+
+  /* ─────────  Search  ───────── */
+  .search-row {
+    display: flex; gap: 8px; align-items: center;
+    padding: 6px 14px 12px;
+  }
+  .search-row .field {
+    flex: 1;
+    height: 36px;
+    padding: 0 14px 0 32px;
+    border: 1.5px solid var(--ink);
+    border-radius: 6px;
+    background: var(--frame-bg);
+    font: inherit;
+    font-size: .8rem;
+    color: var(--ink);
+  }
+  .search-wrap {
+    flex: 1; position: relative;
+    display: flex; align-items: center;
+  }
+  .search-wrap input { width: 100%; }
+  .search-wrap .search-icon {
+    position: absolute; left: 10px;
+    color: var(--ink-soft);
+    pointer-events: none;
+  }
+  .filter-btn {
+    width: 36px; height: 36px;
+    border-radius: 6px;
+    background: var(--frame-bg);
+    color: var(--ink);
+    border: 1.5px solid var(--ink);
+    cursor: pointer;
+    display: grid; place-items: center;
+  }
+
+  /* ─────────  Buttons  ───────── */
+  .btn {
+    width: 100%;
+    border: 1.5px solid var(--ink);
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-family: var(--ff-sans);
+    font-weight: 600;
+    font-size: .9rem;
+    cursor: pointer;
+    display: inline-flex; justify-content: center; align-items: center; gap: 8px;
+    background: var(--frame-bg);
+    color: var(--ink);
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--ink);
+  }
+  .btn-ink {
+    background: var(--ink);
+    color: var(--frame-bg);
+  }
+
+  .footer {
+    border-top: 1px solid var(--hair);
+    padding: 12px 16px 14px;
+    background: var(--frame-bg);
+  }
+  .footer ul {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; gap: 4px;
+    font-size: .78rem;
+    color: var(--ink);
+  }
+  .footer .legal {
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--hair);
+    font-size: .65rem;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  /* =========================================================
+     01 · HOME
+     ========================================================= */
+  .home-hero {
+    margin: 4px 14px 24px;
+    aspect-ratio: 1 / 0.95;
+    position: relative;
+  }
+  .home-hero .copy {
+    position: absolute;
+    top: 18px; left: 18px;
+    right: 70px;
+    z-index: 2;
+  }
+  .home-hero .eyebrow {
+    font-size: .65rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+  .home-hero h1 {
+    font-family: var(--ff-display);
+    font-weight: 600;
+    font-size: 1.6rem;
+    line-height: 1.04;
+    margin: 6px 0 0;
+    color: var(--ink);
+  }
+  .home-hero .discount-tab {
+    position: absolute;
+    right: 0; top: 38%;
+    background: var(--ink);
+    color: var(--frame-bg);
+    padding: 12px 7px;
+    border-radius: 8px 0 0 8px;
+    writing-mode: vertical-rl;
+    transform: translateY(-50%) rotate(180deg);
+    font-weight: 700;
+    font-size: .65rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    z-index: 3;
+  }
+
+  .home-cta-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 0 14px 24px;
+  }
+  .home-cta-row .btn { padding: 11px 8px; font-size: .85rem; }
+
+  .home-section-head {
+    padding: 8px 16px 8px;
+    display: flex; align-items: baseline; justify-content: space-between;
+  }
+  .home-section-head h2 {
+    font-family: var(--ff-display);
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin: 0;
+    color: var(--ink);
+  }
+  .home-section-head .more {
+    font-size: .74rem;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+
+  .beekeeper {
+    margin: 0 14px;
+    border: 1.5px solid var(--ink);
+    border-radius: 8px;
+    aspect-ratio: 1 / 0.85;
+    position: relative;
+    overflow: hidden;
+  }
+  .beekeeper-card {
+    position: absolute;
+    left: 12px; bottom: 12px; right: 12px;
+    background: var(--frame-bg);
+    border: 1.5px solid var(--ink);
+    border-radius: 6px;
+    padding: 10px 12px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 8px;
+    z-index: 2;
+  }
+  .beekeeper-card .name {
+    font-family: var(--ff-display);
+    font-weight: 600;
+    font-size: .9rem;
+    line-height: 1.15;
+    margin: 0;
+    color: var(--ink);
+  }
+  .beekeeper-card .desc {
+    font-size: .7rem;
+    color: var(--ink-soft);
+    margin: 2px 0 0;
+  }
+  .beekeeper-card .more-link {
+    font-size: .7rem;
+    color: var(--ink);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .dots {
+    position: absolute;
+    bottom: 22px; right: 14px;
+    display: flex; gap: 4px;
+    z-index: 3;
+  }
+  .dots span {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(0,0,0,.3);
+  }
+  .dots span.active { background: var(--ink); width: 16px; border-radius: 999px; }
+
+  /* =========================================================
+     02 · SHOP
+     ========================================================= */
+  .cat-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    padding: 4px 14px 12px;
+  }
+  .cat-tile {
+    aspect-ratio: 1;
+    border: 1.5px solid var(--ink);
+    border-radius: 6px;
+    background: var(--frame-fill);
+    position: relative;
+    display: grid; place-items: end center;
+    padding-bottom: 5px;
+    font-size: .65rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .cat-tile .lbl {
+    background: var(--frame-bg);
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 14px;
+    padding: 6px 14px 18px;
+  }
+  .product-card {
+    background: var(--frame-bg);
+    border: 1.5px solid var(--ink);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+  .product-card .photo {
+    aspect-ratio: 1 / 0.92;
+    position: relative;
+    border-bottom: 1.5px solid var(--ink);
+  }
+  .product-card .heart {
+    position: absolute; top: 8px; right: 8px;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--frame-bg);
+    border: 1.5px solid var(--ink);
+    display: grid; place-items: center;
+    color: var(--ink);
+    cursor: pointer;
+    z-index: 2;
+    padding: 0;
+  }
+  .product-card .heart svg { width: 13px; height: 13px; display: block; }
+  .product-card .heart.fill svg { fill: var(--ink); }
+  .product-card .meta {
+    padding: 7px 10px 10px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 6px;
+  }
+  .product-card .name {
+    font-family: var(--ff-display);
+    font-weight: 600;
+    font-size: .88rem;
+    line-height: 1.1;
+    color: var(--ink);
+    margin: 0;
+  }
+  .product-card .desc {
+    font-size: .65rem;
+    color: var(--ink-soft);
+    margin: 1px 0 3px;
+    line-height: 1.25;
+  }
+  .product-card .price {
+    font-size: .75rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .product-card .add {
+    width: 26px; height: 26px;
+    border: 1.5px solid var(--ink);
+    border-radius: 6px;
+    background: var(--frame-bg);
+    color: var(--ink);
+    display: grid; place-items: center;
+    cursor: pointer;
+  }
+
+  /* =========================================================
+     03 · PRODUCT (PDP)
+     ========================================================= */
+  .pdp-hero {
+    margin: 4px 14px 10px;
+    aspect-ratio: 1 / 0.62;
+    position: relative;
+  }
+  .pdp-hero .pager {
+    position: absolute;
+    bottom: 8px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; gap: 4px;
+    z-index: 2;
+  }
+  .pdp-hero .pager span {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: rgba(0,0,0,.3);
+  }
+  .pdp-hero .pager span.active { background: var(--ink); width: 14px; border-radius: 999px; }
+
+  .pdp-meta { padding: 0 16px 4px; }
+  .pdp-meta .rating {
+    display: flex; align-items: center; gap: 6px;
+    font-size: .7rem; color: var(--ink-soft);
+    margin-bottom: 2px;
+  }
+  .pdp-meta .rating .stars { color: var(--ink); letter-spacing: 1px; }
+  .pdp-meta .name-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 10px; margin: 2px 0;
+  }
+  .pdp-meta .name {
+    font-family: var(--ff-display);
+    font-weight: 600;
+    font-size: 1.05rem;
+    line-height: 1.1;
+    margin: 0;
+    color: var(--ink);
+  }
+  .pdp-meta .price-strong {
+    font-size: .98rem;
+    font-weight: 700;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .pdp-meta .desc {
+    font-size: .72rem;
+    color: var(--ink-soft);
+    line-height: 1.4;
+    margin: 2px 0 0;
+  }
+
+  .size-block { padding: 8px 16px 4px; }
+  .size-label {
+    font-size: .65rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+  .size-row { display: flex; gap: 6px; }
+  .size-pill {
+    flex: 1;
+    text-align: center;
+    padding: 7px 0;
+    border: 1.5px solid var(--ink);
+    border-radius: 6px;
+    background: var(--frame-bg);
+    font-size: .74rem;
+    font-weight: 500;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .size-pill.active {
+    background: var(--ink);
+    color: var(--frame-bg);
+    font-weight: 600;
+  }
+
+  .buy-block {
+    padding: 8px 16px 12px;
+    display: grid; gap: 12px;
+  }
+  .buy-card {
+    padding: 8px 10px;
+    border: 1.5px solid var(--ink);
+    border-radius: 6px;
+    background: var(--frame-bg);
+    position: relative;
+  }
+  .buy-card.selected { background: var(--frame-soft); }
+  .buy-card .row {
+    display: flex; align-items: center; gap: 8px;
+  }
+  .radio {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    border: 1.6px solid var(--ink);
+    display: grid; place-items: center;
+    flex-shrink: 0;
+  }
+  .radio.checked::after {
+    content: "";
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--ink);
+  }
+  .buy-card .title {
+    font-size: .85rem; font-weight: 600;
+    color: var(--ink);
+    flex: 1;
+  }
+  .buy-card .save-pill {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-size: .62rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-left: 4px;
+  }
+  .buy-card .price {
+    font-size: .88rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-left: auto;
+  }
+  .buy-card .sub-desc {
+    font-size: .68rem;
+    color: var(--ink-soft);
+    margin: 2px 0 6px 24px;
+    line-height: 1.35;
+  }
+  .delivery-select {
+    margin-left: 24px;
+    padding: 6px 10px;
+    background: var(--frame-bg);
+    border: 1.5px solid var(--ink);
+    border-radius: 4px;
+    font-size: .7rem;
+    color: var(--ink);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  .ymal-head { padding: 8px 16px 6px; }
+  .ymal-head h3 {
+    font-family: var(--ff-display);
+    font-weight: 600;
+    font-size: .95rem;
+    margin: 0;
+    color: var(--ink);
+  }
+  .ymal-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 4px 16px 16px;
+  }
+  .ymal-card {
+    background: var(--frame-bg);
+    border: 1.5px solid var(--ink);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .ymal-card .photo {
+    aspect-ratio: 1 / 0.88;
+    border-bottom: 1.5px solid var(--ink);
+    position: relative;
+  }
+  .ymal-card .meta {
+    padding: 8px 10px 10px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 6px;
+  }
+  .ymal-card .name {
+    font-family: var(--ff-display);
+    font-weight: 600;
+    font-size: .78rem;
+    margin: 0;
+  }
+  .ymal-card .desc { font-size: .62rem; color: var(--ink-soft); margin: 1px 0 2px; }
+  .ymal-card .price { font-size: .7rem; font-weight: 600; }
+  .ymal-card .add {
+    width: 22px; height: 22px;
+    border: 1.5px solid var(--ink);
+    border-radius: 4px;
+    background: var(--frame-bg);
+    display: grid; place-items: center;
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  /* =========================================================
+     04 · CART (drawer)
+     ========================================================= */
+  .pdp-behind {
+    position: absolute; inset: 0;
+    opacity: .5;
+    pointer-events: none;
+  }
+  .cart-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,.18);
+    z-index: 4;
+  }
+  .cart-drawer {
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 88%;
+    background: var(--frame-bg);
+    border-left: 1.5px solid var(--ink);
+    z-index: 5;
+    display: flex; flex-direction: column;
+    border-radius: 12px 0 0 12px;
+  }
+  .cart-head {
+    display: flex; align-items: center;
+    padding: 16px 16px 12px;
+    border-bottom: 1px solid var(--hair);
+  }
+  .cart-head h2 {
+    font-family: var(--ff-display);
+    font-weight: 600;
+    font-size: 1.05rem;
+    margin: 0;
+    color: var(--ink);
+    flex: 1;
+  }
+  .cart-close {
+    background: transparent;
+    border: 0;
+    width: 28px; height: 28px;
+    display: grid; place-items: center;
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  .cart-body { flex: 1; padding: 12px 14px; overflow: hidden; }
+  .cart-item {
+    border: 1.5px solid var(--ink);
+    border-radius: 6px;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 10px;
+    position: relative;
+    background: var(--frame-bg);
+  }
+  .cart-item .thumb {
+    aspect-ratio: 1;
+    border: 1.5px solid var(--ink);
+    border-radius: 4px;
+    background: var(--frame-fill);
+    position: relative;
+    overflow: hidden;
+  }
+  .cart-item .thumb::before, .cart-item .thumb::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(to top right, transparent calc(50% - 1px), var(--ink) calc(50% - 1px), var(--ink) calc(50% + 1px), transparent calc(50% + 1px));
+  }
+  .cart-item .thumb::after {
+    background: linear-gradient(to top left, transparent calc(50% - 1px), var(--ink) calc(50% - 1px), var(--ink) calc(50% + 1px), transparent calc(50% + 1px));
+  }
+  .cart-item .info { display: flex; flex-direction: column; gap: 1px; }
+  .cart-item .name {
+    font-family: var(--ff-display);
+    font-weight: 600;
+    font-size: .88rem;
+    line-height: 1.1;
+    color: var(--ink);
+    margin: 0;
+    padding-right: 22px;
+  }
+  .cart-item .weight {
+    font-size: .68rem;
+    color: var(--ink-soft);
+  }
+  .cart-item .pricerow {
+    display: flex; align-items: center; gap: 8px;
+    margin-top: 3px;
+  }
+  .cart-item .price {
+    font-size: .88rem;
+    font-weight: 700;
+  }
+  .cart-item .qty {
+    margin-left: auto;
+    display: inline-flex; align-items: center;
+    border: 1.5px solid var(--ink);
+    border-radius: 999px;
+    padding: 1px;
+    gap: 2px;
+    font-weight: 600;
+    font-size: .72rem;
+    background: var(--frame-bg);
+  }
+  .cart-item .qty button {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: transparent;
+    border: 0;
+    color: var(--ink);
+    display: grid; place-items: center;
+    cursor: pointer;
+  }
+  .cart-item .qty span { padding: 0 4px; min-width: 12px; text-align: center; }
+  .cart-item .sub-row {
+    margin-top: 5px;
+    display: flex; align-items: center;
+    gap: 6px;
+    font-size: .65rem;
+    color: var(--ink-soft);
+  }
+  .cart-item .sub-row .pill {
+    background: var(--frame-bg);
+    color: var(--ink);
+    padding: 2px 6px;
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: .6rem;
+  }
+  .cart-item .close-x {
+    position: absolute;
+    top: 8px; right: 10px;
+    width: 18px; height: 18px;
+    border: 0;
+    background: transparent;
+    display: grid; place-items: center;
+    cursor: pointer; color: var(--ink);
+  }
+
+  .cart-summary {
+    margin-top: 10px;
+    padding: 10px 12px;
+    border: 1px dashed var(--hair);
+    border-radius: 6px;
+    font-size: .78rem;
+    color: var(--ink);
+  }
+  .cart-summary .line {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 3px 0;
+  }
+  .cart-summary .line.total {
+    border-top: 1px dashed var(--hair);
+    margin-top: 6px;
+    padding-top: 8px;
+    font-weight: 700;
+    font-size: .92rem;
+  }
+
+  .cart-foot {
+    padding: 10px 14px 14px;
+    background: var(--frame-bg);
+    border-top: 1px solid var(--hair);
+  }
+  .cart-foot .ship-note {
+    font-size: .68rem;
+    text-align: center;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+  }
+
+  /* =========================================================
+     05 · CHECKOUT
+     ========================================================= */
+  .summary-bar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 16px;
+    background: var(--frame-soft);
+    border-top: 1px solid var(--hair);
+    border-bottom: 1px solid var(--hair);
+    font-size: .82rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .summary-bar .chev { font-size: .65rem; margin-left: 4px; color: var(--ink-soft); }
+
+  .co-section {
+    padding: 10px 16px 2px;
+  }
+  .co-section h3 {
+    display: flex; align-items: baseline; justify-content: space-between;
+    font-family: var(--ff-display);
+    font-weight: 600;
+    font-size: .9rem;
+    margin: 0 0 6px;
+    color: var(--ink);
+  }
+  .co-section h3 .link {
+    font-family: var(--ff-sans);
+    font-size: .72rem;
+    color: var(--ink);
+    font-weight: 600;
+    text-decoration: underline;
+  }
+  .input {
+    width: 100%;
+    height: 34px;
+    border: 1.5px solid var(--ink);
+    border-radius: 6px;
+    padding: 0 12px;
+    background: var(--frame-bg);
+    font: inherit;
+    font-size: .76rem;
+    color: var(--ink);
+    margin-bottom: 5px;
+  }
+  .input::placeholder { color: var(--muted); }
+  .input.with-label {
+    padding-top: 14px;
+    height: 40px;
+  }
+  .input-wrap {
+    position: relative;
+    margin-bottom: 6px;
+  }
+  .input-wrap .lbl {
+    position: absolute;
+    top: 4px; left: 12px;
+    font-size: .58rem;
+    color: var(--muted);
+    pointer-events: none;
+  }
+  .input-wrap .input {
+    margin: 0;
+  }
+  .checkbox-row {
+    display: flex; align-items: center; gap: 8px;
+    margin: 6px 0 4px;
+    font-size: .74rem;
+    color: var(--ink-soft);
+  }
+  .checkbox {
+    width: 14px; height: 14px;
+    border-radius: 3px;
+    border: 1.5px solid var(--ink);
+    display: grid; place-items: center;
+    color: var(--ink);
+    background: var(--frame-bg);
+  }
+  .checkbox.checked {
+    background: var(--ink);
+    color: var(--frame-bg);
+  }
+
+  .pay-list {
+    border: 1.5px solid var(--ink);
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--frame-bg);
+  }
+  .pay-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--hair);
+    font-size: .78rem;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .pay-row:last-child { border-bottom: 0; }
+  .pay-row.open {
+    background: var(--frame-soft);
+  }
+  .pay-row .logo {
+    margin-left: auto;
+    font-weight: 600;
+    font-size: .65rem;
+    letter-spacing: .04em;
+    color: var(--ink-soft);
+  }
+  .pay-form {
+    padding: 4px 12px 10px;
+    background: var(--frame-soft);
+    border-bottom: 1px solid var(--hair);
+  }
+
+  .summary-card {
+    border: 1.5px solid var(--ink);
+    border-radius: 6px;
+    padding: 10px;
+    margin-top: 2px;
+  }
+  .summary-product {
+    display: grid;
+    grid-template-columns: 42px 1fr;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .summary-product .thumb {
+    aspect-ratio: 1;
+    border-radius: 4px;
+    border: 1.5px solid var(--ink);
+    background: var(--frame-fill);
+    position: relative;
+    overflow: hidden;
+  }
+  .summary-product .thumb::before, .summary-product .thumb::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(to top right, transparent calc(50% - 1px), var(--ink) calc(50% - 1px), var(--ink) calc(50% + 1px), transparent calc(50% + 1px));
+  }
+  .summary-product .thumb::after {
+    background: linear-gradient(to top left, transparent calc(50% - 1px), var(--ink) calc(50% - 1px), var(--ink) calc(50% + 1px), transparent calc(50% + 1px));
+  }
+  .summary-product .name {
+    font-family: var(--ff-display);
+    font-weight: 600;
+    font-size: .9rem;
+    line-height: 1;
+    margin: 0;
+  }
+  .summary-product .weight { font-size: .65rem; color: var(--ink-soft); }
+  .summary-product .price { font-weight: 700; font-size: .85rem; }
+
+  .voucher-row {
+    display: flex; gap: 6px;
+    margin-bottom: 8px;
+  }
+  .voucher-row .input { margin: 0; }
+  .voucher-row .btn {
+    width: auto; padding: 0 14px; height: 34px;
+    border-radius: 6px;
+    font-size: .76rem;
+  }
+  .totals .line {
+    display: flex; justify-content: space-between;
+    padding: 2px 0;
+    font-size: .76rem;
+    color: var(--ink-soft);
+  }
+  .totals .line.grand {
+    border-top: 1px dashed var(--hair);
+    margin-top: 5px;
+    padding-top: 6px;
+    font-weight: 700;
+    font-size: .9rem;
+    color: var(--ink);
+  }
+  .checkout-cta {
+    padding: 6px 16px 14px;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- ─────────  Shared SVG icons (single-stroke wireframe style)  ───────── -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-cart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.2a2 2 0 0 0 2-1.5L20.5 8H6.2"/></g></symbol>
+    <symbol id="i-cart-add" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9h14l-1.6 8.2a2 2 0 0 1-2 1.6H8.6a2 2 0 0 1-2-1.6z"/><path d="M8.5 9V7a3.5 3.5 0 0 1 7 0v2"/><path d="M12 12.5v4M10 14.5h4"/></g></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 8.3a5 5 0 0 0-8.8-3.2A5 5 0 0 0 3.2 8.3c0 7 8.8 12 8.8 12s8.8-5 8.8-12z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-person" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></g></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></g></symbol>
+    <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6l-12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-chev-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8.5v.01M11 12h1v4h1"/></g></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></g></symbol>
+    <symbol id="i-signal" viewBox="0 0 20 12"><path d="M1 11h2v-3H1zM5 11h2v-5H5zM9 11h2v-7H9zM13 11h2v-9h-2zM17 11h2v-11h-2z" fill="currentColor"/></symbol>
+    <symbol id="i-wifi" viewBox="0 0 16 12"><path d="M1.5 4.5a10 10 0 0 1 13 0M3.5 6.7a7 7 0 0 1 9 0M5.5 8.9a4 4 0 0 1 5 0M8 11.2v.01" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></symbol>
+    <symbol id="i-battery" viewBox="0 0 24 12"><rect x="0.5" y="1" width="21" height="10" rx="2" fill="none" stroke="currentColor"/><rect x="22.5" y="4" width="1.5" height="4" rx="0.5" fill="currentColor"/><rect x="2" y="2.5" width="14" height="7" rx="1" fill="currentColor"/></symbol>
+  </defs>
+</svg>
+
+<header class="page-head">
+  <div class="eyebrow">Hey Honey · low / mid fidelity</div>
+  <h1>Structure first, <em>polish later</em>.</h1>
+  <p>A stripped-back pass focused on layout, hierarchy, and flow. Greyscale plus a single honey accent. Image placeholders carry the X marks of intent — to be replaced with real photography and illustration at the hi-fi stage.</p>
+  <div class="legend">
+    <span class="badge-key"><span class="dot"></span> Ink (structure)</span>
+    <span class="badge-key"><span class="dot accent"></span> Honey accent (primary actions)</span>
+    <span class="badge-key"><span class="dot fill"></span> Placeholder fill</span>
+    <span class="badge-key"><span class="dot outline"></span> Outlined surface</span>
+  </div>
+</header>
+
+<main class="phones-grid">
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- 01 · HOME                                            -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <section class="phone-card">
+    <div class="phone-label"><b>01 · Home</b><span>landing</span></div>
+    <div class="phone-frame">
+      <div class="status-bar">
+        <span>9:41</span>
+        <span class="status-right">
+          <svg class="ic-sm"><use href="#i-signal"/></svg>
+          <svg class="ic-sm" style="width:14px;height:10px"><use href="#i-wifi"/></svg>
+          <svg style="width:22px;height:11px"><use href="#i-battery"/></svg>
+        </span>
+      </div>
+      <div class="screen">
+        <header class="topbar">
+          <a class="brand" href="#">Hey Honey</a>
+          <button class="icon-btn" aria-label="Cart"><svg class="ic"><use href="#i-cart"/></svg></button>
+          <button class="icon-btn" aria-label="Favourites"><svg class="ic"><use href="#i-heart"/></svg></button>
+          <button class="icon-btn" aria-label="Account"><svg class="ic"><use href="#i-person"/></svg></button>
+          <button class="icon-btn" aria-label="Menu"><svg class="ic"><use href="#i-menu"/></svg></button>
+        </header>
+        <div class="search-row">
+          <div class="search-wrap">
+            <svg class="search-icon ic-sm"><use href="#i-search"/></svg>
+            <input class="field" placeholder="Search Manuka, Acacia, gifts…" />
+          </div>
+          <button class="filter-btn" aria-label="Filters"><svg class="ic"><use href="#i-filter"/></svg></button>
+        </div>
+
+        <div class="screen-scroll">
+          <!-- Hero -->
+          <section class="home-hero">
+            <div class="ph" style="position:absolute; inset:0; border-radius:8px">
+              <div class="ph-label">Hero image / mascot</div>
+            </div>
+            <div class="copy">
+              <div class="eyebrow">Small-batch · Swiss</div>
+              <h1>Marketing message<br>goes here.</h1>
+            </div>
+            <span class="discount-tab">Get 10% OFF</span>
+          </section>
+
+          <div class="home-cta-row">
+            <button class="btn">Learn more</button>
+            <button class="btn btn-primary">Shop now</button>
+          </div>
+
+          <div class="home-section-head">
+            <h2>Our beekeepers</h2>
+            <a class="more" href="#">View all →</a>
+          </div>
+
+          <article class="beekeeper">
+            <div class="ph" style="position:absolute; inset:0; border:0; border-radius:6px"><div class="ph-label">Beekeeper photo</div></div>
+            <div class="dots">
+              <span class="active"></span><span></span><span></span><span></span><span></span>
+            </div>
+            <div class="beekeeper-card">
+              <div>
+                <p class="name">Name</p>
+                <p class="desc">Region · varietal · short bio</p>
+              </div>
+              <a class="more-link" href="#">Learn more →</a>
+            </div>
+          </article>
+
+          <footer class="footer" style="margin-top:14px">
+            <ul>
+              <li>About us</li>
+              <li>Subscriptions</li>
+              <li>Recipes</li>
+              <li>Support</li>
+            </ul>
+            <p class="legal">Legal footer</p>
+          </footer>
+        </div>
+      </div>
+      <div class="home-indicator"></div>
+    </div>
+    <div class="phone-notes">
+      <ul>
+        <li><b>Hero:</b> single image placeholder; marketing message + 10% OFF pull-tab on the right edge</li>
+        <li><b>Primary action</b> ("Shop now") in honey to test it draws the eye against the structure</li>
+        <li><b>Beekeepers:</b> card carousel with overlay caption + 5-dot pager</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- 02 · SHOP                                            -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <section class="phone-card">
+    <div class="phone-label"><b>02 · Shop</b><span>browse</span></div>
+    <div class="phone-frame">
+      <div class="status-bar">
+        <span>9:41</span>
+        <span class="status-right">
+          <svg class="ic-sm"><use href="#i-signal"/></svg>
+          <svg class="ic-sm" style="width:14px;height:10px"><use href="#i-wifi"/></svg>
+          <svg style="width:22px;height:11px"><use href="#i-battery"/></svg>
+        </span>
+      </div>
+      <div class="screen">
+        <header class="topbar">
+          <a class="brand" href="#">Hey Honey</a>
+          <button class="icon-btn"><svg class="ic"><use href="#i-cart"/></svg></button>
+          <button class="icon-btn"><svg class="ic"><use href="#i-heart"/></svg></button>
+          <button class="icon-btn"><svg class="ic"><use href="#i-person"/></svg></button>
+          <button class="icon-btn"><svg class="ic"><use href="#i-menu"/></svg></button>
+        </header>
+        <div class="search-row">
+          <div class="search-wrap">
+            <svg class="search-icon ic-sm"><use href="#i-search"/></svg>
+            <input class="field" placeholder="Search the hive…" />
+          </div>
+          <button class="filter-btn"><svg class="ic"><use href="#i-filter"/></svg></button>
+        </div>
+
+        <div class="screen-scroll">
+          <div class="cat-row">
+            <div class="cat-tile"><span class="lbl">Honey</span></div>
+            <div class="cat-tile"><span class="lbl">Gifts</span></div>
+            <div class="cat-tile"><span class="lbl">Subs</span></div>
+            <div class="cat-tile"><span class="lbl">Bees</span></div>
+          </div>
+
+          <div class="product-grid">
+            <article class="product-card">
+              <div class="photo"><div class="ph" style="position:absolute; inset:0; border:0; border-radius:0"></div>
+                <button class="heart" aria-label="Save"><svg class="ic-sm"><use href="#i-heart"/></svg></button>
+              </div>
+              <div class="meta">
+                <div>
+                  <h3 class="name">Name</h3>
+                  <p class="desc">Description</p>
+                  <span class="price">Price</span>
+                </div>
+                <button class="add" aria-label="Add"><svg class="ic-sm"><use href="#i-cart-add"/></svg></button>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="photo"><div class="ph" style="position:absolute; inset:0; border:0; border-radius:0"></div>
+                <button class="heart fill" aria-label="Saved"><svg class="ic-sm"><use href="#i-heart"/></svg></button>
+              </div>
+              <div class="meta">
+                <div>
+                  <h3 class="name">Name</h3>
+                  <p class="desc">Description</p>
+                  <span class="price">Price</span>
+                </div>
+                <button class="add"><svg class="ic-sm"><use href="#i-cart-add"/></svg></button>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="photo"><div class="ph" style="position:absolute; inset:0; border:0; border-radius:0"></div>
+                <button class="heart"><svg class="ic-sm"><use href="#i-heart"/></svg></button>
+              </div>
+              <div class="meta">
+                <div>
+                  <h3 class="name">Name</h3>
+                  <p class="desc">Description</p>
+                  <span class="price">Price</span>
+                </div>
+                <button class="add"><svg class="ic-sm"><use href="#i-cart-add"/></svg></button>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="photo"><div class="ph" style="position:absolute; inset:0; border:0; border-radius:0"></div>
+                <button class="heart"><svg class="ic-sm"><use href="#i-heart"/></svg></button>
+              </div>
+              <div class="meta">
+                <div>
+                  <h3 class="name">Name</h3>
+                  <p class="desc">Description</p>
+                  <span class="price">Price</span>
+                </div>
+                <button class="add"><svg class="ic-sm"><use href="#i-cart-add"/></svg></button>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="photo"><div class="ph" style="position:absolute; inset:0; border:0; border-radius:0"></div>
+                <button class="heart"><svg class="ic-sm"><use href="#i-heart"/></svg></button>
+              </div>
+              <div class="meta">
+                <div>
+                  <h3 class="name">Name</h3>
+                  <p class="desc">Description</p>
+                  <span class="price">Price</span>
+                </div>
+                <button class="add"><svg class="ic-sm"><use href="#i-cart-add"/></svg></button>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="photo"><div class="ph" style="position:absolute; inset:0; border:0; border-radius:0"></div>
+                <button class="heart"><svg class="ic-sm"><use href="#i-heart"/></svg></button>
+              </div>
+              <div class="meta">
+                <div>
+                  <h3 class="name">Name</h3>
+                  <p class="desc">Description</p>
+                  <span class="price">Price</span>
+                </div>
+                <button class="add"><svg class="ic-sm"><use href="#i-cart-add"/></svg></button>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+      <div class="home-indicator"></div>
+    </div>
+    <div class="phone-notes">
+      <ul>
+        <li><b>Categories:</b> 4-up row, square tiles with text labels (icons added at hi-fi)</li>
+        <li><b>Product grid:</b> 2-col with heart top-right and quick-add bottom-right</li>
+        <li><b>Heart state:</b> outlined / filled to show saved vs not</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- 03 · PRODUCT (PDP)                                   -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <section class="phone-card">
+    <div class="phone-label"><b>03 · Product</b><span>PDP</span></div>
+    <div class="phone-frame">
+      <div class="status-bar">
+        <span>9:41</span>
+        <span class="status-right">
+          <svg class="ic-sm"><use href="#i-signal"/></svg>
+          <svg class="ic-sm" style="width:14px;height:10px"><use href="#i-wifi"/></svg>
+          <svg style="width:22px;height:11px"><use href="#i-battery"/></svg>
+        </span>
+      </div>
+      <div class="screen">
+        <header class="back-row">
+          <button class="back" aria-label="Back"><svg class="ic"><use href="#i-back"/></svg></button>
+          <a class="brand" href="#">Hey Honey</a>
+          <button class="icon-btn" style="width:30px;height:30px;display:grid;place-items:center;background:transparent;border:0"><svg class="ic"><use href="#i-cart"/></svg></button>
+          <button class="icon-btn" style="width:30px;height:30px;display:grid;place-items:center;background:transparent;border:0"><svg class="ic"><use href="#i-heart"/></svg></button>
+          <button class="icon-btn" style="width:30px;height:30px;display:grid;place-items:center;background:transparent;border:0"><svg class="ic"><use href="#i-person"/></svg></button>
+          <button class="icon-btn" style="width:30px;height:30px;display:grid;place-items:center;background:transparent;border:0"><svg class="ic"><use href="#i-menu"/></svg></button>
+        </header>
+
+        <div class="screen-scroll">
+          <div class="pdp-hero">
+            <div class="ph" style="position:absolute; inset:0; border-radius:8px"><div class="ph-label">Product image</div></div>
+            <div class="pager"><span class="active"></span><span></span><span></span></div>
+          </div>
+
+          <div class="pdp-meta">
+            <div class="rating">
+              <span class="stars">★★★★★</span>
+              <span>Rating & reviews (128)</span>
+            </div>
+            <div class="name-row">
+              <h1 class="name">Product name</h1>
+              <span class="price-strong">CHF 20.00</span>
+            </div>
+            <p class="desc">Short description, two lines maximum to keep the buy cluster above the fold.</p>
+          </div>
+
+          <div class="size-block">
+            <p class="size-label">Size</p>
+            <div class="size-row">
+              <div class="size-pill">100 g</div>
+              <div class="size-pill active">250 g</div>
+              <div class="size-pill">500 g</div>
+            </div>
+          </div>
+
+          <div class="buy-block">
+            <div class="buy-card selected">
+              <div class="row">
+                <div class="radio checked"></div>
+                <span class="title">Subscribe & save <span class="save-pill">−10%</span></span>
+                <span class="price">CHF 20.00</span>
+              </div>
+              <p class="sub-desc">Description of benefits</p>
+              <div class="delivery-select">
+                <span>Delivery: every 30 days (most common)</span>
+                <svg class="ic-sm"><use href="#i-chev-down"/></svg>
+              </div>
+            </div>
+            <div class="buy-card">
+              <div class="row">
+                <div class="radio"></div>
+                <span class="title">One-time purchase</span>
+                <span class="price">CHF 22.20</span>
+              </div>
+            </div>
+            <button class="btn btn-primary">Add to cart</button>
+          </div>
+
+          <div>
+            <div class="ymal-head"><h3>You may also like</h3></div>
+            <div class="ymal-row">
+              <article class="ymal-card">
+                <div class="photo"><div class="ph" style="position:absolute; inset:0; border:0; border-radius:0"></div></div>
+                <div class="meta">
+                  <div>
+                    <h4 class="name">Name</h4>
+                    <p class="desc">Description</p>
+                    <span class="price">Price</span>
+                  </div>
+                  <button class="add"><svg class="ic-sm"><use href="#i-cart-add"/></svg></button>
+                </div>
+              </article>
+              <article class="ymal-card">
+                <div class="photo"><div class="ph" style="position:absolute; inset:0; border:0; border-radius:0"></div></div>
+                <div class="meta">
+                  <div>
+                    <h4 class="name">Name</h4>
+                    <p class="desc">Description</p>
+                    <span class="price">Price</span>
+                  </div>
+                  <button class="add"><svg class="ic-sm"><use href="#i-cart-add"/></svg></button>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="home-indicator"></div>
+    </div>
+    <div class="phone-notes">
+      <ul>
+        <li><b>Size selector:</b> active state inverted (dark fill) for unambiguous selection</li>
+        <li><b>Subscribe & save</b> default-selected; one-time purchase secondary</li>
+        <li><b>Delivery cadence</b> as a dropdown inside the subscribe card, not buried</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- 04 · CART (drawer over PDP)                          -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <section class="phone-card">
+    <div class="phone-label"><b>04 · Cart</b><span>drawer over PDP</span></div>
+    <div class="phone-frame">
+      <div class="status-bar">
+        <span>9:41</span>
+        <span class="status-right">
+          <svg class="ic-sm"><use href="#i-signal"/></svg>
+          <svg class="ic-sm" style="width:14px;height:10px"><use href="#i-wifi"/></svg>
+          <svg style="width:22px;height:11px"><use href="#i-battery"/></svg>
+        </span>
+      </div>
+      <div class="screen">
+
+        <!-- Behind: dimmed PDP layer -->
+        <div class="pdp-behind">
+          <header class="back-row">
+            <button class="back"><svg class="ic"><use href="#i-back"/></svg></button>
+            <a class="brand">Hey Honey</a>
+          </header>
+          <div class="pdp-hero" style="margin:4px 14px 12px">
+            <div class="ph" style="position:absolute; inset:0; border-radius:8px"></div>
+          </div>
+          <div class="pdp-meta">
+            <h1 class="name">Product name</h1>
+            <p class="desc">Description</p>
+          </div>
+        </div>
+
+        <!-- Overlay -->
+        <div class="cart-overlay"></div>
+
+        <!-- Drawer -->
+        <aside class="cart-drawer">
+          <header class="cart-head">
+            <h2>My cart</h2>
+            <button class="cart-close" aria-label="Close"><svg class="ic"><use href="#i-close"/></svg></button>
+          </header>
+          <div class="cart-body">
+            <article class="cart-item">
+              <div class="thumb"></div>
+              <div class="info">
+                <button class="close-x"><svg class="ic-sm"><use href="#i-close"/></svg></button>
+                <h3 class="name">Product name</h3>
+                <span class="weight">250 g</span>
+                <div class="pricerow">
+                  <span class="price">CHF 20.00</span>
+                  <div class="qty">
+                    <button aria-label="Decrease"><svg class="ic-sm"><use href="#i-minus"/></svg></button>
+                    <span>1</span>
+                    <button aria-label="Increase"><svg class="ic-sm"><use href="#i-plus"/></svg></button>
+                  </div>
+                </div>
+                <div class="sub-row">
+                  <span class="pill">Subscription</span>
+                  <span>every 30 days</span>
+                  <svg class="ic-sm" style="margin-left:auto;color:var(--ink-soft)"><use href="#i-info"/></svg>
+                </div>
+              </div>
+            </article>
+
+            <div class="cart-summary">
+              <div class="line"><span>Subtotal</span><span>CHF 20.00</span></div>
+              <div class="line"><span>Subscriber discount</span><span>−CHF 2.20</span></div>
+              <div class="line total"><span>Total</span><span>CHF 17.80</span></div>
+            </div>
+          </div>
+          <footer class="cart-foot">
+            <p class="ship-note">Taxes and shipping calculated at checkout</p>
+            <button class="btn btn-primary">Checkout</button>
+          </footer>
+        </aside>
+
+      </div>
+      <div class="home-indicator"></div>
+    </div>
+    <div class="phone-notes">
+      <ul>
+        <li><b>Drawer pattern:</b> right-anchored, 88% width, scrim over the PDP behind</li>
+        <li><b>Item card:</b> thumb + name + weight + price + qty stepper in one block</li>
+        <li><b>Pre-checkout total</b> shown with subscriber discount on its own line</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- 05 · CHECKOUT                                        -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <section class="phone-card">
+    <div class="phone-label"><b>05 · Checkout</b><span>pay</span></div>
+    <div class="phone-frame">
+      <div class="status-bar">
+        <span>9:41</span>
+        <span class="status-right">
+          <svg class="ic-sm"><use href="#i-signal"/></svg>
+          <svg class="ic-sm" style="width:14px;height:10px"><use href="#i-wifi"/></svg>
+          <svg style="width:22px;height:11px"><use href="#i-battery"/></svg>
+        </span>
+      </div>
+      <div class="screen">
+        <header class="back-row">
+          <button class="back"><svg class="ic"><use href="#i-back"/></svg></button>
+          <a class="brand">Hey Honey</a>
+          <button class="icon-btn" style="width:30px;height:30px;display:grid;place-items:center;background:transparent;border:0"><svg class="ic"><use href="#i-cart"/></svg></button>
+          <button class="icon-btn" style="width:30px;height:30px;display:grid;place-items:center;background:transparent;border:0"><svg class="ic"><use href="#i-heart"/></svg></button>
+          <button class="icon-btn" style="width:30px;height:30px;display:grid;place-items:center;background:transparent;border:0"><svg class="ic"><use href="#i-person"/></svg></button>
+          <button class="icon-btn" style="width:30px;height:30px;display:grid;place-items:center;background:transparent;border:0"><svg class="ic"><use href="#i-menu"/></svg></button>
+        </header>
+
+        <div class="summary-bar">
+          <span>Order summary <span class="chev">▾</span></span>
+          <span>CHF 17.80</span>
+        </div>
+
+        <div class="screen-scroll">
+          <section class="co-section">
+            <h3>Contact <a href="#" class="link">Sign in</a></h3>
+            <input class="input" placeholder="Email or phone number">
+          </section>
+
+          <section class="co-section">
+            <h3>Delivery</h3>
+            <div class="input-wrap">
+              <span class="lbl">Country / Region</span>
+              <input class="input with-label" value="Switzerland">
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px">
+              <input class="input" placeholder="First name">
+              <input class="input" placeholder="Last name">
+            </div>
+            <input class="input" placeholder="Address">
+            <div style="display:grid; grid-template-columns:1fr 1.4fr; gap:6px">
+              <input class="input" placeholder="Postal code">
+              <input class="input" placeholder="City">
+            </div>
+            <div class="checkbox-row">
+              <div class="checkbox"></div>
+              <span>Save this information for next time</span>
+            </div>
+          </section>
+
+          <section class="co-section">
+            <h3>Payment <svg class="ic-sm" style="color:var(--ink-soft)"><use href="#i-lock"/></svg></h3>
+            <div class="pay-list">
+              <div class="pay-row open">
+                <div class="radio checked"></div>
+                <span>Credit card</span>
+              </div>
+              <div class="pay-form">
+                <input class="input" placeholder="Card number">
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px">
+                  <input class="input" placeholder="Expiration date (MM/YY)">
+                  <input class="input" placeholder="Security code">
+                </div>
+                <input class="input" placeholder="Name on card">
+                <div class="checkbox-row">
+                  <div class="checkbox checked"><svg viewBox="0 0 16 16" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg></div>
+                  <span>Use shipping address as billing address</span>
+                </div>
+              </div>
+              <div class="pay-row">
+                <div class="radio"></div>
+                <span>Twint</span>
+              </div>
+              <div class="pay-row">
+                <div class="radio"></div>
+                <span>PostFinance</span>
+              </div>
+              <div class="pay-row">
+                <div class="radio"></div>
+                <span>Apple Pay</span>
+              </div>
+              <div class="pay-row">
+                <div class="radio"></div>
+                <span>Google Pay</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="co-section">
+            <h3>Order summary</h3>
+            <div class="summary-card">
+              <div class="summary-product">
+                <div class="thumb"></div>
+                <div>
+                  <p class="name">Product name</p>
+                  <span class="weight">250 g · Subscription every 30 days</span>
+                  <div class="price">CHF 20.00</div>
+                </div>
+              </div>
+              <div class="voucher-row">
+                <input class="input" placeholder="Add discount code / voucher">
+                <button class="btn">Add</button>
+              </div>
+              <div class="totals">
+                <div class="line"><span>Subtotal</span><span>CHF 20.00</span></div>
+                <div class="line"><span>Subscriber discount</span><span>−CHF 2.20</span></div>
+                <div class="line"><span>Shipping</span><span>Enter shipping address</span></div>
+                <div class="line grand"><span>Total</span><span>CHF 17.80</span></div>
+              </div>
+            </div>
+          </section>
+
+          <div class="checkout-cta">
+            <button class="btn btn-primary">Pay</button>
+          </div>
+
+          <footer class="footer">
+            <p class="legal">Legal footer</p>
+          </footer>
+        </div>
+      </div>
+      <div class="home-indicator"></div>
+    </div>
+    <div class="phone-notes">
+      <ul>
+        <li><b>Sticky order summary bar</b> at the top with the total always visible</li>
+        <li><b>Floating-label inputs</b> for the longer fields (Country, Address, etc.)</li>
+        <li><b>Payment list:</b> credit card expands inline; alternates collapse to a single row each</li>
+        <li><b>"Enter shipping address"</b> placeholder text on the shipping line until the address is filled</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<p style="max-width:1320px; margin:-3rem auto 4rem; padding:0 2rem; font-size:.8rem; color:var(--muted)">
+  Hi-fi version (pastel, mascot, full polish) preserved at <a href="mockups-hifi.html" style="color:var(--ink); text-decoration:underline">mockups-hifi.html</a>.
+</p>
+
+</body>
+</html>

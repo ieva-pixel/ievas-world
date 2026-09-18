@@ -100,6 +100,10 @@
       max-width: 1800px;
       margin: 0 auto;
       width: 100%;
+      position: relative;
+      z-index: 1;
+      transform-origin: center;
+      will-change: transform, opacity, filter;
     }
     .about-highlight h3 {
       font-family: var(--ff-serif, 'Instrument Serif', serif);
@@ -119,14 +123,52 @@
     }
 
     /* Testimonials */
+    .about-quotes-transition {
+      background: var(--olive-deep);
+      height: 160vh;
+      margin-top: 0;
+      position: relative;
+      z-index: 2;
+    }
+    .about-facts-transition,
+    .about-contact-transition {
+      height: 160vh;
+      margin-top: 0;
+      position: relative;
+      z-index: 2;
+    }
+    .about-facts-transition { background: var(--cream); }
+    .about-contact-transition { background: var(--olive-deep); }
     .about-quotes {
       background: var(--olive-deep);
       color: var(--cream);
       padding: 7rem var(--page-gutter);
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      isolation: isolate;
+      overflow: hidden;
+    }
+    .about-quotes::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: url('blinds.jpg') right center / auto 120% no-repeat;
+      mix-blend-mode: soft-light;
+      opacity: 0.14;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 72%, transparent 100%);
+      mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 72%, transparent 100%);
+      pointer-events: none;
     }
     .about-quotes-inner {
       max-width: 1800px;
       margin: 0 auto;
+      width: 100%;
+      will-change: transform, opacity, filter;
     }
     .about-quotes-heading {
       font-family: var(--ff-serif, 'Instrument Serif', serif);
@@ -173,6 +215,15 @@
       max-width: 1800px;
       margin: 0 auto;
       width: 100%;
+      transform-origin: center;
+      will-change: transform, opacity, filter;
+    }
+    .about-facts-transition .about-facts {
+      align-content: center;
+      box-sizing: border-box;
+      min-height: 100vh;
+      position: sticky;
+      top: 0;
     }
     .about-fact {
       padding-left: 1.25rem;
@@ -197,11 +248,18 @@
       position: relative;
       overflow: hidden;
     }
+    .about-contact-transition .about-contact {
+      box-sizing: border-box;
+      min-height: 100vh;
+      position: sticky;
+      top: 0;
+    }
     .about-contact-inner {
       max-width: 1800px;
       margin: 0 auto;
       position: relative;
       z-index: 1;
+      will-change: transform, opacity, filter;
     }
     .about-contact-heading {
       font-family: var(--ff-serif, 'Instrument Serif', serif);
@@ -246,7 +304,12 @@
       .about-highlights,
       .about-facts { grid-template-columns: 1fr; gap: 2rem; padding: 4rem var(--page-gutter); }
       .about-quotes-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-      .about-quotes { padding: 5rem var(--page-gutter); }
+      .about-quotes-transition { height: auto; margin-top: 0; }
+      .about-quotes { height: auto; min-height: 0; padding: 5rem var(--page-gutter); position: relative; }
+      .about-facts-transition,
+      .about-contact-transition { height: auto; margin-top: 0; }
+      .about-facts-transition .about-facts,
+      .about-contact-transition .about-contact { min-height: 0; position: relative; }
     }
   </style>
 </head>
@@ -296,7 +359,7 @@
     </section>
 
     <!-- ═══ HIGHLIGHTS ═════════════════════════════════════════════════ -->
-    <section class="about-highlights col-lines">
+    <section class="about-highlights col-lines" id="aboutHighlights">
       <div class="about-highlight">
         <div class="eyebrow eyebrow-dark">Most recent · 2022–2025</div>
         <h3>Lead designer, PwC Switzerland</h3>
@@ -315,6 +378,7 @@
     </section>
 
     <!-- ═══ TESTIMONIALS ═══════════════════════════════════════════════ -->
+    <div class="about-quotes-transition" id="aboutQuotesTransition">
     <section class="about-quotes">
       <div class="about-quotes-inner">
         <div class="eyebrow eyebrow-light">Kind words</div>
@@ -341,9 +405,11 @@
         </div>
       </div>
     </section>
+    </div>
 
     <!-- ═══ QUICK FACTS ════════════════════════════════════════════════ -->
-    <section class="about-facts col-lines">
+    <div class="about-facts-transition" id="aboutFactsTransition">
+    <section class="about-facts col-lines" id="aboutFacts">
       <div class="about-fact">
         <div class="eyebrow eyebrow-dark">Based</div>
         <p>Zürich, CH</p>
@@ -354,16 +420,18 @@
       </div>
       <div class="about-fact">
         <div class="eyebrow eyebrow-dark">Tools</div>
-        <p>Figma · Adobe&nbsp;CC · Miro · Jira · Material&nbsp;UI · Magic&nbsp;Patterns · Claude · WebAIM</p>
+        <p>Figma · Adobe&nbsp;CC · Miro · Claude · Codex · Magic&nbsp;Patterns · Jira</p>
       </div>
       <div class="about-fact">
         <div class="eyebrow eyebrow-dark">Status</div>
         <p>Independent · open to roles &amp; projects</p>
       </div>
     </section>
+    </div>
 
     <!-- ═══ CONTACT ════════════════════════════════════════════════════ -->
-    <section class="about-contact">
+    <div class="about-contact-transition" id="aboutContactTransition">
+    <section class="about-contact" id="aboutContact">
       <div class="about-contact-inner">
         <div class="eyebrow eyebrow-light">Contact</div>
         <h2 class="about-contact-heading">Let's talk.</h2>
@@ -380,8 +448,62 @@
         </div>
       </div>
     </section>
+    </div>
 
   </main>
+
+  <script>
+    (() => {
+      const transition = document.getElementById('aboutQuotesTransition');
+      const highlights = document.getElementById('aboutHighlights');
+      const quotes = transition?.querySelector('.about-quotes-inner');
+      const factsTransition = document.getElementById('aboutFactsTransition');
+      const facts = document.getElementById('aboutFacts');
+      const contactTransition = document.getElementById('aboutContactTransition');
+      const contact = document.getElementById('aboutContact');
+      if (!transition || !highlights || !quotes || !factsTransition || !facts || !contactTransition || !contact) return;
+
+      const clamp = (value) => Math.max(0, Math.min(1, value));
+      const updateTransition = () => {
+        if (window.innerWidth <= 900) {
+          highlights.style.cssText = '';
+          quotes.style.cssText = '';
+          facts.style.cssText = '';
+          contact.style.cssText = '';
+          return;
+        }
+
+        const progressFor = (element) => clamp((window.innerHeight - element.getBoundingClientRect().top) / (window.innerHeight * 1.15));
+        const easeFor = (element) => {
+          const progress = progressFor(element);
+          return progress * progress * (3 - 2 * progress);
+        };
+        const quotesIn = easeFor(transition);
+        const factsIn = easeFor(factsTransition);
+        const contactIn = easeFor(contactTransition);
+
+        highlights.style.opacity = String(1 - quotesIn * 0.15);
+        highlights.style.filter = `blur(${(quotesIn * 3).toFixed(1)}px)`;
+        highlights.style.transform = `scale(${(1 - quotesIn * 0.015).toFixed(3)})`;
+
+        quotes.style.opacity = String(quotesIn * (1 - factsIn * 0.15));
+        quotes.style.filter = `blur(${(((1 - quotesIn) + factsIn) * 4).toFixed(1)}px)`;
+        quotes.style.transform = `translateY(${((1 - quotesIn) * 20 - factsIn * 14).toFixed(1)}px)`;
+
+        facts.style.opacity = String(factsIn * (1 - contactIn * 0.15));
+        facts.style.filter = `blur(${(((1 - factsIn) + contactIn) * 4).toFixed(1)}px)`;
+        facts.style.transform = `translateY(${((1 - factsIn) * 20 - contactIn * 14).toFixed(1)}px) scale(${(1 - contactIn * 0.015).toFixed(3)})`;
+
+        contact.style.opacity = String(contactIn);
+        contact.style.filter = `blur(${((1 - contactIn) * 4).toFixed(1)}px)`;
+        contact.style.transform = `translateY(${((1 - contactIn) * 20).toFixed(1)}px)`;
+      };
+
+      window.addEventListener('scroll', updateTransition, { passive: true });
+      window.addEventListener('resize', updateTransition);
+      updateTransition();
+    })();
+  </script>
 
 </body>
 </html>

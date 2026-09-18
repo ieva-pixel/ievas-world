@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Manuka · Hey Honey</title>
+<meta name="description" content="Genuine New Zealand Manuka, UMF 15+ certified, packaged in Switzerland. Bold, medicinal, deeply herbal.">
+<meta name="theme-color" content="#FBF6EC">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="phone" role="region" aria-label="Hey Honey, product detail">
+  <main id="main" class="shell">
+
+    <!-- Top bar -->
+    <header class="topbar">
+      <a class="iconbtn" href="index.html" aria-label="Back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+      </a>
+      <a class="brand" href="index.html" aria-label="Hey Honey home">Hey&nbsp;<em class="amp">Honey</em></a>
+      <span class="spacer"></span>
+      <a class="iconbtn" href="cart.html" aria-label="Cart, 1 item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.2a2 2 0 0 0 2-1.5L20.5 8H6.2"/></svg>
+        <span class="badge">1</span>
+      </a>
+      <button class="iconbtn" aria-label="Favourite this product" aria-pressed="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 8.3a5 5 0 0 0-8.8-3.2A5 5 0 0 0 3.2 8.3c0 7 8.8 12 8.8 12s8.8-5 8.8-12z"/></svg>
+      </button>
+    </header>
+
+    <!-- Hero jar -->
+    <section class="pdp-hero" aria-label="Product image">
+      <div class="pdp-jar">
+        <img src="photos/jar-manuka-cutout.png" alt="Alpen Bene Manuka honey jar, 250g.">
+      </div>
+    </section>
+
+    <h1 class="pdp-title">Manuka</h1>
+    <p class="pdp-tag">Bold, medicinal, deeply herbal. Made on <a href="index.html#beekeepers-title">Tobias Schmidt’s</a> farm in Zurich Oberland.</p>
+
+    <div style="text-align: center;">
+      <p class="reviews" aria-label="Rated 4.8 out of 5 from 124 reviews">
+        <span class="stars" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.9 7.4.6-5.6 4.9 1.7 7.3L12 17.8 5.6 21.7l1.7-7.3L1.7 9.5l7.4-.6z"/></svg>
+        </span>
+        <span class="reviews-rating">4.8</span>
+        <span aria-hidden="true">·</span>
+        <a href="#reviews">124 reviews</a>
+      </p>
+      <p class="urgency" aria-label="Limited stock notice">
+        Only 12 jars from this June harvest
+      </p>
+    </div>
+
+    <!-- Buy cluster: cream island within the dark PDP -->
+    <div class="surface-light surface-buy-cluster" aria-label="Buy this jar">
+
+    <!-- Sizes -->
+    <fieldset class="sizes" aria-label="Choose size">
+      <legend class="sr-only">Choose a jar size</legend>
+      <input type="radio" name="size" id="s100" value="100">
+      <label for="s100">100 g</label>
+      <input type="radio" name="size" id="s250" value="250" checked>
+      <label for="s250">250 g</label>
+      <input type="radio" name="size" id="s500" value="500">
+      <label for="s500">500 g</label>
+    </fieldset>
+
+    <!-- Purchase options -->
+    <fieldset class="purchase" aria-label="Choose purchase type">
+      <legend class="sr-only">Purchase type</legend>
+
+      <label class="opt" data-active="true">
+        <div class="opt-head">
+          <input type="radio" name="buy" value="subscribe" checked>
+          <span class="opt-title">Subscribe and save <small style="color: var(--honey-deep); font-weight: 500;">(−10%)</small></span>
+          <span class="opt-price">CHF 18.00</span>
+        </div>
+        <p class="opt-body">Recurring deliveries reduce packaging waste and keep the cupboard full. Pause or cancel any time, no fuss.</p>
+        <div class="delivery-select" role="button" tabindex="0">
+          <span>Delivery: every 30 days <em style="color: var(--muted); font-style: normal;">(most common)</em></span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+      </label>
+
+      <label class="opt">
+        <div class="opt-head">
+          <input type="radio" name="buy" value="one-time">
+          <span class="opt-title">One-time purchase</span>
+          <span class="opt-price">CHF 20.00</span>
+        </div>
+      </label>
+    </fieldset>
+
+    <div class="sticky-cta" style="margin-top: 1.5rem;">
+      <div class="cta-with-qty">
+        <div class="qty qty--inline" role="group" aria-label="Quantity">
+          <button type="button" aria-label="Decrease quantity">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg>
+          </button>
+          <span aria-live="polite" id="pdp-qty">1</span>
+          <button type="button" aria-label="Increase quantity">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+        </div>
+        <a class="cta cta--block" href="cart.html" id="pdp-cta">Add to cart · CHF 18.00</a>
+      </div>
+    </div>
+
+    </div><!-- /surface-buy-cluster -->
+
+    <!-- Tasting card -->
+    <section class="section" aria-labelledby="taste-title">
+      <span class="eyebrow">on the spoon</span>
+      <h2 id="taste-title">Tastes like <em>medicine</em><br>(in the best way)</h2>
+      <div class="panel" style="margin-top: 1rem;">
+        <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 0.85rem;">
+          <li style="display: flex; gap: 0.85rem; align-items: flex-start;">
+            <span aria-hidden="true" style="font-family: var(--ff-display); font-size: 1.3rem; color: var(--accent-emphasis); line-height: 1;">·</span>
+            <div><strong style="font-weight: 500;">Bold, herbal.</strong> Eucalypt, dark caramel, a long resinous finish.</div>
+          </li>
+          <li style="display: flex; gap: 0.85rem; align-items: flex-start;">
+            <span aria-hidden="true" style="font-family: var(--ff-display); font-size: 1.3rem; color: var(--accent-emphasis); line-height: 1;">·</span>
+            <div><strong style="font-weight: 500;">A spoonful a day.</strong> Soothes a sore throat, warms a tea.</div>
+          </li>
+          <li style="display: flex; gap: 0.85rem; align-items: flex-start;">
+            <span aria-hidden="true" style="font-family: var(--ff-display); font-size: 1.3rem; color: var(--accent-emphasis); line-height: 1;">·</span>
+            <div><strong style="font-weight: 500;">UMF 15+.</strong> Independently certified for activity and origin.</div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Related -->
+    <section class="section" aria-labelledby="related-title">
+      <span class="eyebrow">also lovely</span>
+      <h2 id="related-title">Other <em>varietals</em></h2>
+
+      <div class="product-grid">
+        <a class="product-card product-card--elder" href="product.html" aria-label="Premium Elderflower, CHF 25">
+          <div class="product-photo">
+            <img src="photos/jar-elder.jpg" alt="Premium Elderflower honey">
+            <button class="product-fav" type="button" aria-label="Add Elderflower to favourites">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 8.3a5 5 0 0 0-8.8-3.2A5 5 0 0 0 3.2 8.3c0 7 8.8 12 8.8 12s8.8-5 8.8-12z"/></svg>
+            </button>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Elderflower</h3>
+            <p class="product-tag">Floral, airy, gently perfumed</p>
+            <div class="product-row">
+              <span class="product-price">CHF 25</span>
+              <button class="product-add" type="button" aria-label="Add Elderflower to cart">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+            </div>
+          </div>
+        </a>
+
+        <a class="product-card product-card--acacia" href="product.html" aria-label="Acacia, CHF 17">
+          <div class="product-photo">
+            <img src="photos/jar-acacia.jpg" alt="Acacia honey jar">
+            <button class="product-fav" type="button" aria-label="Add Acacia to favourites">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 8.3a5 5 0 0 0-8.8-3.2A5 5 0 0 0 3.2 8.3c0 7 8.8 12 8.8 12s8.8-5 8.8-12z"/></svg>
+            </button>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Acacia</h3>
+            <p class="product-tag">Clean, vanilla-soft, delicate</p>
+            <div class="product-row">
+              <span class="product-price">CHF 17</span>
+              <button class="product-add" type="button" aria-label="Add Acacia to cart">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  // Price model: subscribe is 10% off one-time
+  const PRICES = {
+    '100': { onetime:  9.00, subscribe:  8.10 },
+    '250': { onetime: 20.00, subscribe: 18.00 },
+    '500': { onetime: 36.00, subscribe: 32.40 }
+  };
+  const fmt = n => `CHF ${n.toFixed(2)}`;
+
+  let qty = 1;
+  let size = '250';
+  let mode = 'subscribe';
+
+  const ctaEl = document.getElementById('pdp-cta');
+  const qtyEl = document.getElementById('pdp-qty');
+
+  function recalc() {
+    const unit = PRICES[size][mode];
+    const total = unit * qty;
+    document.querySelectorAll('.purchase .opt').forEach(o => {
+      const r = o.querySelector('input[type=radio]');
+      const m = (r && r.value === 'one-time') ? 'onetime' : 'subscribe';
+      const priceEl = o.querySelector('.opt-price');
+      if (priceEl) priceEl.textContent = fmt(PRICES[size][m]);
+    });
+    if (ctaEl) ctaEl.textContent = `Add to cart · ${fmt(total)}`;
+  }
+
+  // Qty stepper
+  const qtyBtns = document.querySelectorAll('.qty--inline button');
+  if (qtyBtns.length === 2 && qtyEl) {
+    qtyBtns[0].addEventListener('click', () => {
+      if (qty > 1) { qty--; qtyEl.textContent = qty; recalc(); }
+    });
+    qtyBtns[1].addEventListener('click', () => {
+      if (qty < 9) { qty++; qtyEl.textContent = qty; recalc(); }
+    });
+  }
+
+  // Size change
+  document.querySelectorAll('.sizes input').forEach(i => {
+    i.addEventListener('change', () => { size = i.value; recalc(); });
+  });
+
+  // Purchase option toggle
+  const opts = document.querySelectorAll('.purchase .opt');
+  opts.forEach(o => {
+    o.addEventListener('click', () => {
+      opts.forEach(x => x.dataset.active = 'false');
+      o.dataset.active = 'true';
+      const r = o.querySelector('input[type=radio]');
+      if (r) {
+        r.checked = true;
+        mode = r.value === 'one-time' ? 'onetime' : 'subscribe';
+        recalc();
+      }
+    });
+  });
+
+  recalc();
+</script>
+</body>
+</html>

@@ -1,0 +1,1920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hey Honey — high fidelity mockups</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  /* =========================================================
+     Hey Honey — high-fi mockups
+     Theme: light, pastel, playful
+     Palette: pastel yellow, blue, pink, purple + warm cream
+     ========================================================= */
+  :root {
+    /* Page canvas — soft periwinkle wash */
+    --paper:        #EFEBFA;
+    --paper-2:      #E4DEF6;
+    --frame-bg:     #FBFAFF;
+    --frame-soft:   #F2EEFF;
+
+    /* Ink */
+    --ink:          #2A2240;
+    --ink-soft:     #5A5378;
+    --muted:        #918AAD;
+    --hair:         #E2DDF2;
+    --hair-soft:    #EFEAFB;
+
+    /* Honey — warm anchor */
+    --honey:        #FFCE5A;
+    --honey-deep:   #E89B2A;
+    --honey-soft:   #FFE9A3;
+    --honey-cream:  #FFF4D2;
+
+    /* Pastels */
+    --pink:         #F4B6C3;
+    --pink-soft:    #FBDFE6;
+    --periwinkle:   #B5B6F0;
+    --periwinkle-soft: #DCDDF8;
+    --lavender:     #CEC0EC;
+    --lavender-soft:#E7DEF6;
+    --sky:          #B8D2EE;
+    --sky-soft:     #DEEAF7;
+
+    --ok:           #2E7A4F;
+
+    --ff-brand:     'Quicksand', system-ui, sans-serif;
+    --ff-display:   'Quicksand', system-ui, sans-serif;
+    --ff-sans:      'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--ff-sans);
+    color: var(--ink);
+    background:
+      radial-gradient(1100px 700px at 18% -10%, var(--honey-soft) 0%, transparent 60%),
+      radial-gradient(900px 600px at 100% 110%, var(--pink-soft) 0%, transparent 55%),
+      radial-gradient(900px 700px at -10% 100%, var(--sky-soft) 0%, transparent 60%),
+      radial-gradient(700px 500px at 50% 50%, var(--periwinkle-soft) 0%, transparent 70%),
+      var(--paper);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.4;
+    min-height: 100vh;
+  }
+
+  img { display: block; max-width: 100%; }
+  button { font: inherit; }
+  a { color: inherit; }
+
+  /* ─────────  Page head  ───────── */
+  .page-head {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 5rem 2rem 2rem;
+  }
+  .page-head .eyebrow {
+    font-size: .78rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 600;
+    margin-bottom: .85rem;
+  }
+  .page-head h1 {
+    font-family: var(--ff-display);
+    font-weight: 500;
+    font-style: normal;
+    font-size: clamp(2.6rem, 5vw, 4.2rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin: 0 0 1rem;
+    color: var(--ink);
+  }
+  .page-head h1 em {
+    font-style: normal;
+    color: var(--honey-deep);
+    font-weight: 700;
+  }
+  .page-head p {
+    max-width: 640px;
+    font-size: 1.02rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0 0 1.5rem;
+  }
+  .page-head .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .55rem .65rem;
+    margin-top: 1rem;
+  }
+  .swatch {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .4rem .85rem .4rem .55rem;
+    background: rgba(255,255,255,.7);
+    border: 1px solid var(--hair);
+    border-radius: 999px;
+    font-size: .78rem;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+  .swatch .dot {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.04);
+  }
+
+  /* ─────────  Grid  ───────── */
+  .phones-grid {
+    max-width: 1320px;
+    margin: 1.5rem auto 6rem;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 3rem 2rem;
+    align-items: start;
+  }
+  @media (max-width: 600px) {
+    .page-head { padding: 3rem 1.25rem 1rem; }
+    .phones-grid { padding: 0 1.25rem; gap: 2rem; }
+  }
+
+  /* ─────────  Phone frame  ───────── */
+  .phone-card { display: flex; flex-direction: column; }
+  .phone-label {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: .85rem;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+  .phone-label b {
+    font-weight: 700; color: var(--ink); letter-spacing: 0;
+    font-size: 1.02rem;
+  }
+  .phone-label span {
+    font-size: .72rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .phone-notes {
+    margin-top: 1rem;
+    font-size: .82rem;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  .phone-notes ul { margin: 0; padding: 0 0 0 1.1rem; }
+  .phone-notes li { margin-bottom: .2rem; }
+  .phone-notes li b { color: var(--ink); }
+
+  .phone-frame {
+    width: 100%;
+    aspect-ratio: 9 / 19.5;
+    background: var(--frame-bg);
+    border-radius: 44px;
+    overflow: hidden;
+    position: relative;
+    contain: layout paint;
+    box-shadow:
+      0 0 0 1px rgba(42,34,64,.08) inset,
+      0 0 0 6px #FFFFFF,
+      0 0 0 7px rgba(60,40,120,.06),
+      0 30px 60px -22px rgba(60,40,120,.30),
+      0 12px 24px -12px rgba(60,40,120,.18);
+    isolation: isolate;
+  }
+
+  .status-bar {
+    height: 38px;
+    padding: 0 22px 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: .78rem;
+    font-weight: 600;
+    color: var(--ink);
+    z-index: 3;
+    position: relative;
+  }
+  .status-right { display: flex; gap: 5px; align-items: center; }
+  .home-indicator {
+    position: absolute;
+    bottom: 8px; left: 50%;
+    transform: translateX(-50%);
+    width: 34%; height: 4px; border-radius: 2px;
+    background: rgba(42,31,18,.45);
+    z-index: 5;
+  }
+
+  .screen {
+    position: absolute;
+    inset: 38px 0 0 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: var(--frame-bg);
+  }
+  .screen-scroll {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* ─────────  Shared bits  ───────── */
+  .ic { width: 18px; height: 18px; display: block; }
+  .ic-sm { width: 14px; height: 14px; display: block; }
+  .ic-lg { width: 22px; height: 22px; display: block; }
+
+  .topbar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 14px 16px 8px;
+  }
+  .topbar .brand {
+    font-family: var(--ff-brand);
+    font-weight: 400;
+    font-size: 1.05rem;
+    color: var(--ink);
+    letter-spacing: .02em;
+    text-decoration: none;
+    margin-right: auto;
+  }
+  .topbar .brand .h { color: var(--honey-deep); }
+  .topbar .icon-btn {
+    width: 32px; height: 32px;
+    display: grid; place-items: center;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--ink);
+    border: 0; cursor: pointer;
+    position: relative;
+  }
+  .topbar .icon-btn .dot {
+    position: absolute; top: 4px; right: 4px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--pink);
+    border: 1.5px solid var(--frame-bg);
+  }
+  .back-row {
+    display: flex; align-items: center; gap: 6px;
+    padding: 14px 12px 8px;
+  }
+  .back-row .back {
+    display: grid; place-items: center;
+    width: 32px; height: 32px;
+    border: 0; background: transparent;
+    color: var(--ink);
+  }
+  .back-row .brand {
+    font-family: var(--ff-brand);
+    font-size: 1.05rem;
+    letter-spacing: .02em;
+    margin-right: auto;
+    color: var(--ink);
+  }
+  .back-row .brand .h { color: var(--honey-deep); }
+
+  .search-row {
+    display: flex; gap: 10px; align-items: center;
+    padding: 8px 16px 14px;
+    position: relative;
+  }
+  .search-row .field {
+    flex: 1;
+    height: 40px;
+    padding: 0 14px 0 38px;
+    border: 0;
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(42,31,18,.06), 0 0 0 1px var(--hair) inset;
+    font: inherit;
+    font-size: .85rem;
+    color: var(--ink);
+    position: relative;
+  }
+  .search-wrap {
+    flex: 1; position: relative;
+    display: flex; align-items: center;
+  }
+  .search-wrap input { width: 100%; }
+  .search-wrap .search-icon {
+    position: absolute; left: 12px;
+    color: var(--muted);
+    pointer-events: none;
+  }
+  .filter-btn {
+    width: 40px; height: 40px;
+    border-radius: 999px;
+    background: var(--honey);
+    color: var(--ink);
+    border: 0; cursor: pointer;
+    display: grid; place-items: center;
+    box-shadow: 0 2px 4px rgba(232,155,42,.25);
+  }
+
+  .btn {
+    width: 100%;
+    border: 0;
+    border-radius: 14px;
+    padding: 14px 16px;
+    font-family: var(--ff-sans);
+    font-weight: 600;
+    font-size: .92rem;
+    cursor: pointer;
+    transition: transform .12s ease;
+    display: inline-flex; justify-content: center; align-items: center; gap: 8px;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary {
+    background: linear-gradient(180deg, var(--honey) 0%, var(--honey-deep) 100%);
+    color: var(--ink);
+    box-shadow: 0 4px 10px -2px rgba(232,155,42,.45), inset 0 1px 0 rgba(255,255,255,.4);
+  }
+  .btn-secondary {
+    background: #fff;
+    color: var(--ink);
+    box-shadow: 0 0 0 1px var(--hair) inset;
+  }
+  .btn-pink { background: var(--pink); color: var(--ink); }
+
+  .footer {
+    border-top: 1px solid var(--hair);
+    padding: 14px 18px 18px;
+    background: var(--frame-bg);
+  }
+  .footer ul {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; gap: 6px;
+    font-family: var(--ff-display);
+    font-style: normal;
+    font-size: .95rem;
+    color: var(--ink);
+  }
+  .footer .legal {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--hair);
+    font-size: .68rem;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  /* =========================================================
+     01 · HOME
+     ========================================================= */
+  .home-hero {
+    margin: 4px 14px 14px;
+    border-radius: 26px;
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1 / 1.05;
+    background:
+      radial-gradient(circle at 50% 80%, var(--honey-cream) 0%, var(--periwinkle-soft) 60%, var(--lavender-soft) 100%);
+    color: var(--ink);
+    isolation: isolate;
+  }
+  .home-hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(180px 180px at 20% 28%, rgba(255,255,255,.5), transparent 70%),
+      radial-gradient(160px 160px at 88% 18%, rgba(244,182,195,.35), transparent 70%);
+    pointer-events: none;
+  }
+  /* Soft sand-cloud shape that the bee sits on */
+  .home-hero::after {
+    content: "";
+    position: absolute;
+    left: -5%; right: -5%; bottom: -8%;
+    height: 56%;
+    background: radial-gradient(60% 100% at 50% 0%, var(--honey-cream) 0%, var(--honey-soft) 60%, transparent 100%);
+    pointer-events: none;
+  }
+  .home-hero .copy {
+    position: relative;
+    padding: 24px 22px 0;
+    text-align: center;
+  }
+  .home-hero .eyebrow {
+    font-family: var(--ff-sans);
+    font-size: .68rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--ink-soft);
+  }
+  .home-hero h1 {
+    font-family: var(--ff-display);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.85rem;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin: 6px 0 0;
+    color: var(--ink);
+  }
+  .home-hero h1 em {
+    font-style: normal;
+    font-weight: 700;
+    color: var(--honey-deep);
+  }
+  .home-hero .bee {
+    position: absolute;
+    bottom: 4%; left: 50%;
+    transform: translateX(-50%);
+    width: 64%;
+    z-index: 2;
+    filter: drop-shadow(0 16px 20px rgba(60,40,120,.18));
+  }
+  .home-hero .discount-tab {
+    position: absolute;
+    right: 0; top: 36%;
+    background: var(--ink);
+    color: var(--honey);
+    padding: 14px 8px;
+    border-radius: 12px 0 0 12px;
+    writing-mode: vertical-rl;
+    transform: translateY(-50%) rotate(180deg);
+    font-weight: 700;
+    font-size: .72rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    box-shadow: -3px 4px 10px -3px rgba(42,34,64,.25);
+  }
+  .home-cta-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 0 14px 18px;
+  }
+  .home-cta-row .btn { padding: 13px 12px; font-size: .88rem; }
+
+  .home-section-head {
+    padding: 8px 18px 4px;
+    display: flex; align-items: baseline; justify-content: space-between;
+  }
+  .home-section-head h2 {
+    font-family: var(--ff-display);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.55rem;
+    letter-spacing: -0.015em;
+    margin: 0;
+    color: var(--ink);
+  }
+  .home-section-head .more {
+    font-size: .78rem;
+    color: var(--honey-deep);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .beekeeper {
+    margin: 6px 14px 0;
+    border-radius: 22px;
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 1 / 0.95;
+    background: linear-gradient(160deg, var(--sky-soft), var(--lavender-soft) 70%);
+  }
+  .beekeeper img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  .beekeeper::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,.4) 100%);
+  }
+  .beekeeper-card {
+    position: absolute;
+    left: 14px; bottom: 14px; right: 14px;
+    background: rgba(255,251,241,.94);
+    backdrop-filter: blur(6px);
+    border-radius: 16px;
+    padding: 12px 14px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 8px;
+    z-index: 2;
+  }
+  .beekeeper-card .name {
+    font-family: var(--ff-display);
+    font-style: normal;
+    font-size: 1.05rem;
+    line-height: 1.1;
+    margin: 0;
+    color: var(--ink);
+  }
+  .beekeeper-card .desc {
+    font-size: .72rem;
+    color: var(--ink-soft);
+    margin: 2px 0 0;
+  }
+  .beekeeper-card .more-link {
+    font-size: .72rem;
+    color: var(--honey-deep);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .dots {
+    position: absolute;
+    bottom: 26px; right: 14px;
+    display: flex; gap: 4px;
+    z-index: 3;
+  }
+  .dots span {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(255,255,255,.6);
+  }
+  .dots span.active { background: var(--ink); width: 18px; border-radius: 999px; }
+
+  /* =========================================================
+     02 · SHOP
+     ========================================================= */
+  .cat-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding: 6px 14px 14px;
+  }
+  .cat-tile {
+    aspect-ratio: 1;
+    border-radius: 16px;
+    display: grid;
+    place-items: end center;
+    padding-bottom: 6px;
+    font-size: .65rem;
+    font-weight: 600;
+    color: var(--ink);
+    position: relative;
+    overflow: hidden;
+  }
+  .cat-tile.yellow { background: linear-gradient(150deg, var(--honey-soft), var(--honey)); }
+  .cat-tile.pink   { background: linear-gradient(150deg, var(--pink-soft), var(--pink)); }
+  .cat-tile.blue   { background: linear-gradient(150deg, var(--sky-soft), var(--sky)); }
+  .cat-tile.purple { background: linear-gradient(150deg, var(--lavender-soft), var(--lavender)); }
+  .cat-tile .em {
+    font-size: 1.5rem;
+    position: absolute;
+    top: 6px; left: 50%;
+    transform: translateX(-50%);
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,.1));
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 0 14px 14px;
+  }
+  .product-card {
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 1px 2px rgba(42,31,18,.05), 0 0 0 1px var(--hair) inset;
+  }
+  .product-card .photo {
+    aspect-ratio: 1 / 0.92;
+    position: relative;
+    overflow: hidden;
+  }
+  .product-card .photo.yellow { background: linear-gradient(160deg, var(--honey-cream), var(--honey-soft)); }
+  .product-card .photo.pink   { background: linear-gradient(160deg, var(--pink-soft), #F8CCD6); }
+  .product-card .photo.blue   { background: linear-gradient(160deg, var(--sky-soft), #C8DCEF); }
+  .product-card .photo.purple { background: linear-gradient(160deg, var(--lavender-soft), #D8C8EE); }
+  .product-card .photo.peri   { background: linear-gradient(160deg, var(--periwinkle-soft), #C6C7F2); }
+  .product-card .photo img {
+    width: 100%; height: 100%; object-fit: cover;
+    mix-blend-mode: multiply;
+  }
+  .product-card .heart {
+    position: absolute; top: 8px; right: 8px;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: rgba(255,251,241,.92);
+    display: grid; place-items: center;
+    color: var(--ink);
+    border: 0; cursor: pointer;
+    z-index: 2;
+  }
+  .product-card .heart.fill { color: var(--pink); }
+  .product-card .heart.fill svg { fill: var(--pink); }
+  .product-card .meta {
+    padding: 8px 12px 12px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 6px;
+  }
+  .product-card .name {
+    font-family: var(--ff-display);
+    font-style: normal;
+    font-weight: 500;
+    font-size: .98rem;
+    line-height: 1.1;
+    color: var(--ink);
+    margin: 0;
+  }
+  .product-card .desc {
+    font-size: .7rem;
+    color: var(--ink-soft);
+    margin: 1px 0 4px;
+    line-height: 1.25;
+  }
+  .product-card .price {
+    font-size: .82rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .product-card .add {
+    width: 30px; height: 30px;
+    border: 0; border-radius: 10px;
+    background: var(--honey);
+    color: var(--ink);
+    display: grid; place-items: center;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(232,155,42,.25);
+  }
+
+  /* =========================================================
+     03 · PRODUCT (PDP)
+     ========================================================= */
+  .pdp-hero {
+    margin: 4px 14px 14px;
+    aspect-ratio: 1 / 0.88;
+    border-radius: 22px;
+    overflow: hidden;
+    position: relative;
+    background:
+      radial-gradient(circle at 30% 30%, var(--periwinkle-soft) 0%, transparent 60%),
+      radial-gradient(circle at 75% 80%, var(--honey-soft) 0%, transparent 65%),
+      linear-gradient(160deg, var(--honey-cream) 0%, var(--lavender-soft) 100%);
+  }
+  .pdp-hero img {
+    position: absolute;
+    bottom: -2%; left: 50%;
+    transform: translateX(-50%);
+    width: 80%; height: 100%;
+    object-fit: contain;
+    object-position: bottom;
+    filter: drop-shadow(0 16px 20px rgba(0,0,0,.18));
+  }
+  .pdp-hero .pager {
+    position: absolute;
+    bottom: 12px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; gap: 4px;
+  }
+  .pdp-hero .pager span {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(42,31,18,.3);
+  }
+  .pdp-hero .pager span.active { background: var(--ink); width: 16px; border-radius: 999px; }
+
+  .pdp-meta { padding: 0 18px 8px; }
+  .pdp-meta .rating {
+    display: flex; align-items: center; gap: 6px;
+    font-size: .75rem; color: var(--ink-soft);
+    margin-bottom: 4px;
+  }
+  .pdp-meta .rating .stars { color: var(--honey-deep); letter-spacing: 1px; }
+  .pdp-meta .name {
+    font-family: var(--ff-display);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.5rem;
+    line-height: 1;
+    margin: 4px 0 6px;
+    color: var(--ink);
+  }
+  .pdp-meta .desc {
+    font-size: .8rem;
+    color: var(--ink-soft);
+    line-height: 1.45;
+  }
+
+  .size-block { padding: 12px 18px 8px; }
+  .size-label {
+    font-size: .72rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .size-row { display: flex; gap: 8px; }
+  .size-pill {
+    flex: 1;
+    text-align: center;
+    padding: 11px 0;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 0 0 1px var(--hair) inset;
+    font-size: .82rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+    cursor: pointer;
+  }
+  .size-pill.active {
+    background: var(--ink);
+    color: var(--frame-bg);
+    box-shadow: none;
+    font-weight: 600;
+  }
+
+  .buy-block {
+    padding: 6px 18px 12px;
+    display: grid; gap: 10px;
+  }
+  .buy-card {
+    padding: 12px 14px;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 0 0 1px var(--hair) inset;
+    position: relative;
+  }
+  .buy-card.selected {
+    background: var(--honey-soft);
+    box-shadow: 0 0 0 2px var(--honey-deep) inset;
+  }
+  .buy-card .row {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 4px;
+  }
+  .radio {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 1.6px solid var(--ink-soft);
+    display: grid; place-items: center;
+    flex-shrink: 0;
+  }
+  .radio.checked { border-color: var(--honey-deep); }
+  .radio.checked::after {
+    content: "";
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--honey-deep);
+  }
+  .buy-card .title {
+    font-size: .9rem; font-weight: 600;
+    color: var(--ink);
+    flex: 1;
+  }
+  .buy-card .save-pill {
+    display: inline-block;
+    background: var(--pink);
+    color: var(--ink);
+    font-size: .65rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 999px;
+    margin-left: 4px;
+  }
+  .buy-card .price {
+    font-size: .92rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-left: auto;
+  }
+  .buy-card .sub-desc {
+    font-size: .72rem;
+    color: var(--ink-soft);
+    margin: 4px 0 8px 28px;
+    line-height: 1.4;
+  }
+  .delivery-select {
+    margin-left: 28px;
+    margin-top: 4px;
+    padding: 9px 12px;
+    background: rgba(255,251,241,.7);
+    border-radius: 10px;
+    font-size: .76rem;
+    color: var(--ink);
+    display: flex; justify-content: space-between; align-items: center;
+    box-shadow: 0 0 0 1px var(--hair) inset;
+  }
+
+  .ymal { padding: 4px 0 0; }
+  .ymal-head {
+    padding: 8px 18px 6px;
+  }
+  .ymal-head h3 {
+    font-family: var(--ff-display);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.1rem;
+    margin: 0;
+    color: var(--ink);
+  }
+  .ymal-row {
+    display: flex; gap: 10px;
+    padding: 4px 14px 14px;
+    overflow: hidden;
+  }
+  .ymal-card {
+    flex: 0 0 44%;
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px var(--hair) inset;
+    position: relative;
+  }
+  .ymal-card .photo {
+    aspect-ratio: 1 / 0.88;
+    background: linear-gradient(150deg, var(--sky-soft), var(--sky));
+    position: relative;
+    overflow: hidden;
+  }
+  .ymal-card.purple .photo { background: linear-gradient(150deg, var(--lavender-soft), var(--lavender)); }
+  .ymal-card .photo img {
+    width: 100%; height: 100%; object-fit: cover;
+    mix-blend-mode: multiply;
+  }
+  .ymal-card .meta {
+    padding: 8px 10px 10px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 4px;
+  }
+  .ymal-card .name {
+    font-family: var(--ff-display);
+    font-style: normal;
+    font-size: .85rem;
+    margin: 0;
+  }
+  .ymal-card .desc { font-size: .65rem; color: var(--ink-soft); margin: 1px 0 2px; }
+  .ymal-card .price { font-size: .75rem; font-weight: 600; }
+  .ymal-card .add {
+    width: 26px; height: 26px;
+    border: 0; border-radius: 8px;
+    background: var(--honey);
+    display: grid; place-items: center;
+    color: var(--ink); cursor: pointer;
+  }
+
+  /* =========================================================
+     04 · CART (drawer over PDP)
+     ========================================================= */
+  .pdp-behind {
+    position: absolute; inset: 0;
+    filter: blur(3px) saturate(.6);
+    opacity: .55;
+    pointer-events: none;
+  }
+  .pdp-behind .topbar,
+  .pdp-behind .pdp-hero,
+  .pdp-behind .pdp-meta {
+    /* inherit existing styles */
+  }
+  .cart-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(42,31,18,.32);
+    z-index: 4;
+  }
+  .cart-drawer {
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 88%;
+    background: var(--frame-bg);
+    z-index: 5;
+    display: flex; flex-direction: column;
+    border-radius: 24px 0 0 24px;
+    box-shadow: -10px 0 30px -8px rgba(42,31,18,.35);
+    overflow: hidden;
+  }
+  .cart-head {
+    display: flex; align-items: center;
+    padding: 18px 18px 14px;
+    border-bottom: 1px solid var(--hair);
+  }
+  .cart-head h2 {
+    font-family: var(--ff-display);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.25rem;
+    margin: 0;
+    color: var(--ink);
+    flex: 1;
+  }
+  .cart-close {
+    background: transparent;
+    border: 0;
+    width: 32px; height: 32px;
+    display: grid; place-items: center;
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  .cart-body { flex: 1; padding: 14px 16px; overflow: hidden; }
+  .cart-item {
+    background: linear-gradient(160deg, var(--honey-soft), #FFF4D0);
+    border-radius: 18px;
+    padding: 12px;
+    display: grid;
+    grid-template-columns: 78px 1fr;
+    gap: 12px;
+    position: relative;
+  }
+  .cart-item .thumb {
+    aspect-ratio: 1;
+    border-radius: 14px;
+    background: linear-gradient(160deg, var(--honey-soft), var(--honey));
+    overflow: hidden;
+    position: relative;
+  }
+  .cart-item .thumb img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply; }
+  .cart-item .info { display: flex; flex-direction: column; gap: 2px; }
+  .cart-item .name {
+    font-family: var(--ff-display);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1.1;
+    color: var(--ink);
+    margin: 0;
+  }
+  .cart-item .weight {
+    font-size: .72rem;
+    color: var(--ink-soft);
+  }
+  .cart-item .pricerow {
+    display: flex; align-items: center; gap: 10px;
+    margin-top: 4px;
+  }
+  .cart-item .price {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+  .cart-item .qty {
+    margin-left: auto;
+    display: inline-flex; align-items: center;
+    background: var(--ink);
+    color: var(--frame-bg);
+    border-radius: 999px;
+    padding: 3px;
+    gap: 4px;
+    font-weight: 600;
+    font-size: .78rem;
+  }
+  .cart-item .qty button {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1px solid rgba(255,251,241,.4);
+    color: inherit;
+    display: grid; place-items: center;
+    cursor: pointer;
+  }
+  .cart-item .qty span { padding: 0 4px; min-width: 14px; text-align: center; }
+  .cart-item .sub-row {
+    margin-top: 6px;
+    display: flex; align-items: center;
+    gap: 6px;
+    font-size: .68rem;
+    color: var(--ink-soft);
+  }
+  .cart-item .sub-row .pill {
+    background: var(--periwinkle);
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: .65rem;
+  }
+  .cart-item .close-x {
+    position: absolute;
+    top: 8px; right: 10px;
+    width: 22px; height: 22px;
+    border: 0;
+    background: rgba(255,251,241,.6);
+    border-radius: 50%;
+    display: grid; place-items: center;
+    cursor: pointer; color: var(--ink);
+  }
+
+  .cart-summary {
+    margin-top: 12px;
+    background: var(--frame-soft);
+    border-radius: 16px;
+    padding: 12px 14px;
+    font-size: .8rem;
+    color: var(--ink);
+  }
+  .cart-summary .line {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 4px 0;
+  }
+  .cart-summary .line.total {
+    border-top: 1px dashed var(--hair);
+    margin-top: 6px;
+    padding-top: 10px;
+    font-weight: 700;
+    font-size: .95rem;
+  }
+
+  .cart-foot {
+    padding: 12px 16px 18px;
+    background: var(--frame-bg);
+    border-top: 1px solid var(--hair);
+  }
+  .cart-foot .ship-note {
+    font-size: .7rem;
+    text-align: center;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+  }
+
+  /* =========================================================
+     05 · CHECKOUT
+     ========================================================= */
+  .summary-bar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 18px;
+    background: var(--honey-soft);
+    border-top: 1px solid var(--honey);
+    border-bottom: 1px solid var(--honey);
+    font-size: .85rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .summary-bar .chev { font-size: .7rem; margin-left: 4px; }
+
+  .co-section {
+    padding: 16px 18px 4px;
+  }
+  .co-section h3 {
+    display: flex; align-items: baseline; justify-content: space-between;
+    font-family: var(--ff-display);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.1rem;
+    margin: 0 0 10px;
+    color: var(--ink);
+  }
+  .co-section h3 .link {
+    font-family: var(--ff-sans);
+    font-style: normal;
+    font-size: .78rem;
+    color: var(--honey-deep);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .input {
+    width: 100%;
+    height: 42px;
+    border: 0;
+    border-radius: 10px;
+    padding: 0 14px;
+    background: #fff;
+    box-shadow: 0 0 0 1px var(--hair) inset;
+    font: inherit;
+    font-size: .82rem;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .input::placeholder { color: var(--muted); }
+  .input-stack { display: grid; gap: 0; }
+  .input.with-label {
+    padding-top: 18px;
+    height: 50px;
+    position: relative;
+  }
+  .input-wrap {
+    position: relative;
+    margin-bottom: 8px;
+  }
+  .input-wrap .lbl {
+    position: absolute;
+    top: 7px; left: 14px;
+    font-size: .65rem;
+    color: var(--muted);
+    letter-spacing: .04em;
+    pointer-events: none;
+  }
+  .input-wrap .input {
+    margin: 0;
+  }
+  .checkbox-row {
+    display: flex; align-items: center; gap: 8px;
+    margin: 8px 0 4px;
+    font-size: .78rem;
+    color: var(--ink-soft);
+  }
+  .checkbox {
+    width: 16px; height: 16px;
+    border-radius: 4px;
+    border: 1.6px solid var(--ink-soft);
+    display: grid; place-items: center;
+    color: var(--ink);
+  }
+  .checkbox.checked {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--frame-bg);
+  }
+
+  .pay-list {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 0 0 1px var(--hair) inset;
+    overflow: hidden;
+  }
+  .pay-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 13px 14px;
+    border-bottom: 1px solid var(--hair-soft);
+    font-size: .85rem;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .pay-row:last-child { border-bottom: 0; }
+  .pay-row.open {
+    background: var(--honey-soft);
+  }
+  .pay-row .logo {
+    margin-left: auto;
+    font-weight: 700;
+    font-size: .7rem;
+    letter-spacing: .04em;
+    color: var(--ink-soft);
+  }
+  .pay-row.twint .logo { color: #1F1F1F; }
+  .pay-form {
+    padding: 4px 14px 14px;
+    background: var(--honey-soft);
+    border-bottom: 1px solid var(--hair-soft);
+  }
+  .pay-form .input { background: #fff; }
+
+  .summary-card {
+    background: var(--frame-soft);
+    border-radius: 16px;
+    padding: 14px;
+    margin-top: 4px;
+  }
+  .summary-product {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .summary-product .thumb {
+    aspect-ratio: 1;
+    border-radius: 10px;
+    overflow: hidden;
+    background: linear-gradient(160deg, var(--honey-soft), var(--honey));
+  }
+  .summary-product .thumb img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply; }
+  .summary-product .name {
+    font-family: var(--ff-display);
+    font-style: normal;
+    font-size: .98rem;
+    line-height: 1;
+    margin: 0;
+  }
+  .summary-product .weight { font-size: .7rem; color: var(--ink-soft); }
+  .summary-product .price { font-weight: 700; font-size: .9rem; }
+
+  .voucher-row {
+    display: flex; gap: 6px;
+    margin-bottom: 10px;
+  }
+  .voucher-row .input { margin: 0; }
+  .voucher-row .btn-secondary {
+    width: auto; padding: 0 18px; height: 42px;
+    border-radius: 10px;
+    font-size: .82rem;
+  }
+  .totals .line {
+    display: flex; justify-content: space-between;
+    padding: 4px 0;
+    font-size: .82rem;
+    color: var(--ink-soft);
+  }
+  .totals .line.grand {
+    border-top: 1px dashed var(--hair);
+    margin-top: 6px;
+    padding-top: 10px;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--ink);
+  }
+  .checkout-cta {
+    padding: 6px 18px 18px;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- ─────────  Shared SVG icons  ───────── -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-cart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.2a2 2 0 0 0 2-1.5L20.5 8H6.2"/></g></symbol>
+    <symbol id="i-cart-add" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.2a2 2 0 0 0 2-1.5L20.5 8H10.2"/><path d="M16 4v4M14 6h4"/></g></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 8.3a5 5 0 0 0-8.8-3.2A5 5 0 0 0 3.2 8.3c0 7 8.8 12 8.8 12s8.8-5 8.8-12z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-person" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></g></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></g></symbol>
+    <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6l-12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-chev-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8.5v.01M11 12h1v4h1"/></g></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></g></symbol>
+    <symbol id="i-signal" viewBox="0 0 20 12"><path d="M1 11h2v-3H1zM5 11h2v-5H5zM9 11h2v-7H9zM13 11h2v-9h-2zM17 11h2v-11h-2z" fill="currentColor"/></symbol>
+    <symbol id="i-wifi" viewBox="0 0 16 12"><path d="M1.5 4.5a10 10 0 0 1 13 0M3.5 6.7a7 7 0 0 1 9 0M5.5 8.9a4 4 0 0 1 5 0M8 11.2v.01" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-battery" viewBox="0 0 24 12"><rect x="0.5" y="1" width="21" height="10" rx="2" fill="none" stroke="currentColor"/><rect x="22.5" y="4" width="1.5" height="4" rx="0.5" fill="currentColor"/><rect x="2" y="2.5" width="14" height="7" rx="1" fill="currentColor"/></symbol>
+    <symbol id="i-star" viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.7L10 14.8 4.8 17.5l1-5.7L1.5 7.7l5.9-.9z" fill="currentColor"/></symbol>
+    <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3c-3 3-6 7-6 11a6 6 0 0 0 12 0c0-4-3-8-6-11z" fill="currentColor"/></symbol>
+    <symbol id="i-bee" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><ellipse cx="32" cy="36" rx="14" ry="11"/><path d="M32 26v20M24 33h16M22 40h20"/><ellipse cx="22" cy="22" rx="7" ry="4" transform="rotate(-25 22 22)"/><ellipse cx="42" cy="22" rx="7" ry="4" transform="rotate(25 42 22)"/></g></symbol>
+
+    <radialGradient id="beeShade" cx="0.7" cy="0.8">
+      <stop offset="0" stop-color="#E89B2A" stop-opacity="0"/>
+      <stop offset="1" stop-color="#E89B2A" stop-opacity=".4"/>
+    </radialGradient>
+
+    <!-- Cute bee mascot — chunky watercolour-style smile -->
+    <symbol id="m-bee" viewBox="0 0 240 220">
+      <!-- left wing -->
+      <ellipse cx="55" cy="95" rx="48" ry="28" fill="#FFFFFF" stroke="#E8E2F5" stroke-width="1.5" transform="rotate(-18 55 95)"/>
+      <ellipse cx="60" cy="95" rx="32" ry="18" fill="#FBFAFF" opacity=".9" transform="rotate(-18 55 95)"/>
+      <!-- right wing -->
+      <ellipse cx="185" cy="95" rx="48" ry="28" fill="#FFFFFF" stroke="#E8E2F5" stroke-width="1.5" transform="rotate(18 185 95)"/>
+      <ellipse cx="180" cy="95" rx="32" ry="18" fill="#FBFAFF" opacity=".9" transform="rotate(18 185 95)"/>
+      <!-- body shadow -->
+      <ellipse cx="123" cy="200" rx="60" ry="8" fill="rgba(60,40,120,.10)"/>
+      <!-- body -->
+      <ellipse cx="120" cy="120" rx="72" ry="78" fill="#FFD668"/>
+      <ellipse cx="120" cy="120" rx="72" ry="78" fill="url(#beeShade)"/>
+      <!-- stripes -->
+      <path d="M55 130 q65 22 130 0 v22 q-65 22 -130 0 z" fill="#2A2240"/>
+      <path d="M68 178 q52 18 104 0 v8 q-52 14 -104 0 z" fill="#2A2240"/>
+      <!-- belly highlight -->
+      <ellipse cx="120" cy="100" rx="44" ry="32" fill="#FFF2C2" opacity=".7"/>
+      <!-- eyes (closed-smile curves) -->
+      <path d="M88 102 q6 -10 14 0" stroke="#2A2240" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+      <path d="M138 102 q6 -10 14 0" stroke="#2A2240" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+      <!-- cheeks -->
+      <ellipse cx="78" cy="118" rx="11" ry="7" fill="#F4A8B8" opacity=".8"/>
+      <ellipse cx="162" cy="118" rx="11" ry="7" fill="#F4A8B8" opacity=".8"/>
+      <!-- smile -->
+      <path d="M108 120 q12 10 24 0" stroke="#2A2240" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <!-- antennae -->
+      <path d="M100 50 q-6 -18 -18 -28" stroke="#2A2240" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <path d="M140 50 q6 -18 18 -28" stroke="#2A2240" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <circle cx="82" cy="21" r="5.5" fill="#2A2240"/>
+      <circle cx="158" cy="21" r="5.5" fill="#2A2240"/>
+    </symbol>
+
+    <!-- Honey drop -->
+    <symbol id="m-drop" viewBox="0 0 40 56">
+      <path d="M20 2 C 8 22, 2 36, 2 42 a18 18 0 0 0 36 0 C 38 36, 32 22, 20 2 z" fill="#FFCE5A"/>
+      <path d="M14 36 a6 6 0 0 0 0 12" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" opacity=".6"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="page-head">
+  <div class="eyebrow">Hey Honey · v3 · High fidelity</div>
+  <h1>Five screens, <em>one sweet</em> system.</h1>
+  <p>A light, playful direction for Hey Honey's e-commerce flow. Periwinkle and lavender as the soft canvas; honey-amber, sky, and pink as warm accents; a chubby bee mascot as the visual hook. Quicksand for display, Inter for UI body.</p>
+  <div class="legend">
+    <span class="swatch"><span class="dot" style="background:#FFCE5A"></span> Honey</span>
+    <span class="swatch"><span class="dot" style="background:#FFE9A3"></span> Soft yellow</span>
+    <span class="swatch"><span class="dot" style="background:#F4B6C3"></span> Pastel pink</span>
+    <span class="swatch"><span class="dot" style="background:#B8D2EE"></span> Sky</span>
+    <span class="swatch"><span class="dot" style="background:#B5B6F0"></span> Periwinkle</span>
+    <span class="swatch"><span class="dot" style="background:#CEC0EC"></span> Lavender</span>
+    <span class="swatch"><span class="dot" style="background:#2A2240"></span> Ink</span>
+  </div>
+</header>
+
+<main class="phones-grid">
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- 01 · HOME                                            -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <section class="phone-card">
+    <div class="phone-label"><b>01 · Home</b><span>landing</span></div>
+    <div class="phone-frame">
+      <div class="status-bar">
+        <span>9:41</span>
+        <span class="status-right">
+          <svg class="ic-sm"><use href="#i-signal"/></svg>
+          <svg class="ic-sm" style="width:14px;height:10px"><use href="#i-wifi"/></svg>
+          <svg style="width:22px;height:11px"><use href="#i-battery"/></svg>
+        </span>
+      </div>
+      <div class="screen">
+        <header class="topbar">
+          <a class="brand" href="#">Hey<span class="h"> Honey</span></a>
+          <button class="icon-btn" aria-label="Cart">
+            <svg class="ic"><use href="#i-cart"/></svg>
+            <span class="dot"></span>
+          </button>
+          <button class="icon-btn" aria-label="Favourites"><svg class="ic"><use href="#i-heart"/></svg></button>
+          <button class="icon-btn" aria-label="Account"><svg class="ic"><use href="#i-person"/></svg></button>
+          <button class="icon-btn" aria-label="Menu"><svg class="ic"><use href="#i-menu"/></svg></button>
+        </header>
+        <div class="search-row">
+          <div class="search-wrap">
+            <svg class="search-icon ic-sm"><use href="#i-search"/></svg>
+            <input class="field" placeholder="Search Manuka, Acacia, gifts…" />
+          </div>
+          <button class="filter-btn" aria-label="Filters"><svg class="ic"><use href="#i-filter"/></svg></button>
+        </div>
+
+        <div class="screen-scroll">
+          <!-- Hero -->
+          <section class="home-hero">
+            <div class="copy">
+              <div class="eyebrow">Small-batch · Swiss</div>
+              <h1>Hello,<br><em>honey.</em></h1>
+            </div>
+            <svg class="bee" viewBox="0 0 240 220" aria-hidden="true"><use href="#m-bee"/></svg>
+            <span class="discount-tab">Get 10% OFF</span>
+          </section>
+
+          <div class="home-cta-row">
+            <a class="btn btn-primary" href="#">Shop now</a>
+            <a class="btn btn-secondary" href="#">Learn more</a>
+          </div>
+
+          <div class="home-section-head">
+            <h2>Our beekeepers</h2>
+            <a class="more" href="#">See all →</a>
+          </div>
+
+          <article class="beekeeper">
+            <img src="v2/photos/beekeeper-portrait.jpg" alt="Beekeeper portrait" onerror="this.style.display='none'">
+            <div class="dots">
+              <span class="active"></span><span></span><span></span><span></span><span></span>
+            </div>
+            <div class="beekeeper-card">
+              <div>
+                <p class="name">Tobias Schmidt</p>
+                <p class="desc">Zurich Oberland · Alpine blossom · 1,100 m</p>
+              </div>
+              <a class="more-link" href="#">Learn more →</a>
+            </div>
+          </article>
+
+          <footer class="footer" style="margin-top:18px">
+            <ul>
+              <li>About us</li>
+              <li>Subscriptions</li>
+              <li>Recipes</li>
+              <li>Support</li>
+            </ul>
+            <p class="legal">© 2026 Hey Honey · Zürich</p>
+          </footer>
+        </div>
+      </div>
+      <div class="home-indicator"></div>
+    </div>
+    <div class="phone-notes">
+      <ul>
+        <li><b>Hero:</b> cream-and-periwinkle wash; chubby bee mascot is the visual hook and brand personality</li>
+        <li><b>"Get 10% OFF" tab:</b> ink with honey type, vertical, pinned to right edge as in the wireframe</li>
+        <li><b>Beekeepers:</b> photo card with translucent caption overlay; 5-dot pager for carousel</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- 02 · SHOP                                            -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <section class="phone-card">
+    <div class="phone-label"><b>02 · Shop</b><span>browse</span></div>
+    <div class="phone-frame">
+      <div class="status-bar">
+        <span>9:41</span>
+        <span class="status-right">
+          <svg class="ic-sm"><use href="#i-signal"/></svg>
+          <svg class="ic-sm" style="width:14px;height:10px"><use href="#i-wifi"/></svg>
+          <svg style="width:22px;height:11px"><use href="#i-battery"/></svg>
+        </span>
+      </div>
+      <div class="screen">
+        <header class="topbar">
+          <a class="brand" href="#">Hey<span class="h"> Honey</span></a>
+          <button class="icon-btn"><svg class="ic"><use href="#i-cart"/></svg><span class="dot"></span></button>
+          <button class="icon-btn"><svg class="ic"><use href="#i-heart"/></svg></button>
+          <button class="icon-btn"><svg class="ic"><use href="#i-person"/></svg></button>
+          <button class="icon-btn"><svg class="ic"><use href="#i-menu"/></svg></button>
+        </header>
+        <div class="search-row">
+          <div class="search-wrap">
+            <svg class="search-icon ic-sm"><use href="#i-search"/></svg>
+            <input class="field" placeholder="Search the hive…" />
+          </div>
+          <button class="filter-btn"><svg class="ic"><use href="#i-filter"/></svg></button>
+        </div>
+
+        <div class="screen-scroll">
+          <div class="cat-row">
+            <div class="cat-tile yellow"><span class="em">🍯</span>Honey</div>
+            <div class="cat-tile pink"><span class="em">🎁</span>Gifts</div>
+            <div class="cat-tile blue"><span class="em">📦</span>Subs</div>
+            <div class="cat-tile purple"><span class="em">🐝</span>Bees</div>
+          </div>
+
+          <div class="product-grid">
+            <article class="product-card">
+              <div class="photo yellow">
+                <img src="v2/photos/jar-orange.jpg" alt="" onerror="this.style.display='none'">
+                <button class="heart fill" aria-label="Saved"><svg class="ic"><use href="#i-heart"/></svg></button>
+              </div>
+              <div class="meta">
+                <div>
+                  <h3 class="name">Swiss Blossom</h3>
+                  <p class="desc">Floral, mild</p>
+                  <span class="price">CHF 16</span>
+                </div>
+                <button class="add" aria-label="Add"><svg class="ic-sm"><use href="#i-cart-add"/></svg></button>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="photo blue">
+                <img src="v2/photos/jar-pine.jpg" alt="" onerror="this.style.display='none'">
+                <button class="heart" aria-label="Save"><svg class="ic"><use href="#i-heart"/></svg></button>
+              </div>
+              <div class="meta">
+                <div>
+                  <h3 class="name">Pine Tree</h3>
+                  <p class="desc">Resinous, earthy</p>
+                  <span class="price">CHF 20</span>
+                </div>
+                <button class="add"><svg class="ic-sm"><use href="#i-cart-add"/></svg></button>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="photo pink">
+                <img src="v2/photos/jar-blossom.jpg" alt="" onerror="this.style.display='none'">
+                <button class="heart" aria-label="Save"><svg class="ic"><use href="#i-heart"/></svg></button>
+              </div>
+              <div class="meta">
+                <div>
+                  <h3 class="name">Cherry Blossom</h3>
+                  <p class="desc">Delicate, sweet</p>
+                  <span class="price">CHF 18</span>
+                </div>
+                <button class="add"><svg class="ic-sm"><use href="#i-cart-add"/></svg></button>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="photo purple">
+                <img src="v2/photos/jar-elder.jpg" alt="" onerror="this.style.display='none'">
+                <button class="heart fill" aria-label="Saved"><svg class="ic"><use href="#i-heart"/></svg></button>
+              </div>
+              <div class="meta">
+                <div>
+                  <h3 class="name">Elderflower</h3>
+                  <p class="desc">Light, herbal</p>
+                  <span class="price">CHF 19</span>
+                </div>
+                <button class="add"><svg class="ic-sm"><use href="#i-cart-add"/></svg></button>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="photo peri">
+                <img src="v2/photos/jar-acacia.jpg" alt="" onerror="this.style.display='none'">
+                <button class="heart" aria-label="Save"><svg class="ic"><use href="#i-heart"/></svg></button>
+              </div>
+              <div class="meta">
+                <div>
+                  <h3 class="name">Acacia</h3>
+                  <p class="desc">Clear, silky</p>
+                  <span class="price">CHF 17</span>
+                </div>
+                <button class="add"><svg class="ic-sm"><use href="#i-cart-add"/></svg></button>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="photo yellow">
+                <img src="v2/photos/jar-manuka.jpg" alt="" onerror="this.style.display='none'">
+                <button class="heart" aria-label="Save"><svg class="ic"><use href="#i-heart"/></svg></button>
+              </div>
+              <div class="meta">
+                <div>
+                  <h3 class="name">Manuka</h3>
+                  <p class="desc">Rich, medicinal</p>
+                  <span class="price">CHF 32</span>
+                </div>
+                <button class="add"><svg class="ic-sm"><use href="#i-cart-add"/></svg></button>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+      <div class="home-indicator"></div>
+    </div>
+    <div class="phone-notes">
+      <ul>
+        <li><b>Categories:</b> rotating pastel chips (honey / pink / sky / lavender) — the full palette in one row</li>
+        <li><b>Product card:</b> coloured photo well + heart top-right, quick-add bottom-right, Quicksand display name</li>
+        <li><b>Heart state:</b> outline → pink fill when saved</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- 03 · PRODUCT (PDP)                                   -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <section class="phone-card">
+    <div class="phone-label"><b>03 · Product</b><span>PDP</span></div>
+    <div class="phone-frame">
+      <div class="status-bar">
+        <span>9:41</span>
+        <span class="status-right">
+          <svg class="ic-sm"><use href="#i-signal"/></svg>
+          <svg class="ic-sm" style="width:14px;height:10px"><use href="#i-wifi"/></svg>
+          <svg style="width:22px;height:11px"><use href="#i-battery"/></svg>
+        </span>
+      </div>
+      <div class="screen">
+        <header class="back-row">
+          <button class="back" aria-label="Back"><svg class="ic"><use href="#i-back"/></svg></button>
+          <a class="brand" href="#">Hey<span class="h"> Honey</span></a>
+          <button class="icon-btn" style="width:32px;height:32px;display:grid;place-items:center;background:transparent;border:0"><svg class="ic"><use href="#i-cart"/></svg></button>
+          <button class="icon-btn" style="width:32px;height:32px;display:grid;place-items:center;background:transparent;border:0"><svg class="ic"><use href="#i-heart"/></svg></button>
+          <button class="icon-btn" style="width:32px;height:32px;display:grid;place-items:center;background:transparent;border:0"><svg class="ic"><use href="#i-person"/></svg></button>
+          <button class="icon-btn" style="width:32px;height:32px;display:grid;place-items:center;background:transparent;border:0"><svg class="ic"><use href="#i-menu"/></svg></button>
+        </header>
+
+        <div class="screen-scroll">
+          <div class="pdp-hero">
+            <img src="v2/photos/jar-manuka-cutout.png" alt="Manuka jar" onerror="this.parentNode.style.background='linear-gradient(150deg,var(--honey-soft),var(--honey-deep))'">
+            <div class="pager"><span class="active"></span><span></span><span></span></div>
+          </div>
+
+          <div class="pdp-meta">
+            <div class="rating">
+              <span class="stars">★★★★★</span>
+              <span>4.9 · 128 reviews</span>
+            </div>
+            <h1 class="name">Alpine Manuka</h1>
+            <p class="desc">Rich and dark with a bittersweet finish. Cold-extracted from hives at 1,100 m. Raw, unpasteurised, never warmed above 35°C.</p>
+          </div>
+
+          <div class="size-block">
+            <p class="size-label">Size</p>
+            <div class="size-row">
+              <div class="size-pill">100 g</div>
+              <div class="size-pill active">250 g</div>
+              <div class="size-pill">500 g</div>
+            </div>
+          </div>
+
+          <div class="buy-block">
+            <div class="buy-card selected">
+              <div class="row">
+                <div class="radio checked"></div>
+                <span class="title">Subscribe & save <span class="save-pill">−10%</span></span>
+                <span class="price">CHF 20.00</span>
+              </div>
+              <p class="sub-desc">Free delivery, skip or cancel any time. Beekeeper-direct.</p>
+              <div class="delivery-select">
+                <span>Delivery every 30 days <span style="color:var(--muted)">· most common</span></span>
+                <svg class="ic-sm"><use href="#i-chev-down"/></svg>
+              </div>
+            </div>
+            <div class="buy-card">
+              <div class="row">
+                <div class="radio"></div>
+                <span class="title">One-time purchase</span>
+                <span class="price">CHF 22.20</span>
+              </div>
+            </div>
+            <button class="btn btn-primary">Add to cart</button>
+          </div>
+
+          <div class="ymal">
+            <div class="ymal-head"><h3>You may also like</h3></div>
+            <div class="ymal-row">
+              <article class="ymal-card">
+                <div class="photo">
+                  <img src="v2/photos/jar-pine.jpg" alt="" onerror="this.style.display='none'">
+                </div>
+                <div class="meta">
+                  <div>
+                    <h4 class="name">Pine Tree</h4>
+                    <p class="desc">Resinous</p>
+                    <span class="price">CHF 20</span>
+                  </div>
+                  <button class="add"><svg class="ic-sm"><use href="#i-cart-add"/></svg></button>
+                </div>
+              </article>
+              <article class="ymal-card purple">
+                <div class="photo">
+                  <img src="v2/photos/jar-elder.jpg" alt="" onerror="this.style.display='none'">
+                </div>
+                <div class="meta">
+                  <div>
+                    <h4 class="name">Elderflower</h4>
+                    <p class="desc">Light, herbal</p>
+                    <span class="price">CHF 19</span>
+                  </div>
+                  <button class="add"><svg class="ic-sm"><use href="#i-cart-add"/></svg></button>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="home-indicator"></div>
+    </div>
+    <div class="phone-notes">
+      <ul>
+        <li><b>Size pills:</b> selected size in ink (dark) for unambiguous state</li>
+        <li><b>Subscribe & save:</b> default-selected, soft honey island; "−10%" surfaced on the pink chip</li>
+        <li><b>Delivery cadence</b> visible inside the subscribe card; one-time price shown without the discount</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- 04 · CART (drawer over PDP)                          -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <section class="phone-card">
+    <div class="phone-label"><b>04 · Cart</b><span>drawer over PDP</span></div>
+    <div class="phone-frame">
+      <div class="status-bar">
+        <span>9:41</span>
+        <span class="status-right">
+          <svg class="ic-sm"><use href="#i-signal"/></svg>
+          <svg class="ic-sm" style="width:14px;height:10px"><use href="#i-wifi"/></svg>
+          <svg style="width:22px;height:11px"><use href="#i-battery"/></svg>
+        </span>
+      </div>
+      <div class="screen">
+
+        <!-- Behind: blurred PDP layer -->
+        <div class="pdp-behind">
+          <header class="back-row">
+            <button class="back"><svg class="ic"><use href="#i-back"/></svg></button>
+            <a class="brand">Hey<span class="h"> Honey</span></a>
+            <span style="margin-left:auto"></span>
+          </header>
+          <div class="pdp-hero" style="margin:4px 14px 14px">
+            <img src="v2/photos/jar-manuka-cutout.png" alt="" onerror="this.style.display='none'">
+          </div>
+          <div class="pdp-meta">
+            <h1 class="name">Alpine Manuka</h1>
+            <p class="desc">Rich and dark.</p>
+          </div>
+        </div>
+
+        <!-- Overlay -->
+        <div class="cart-overlay"></div>
+
+        <!-- Drawer -->
+        <aside class="cart-drawer">
+          <header class="cart-head">
+            <h2>My cart</h2>
+            <button class="cart-close" aria-label="Close"><svg class="ic"><use href="#i-close"/></svg></button>
+          </header>
+          <div class="cart-body">
+            <article class="cart-item">
+              <div class="thumb"><img src="v2/photos/jar-manuka.jpg" alt="" onerror="this.style.display='none'"></div>
+              <div class="info">
+                <button class="close-x"><svg class="ic-sm"><use href="#i-close"/></svg></button>
+                <h3 class="name">Alpine Manuka</h3>
+                <span class="weight">250 g</span>
+                <div class="pricerow">
+                  <span class="price">CHF 20.00</span>
+                  <div class="qty">
+                    <button aria-label="Decrease"><svg class="ic-sm"><use href="#i-minus"/></svg></button>
+                    <span>1</span>
+                    <button aria-label="Increase"><svg class="ic-sm"><use href="#i-plus"/></svg></button>
+                  </div>
+                </div>
+                <div class="sub-row">
+                  <span class="pill">Subscription</span>
+                  <span>every 30 days</span>
+                  <svg class="ic-sm" style="margin-left:auto;color:var(--muted)"><use href="#i-info"/></svg>
+                </div>
+              </div>
+            </article>
+
+            <div class="cart-summary">
+              <div class="line"><span>Subtotal</span><span>CHF 20.00</span></div>
+              <div class="line" style="color:var(--ink-soft)"><span>Subscriber discount</span><span>−CHF 2.20</span></div>
+              <div class="line total"><span>Total</span><span>CHF 17.80</span></div>
+            </div>
+          </div>
+          <footer class="cart-foot">
+            <p class="ship-note">Taxes and shipping calculated at checkout</p>
+            <a class="btn btn-primary" href="#">Checkout</a>
+          </footer>
+        </aside>
+
+      </div>
+      <div class="home-indicator"></div>
+    </div>
+    <div class="phone-notes">
+      <ul>
+        <li><b>Drawer pattern:</b> right-anchored, 88% width, soft-blurred PDP behind for context</li>
+        <li><b>Item card:</b> warm honey gradient surface; subscription chip in periwinkle per palette</li>
+        <li><b>Pre-checkout total</b> shown with subscriber discount line as a transparency signal</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- 05 · CHECKOUT                                        -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <section class="phone-card">
+    <div class="phone-label"><b>05 · Checkout</b><span>pay</span></div>
+    <div class="phone-frame">
+      <div class="status-bar">
+        <span>9:41</span>
+        <span class="status-right">
+          <svg class="ic-sm"><use href="#i-signal"/></svg>
+          <svg class="ic-sm" style="width:14px;height:10px"><use href="#i-wifi"/></svg>
+          <svg style="width:22px;height:11px"><use href="#i-battery"/></svg>
+        </span>
+      </div>
+      <div class="screen">
+        <header class="back-row">
+          <button class="back"><svg class="ic"><use href="#i-back"/></svg></button>
+          <a class="brand">Hey<span class="h"> Honey</span></a>
+          <button class="icon-btn" style="width:32px;height:32px;display:grid;place-items:center;background:transparent;border:0"><svg class="ic"><use href="#i-cart"/></svg></button>
+          <button class="icon-btn" style="width:32px;height:32px;display:grid;place-items:center;background:transparent;border:0"><svg class="ic"><use href="#i-heart"/></svg></button>
+          <button class="icon-btn" style="width:32px;height:32px;display:grid;place-items:center;background:transparent;border:0"><svg class="ic"><use href="#i-person"/></svg></button>
+          <button class="icon-btn" style="width:32px;height:32px;display:grid;place-items:center;background:transparent;border:0"><svg class="ic"><use href="#i-menu"/></svg></button>
+        </header>
+
+        <div class="summary-bar">
+          <span>Order summary <span class="chev">▾</span></span>
+          <span>CHF 17.80</span>
+        </div>
+
+        <div class="screen-scroll">
+          <section class="co-section">
+            <h3>Contact <a href="#" class="link">Sign in</a></h3>
+            <div class="input-wrap">
+              <span class="lbl">Email or phone number</span>
+              <input class="input with-label" type="email" placeholder="">
+            </div>
+          </section>
+
+          <section class="co-section">
+            <h3>Delivery</h3>
+            <div class="input-wrap">
+              <span class="lbl">Country / Region</span>
+              <input class="input with-label" value="Switzerland">
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px">
+              <div class="input-wrap">
+                <span class="lbl">First name</span>
+                <input class="input with-label">
+              </div>
+              <div class="input-wrap">
+                <span class="lbl">Last name</span>
+                <input class="input with-label">
+              </div>
+            </div>
+            <div class="input-wrap">
+              <span class="lbl">Address</span>
+              <input class="input with-label">
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1.4fr; gap:8px">
+              <div class="input-wrap">
+                <span class="lbl">Postal code</span>
+                <input class="input with-label">
+              </div>
+              <div class="input-wrap">
+                <span class="lbl">City</span>
+                <input class="input with-label">
+              </div>
+            </div>
+            <div class="checkbox-row">
+              <div class="checkbox checked"><svg viewBox="0 0 16 16" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg></div>
+              <span>Save this information for next time</span>
+            </div>
+          </section>
+
+          <section class="co-section">
+            <h3>Payment <svg class="ic-sm" style="color:var(--muted)"><use href="#i-lock"/></svg></h3>
+            <div class="pay-list">
+              <div class="pay-row open">
+                <div class="radio checked"></div>
+                <span>Credit card</span>
+                <span class="logo">VISA · MC</span>
+              </div>
+              <div class="pay-form">
+                <div class="input-wrap">
+                  <span class="lbl">Card number</span>
+                  <input class="input with-label">
+                </div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px">
+                  <div class="input-wrap">
+                    <span class="lbl">Exp. MM/YY</span>
+                    <input class="input with-label">
+                  </div>
+                  <div class="input-wrap">
+                    <span class="lbl">CVV</span>
+                    <input class="input with-label">
+                  </div>
+                </div>
+                <div class="checkbox-row">
+                  <div class="checkbox checked"><svg viewBox="0 0 16 16" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M3 8l3 3 7-7"/></svg></div>
+                  <span>Billing same as delivery</span>
+                </div>
+              </div>
+              <div class="pay-row twint">
+                <div class="radio"></div>
+                <span>TWINT</span>
+                <span class="logo">TWINT</span>
+              </div>
+              <div class="pay-row">
+                <div class="radio"></div>
+                <span>PostFinance</span>
+                <span class="logo">PF</span>
+              </div>
+              <div class="pay-row">
+                <div class="radio"></div>
+                <span>Apple Pay</span>
+                <span class="logo">Pay</span>
+              </div>
+              <div class="pay-row">
+                <div class="radio"></div>
+                <span>Google Pay</span>
+                <span class="logo">G Pay</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="co-section">
+            <h3>Order summary</h3>
+            <div class="summary-card">
+              <div class="summary-product">
+                <div class="thumb"><img src="v2/photos/jar-manuka.jpg" alt="" onerror="this.style.display='none'"></div>
+                <div>
+                  <p class="name">Alpine Manuka</p>
+                  <span class="weight">250 g · every 30 days</span>
+                  <div class="price">CHF 20.00</div>
+                </div>
+              </div>
+              <div class="voucher-row">
+                <input class="input" placeholder="Discount code or voucher">
+                <button class="btn btn-secondary">Add</button>
+              </div>
+              <div class="totals">
+                <div class="line"><span>Subtotal</span><span>CHF 20.00</span></div>
+                <div class="line"><span>Subscriber discount</span><span style="color:var(--honey-deep);font-weight:600">−CHF 2.20</span></div>
+                <div class="line"><span>Shipping</span><span>Free over CHF 30</span></div>
+                <div class="line grand"><span>Total</span><span>CHF 17.80</span></div>
+              </div>
+            </div>
+          </section>
+
+          <div class="checkout-cta">
+            <button class="btn btn-primary"><svg class="ic-sm"><use href="#i-lock"/></svg> Pay CHF 17.80</button>
+          </div>
+
+          <footer class="footer">
+            <p class="legal">Secured by Stripe · GDPR · Swiss VAT included</p>
+          </footer>
+        </div>
+      </div>
+      <div class="home-indicator"></div>
+    </div>
+    <div class="phone-notes">
+      <ul>
+        <li><b>Sticky order summary bar</b> in pastel yellow at the top, total visible at all times</li>
+        <li><b>Floating labels</b> on inputs (move above the value once typed) — Swiss-clean form pattern</li>
+        <li><b>Payment list:</b> credit card expands inline; TWINT placed second (Swiss-first)</li>
+        <li><b>Pay button</b> shows the exact total — no surprises before tap</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+</body>
+</html>

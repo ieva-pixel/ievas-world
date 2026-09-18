@@ -307,27 +307,25 @@ function initGallery() {
   const items = $$('.cs-gallery-item', track);
   if (!items.length) return;
 
-  // We translate the track left by (track scrollWidth - viewport width)
-  const computeDistance = () => track.scrollWidth - window.innerWidth;
-
-  // Gallery wrap is just tall enough for the horizontal scrub + 1 viewport.
-  // Sticky pin window = wrap.height - 100vh = computeDistance. Gallery releases
-  // exactly when the horizontal scrub completes. Outcomes pinning is handled
-  // separately by ScrollTrigger.pin — see further down.
-  //
-  // GALLERY_HOLD_VH controls how long the final scrub state stays pinned
-  // before the next section can enter. Bumped from 1.0 → 2.0 because galleries
-  // with tall+narrow mobile mockups (Hey Honey, Share Your Bag) have very
-  // short scrub distances — the screens flash by and the next section
-  // arrives before you've absorbed the last frame. 2.0 buys roughly 1 extra
-  // viewport of dwell time on the final state.
-  const GALLERY_HOLD_VH = 2.0;
-  const HOLD_VH = 1.0; // outcomes pinned for ~1 viewport of scroll (next section)
+  // Use the same live measurement for horizontal travel and the sticky window.
+  const viewport = wrap.querySelector('.cs-gallery-pin');
+  const computeDistance = () => Math.max(0, track.scrollWidth - viewport.clientWidth);
+  const GALLERY_HOLD_VH = 2.0; // one viewport for the stage, one for final-screen dwell
+  const HOLD_VH = 1.0;
   const syncWrapHeight = () => {
     wrap.style.height = (computeDistance() + window.innerHeight * GALLERY_HOLD_VH) + 'px';
   };
   syncWrapHeight();
-  window.addEventListener('resize', () => { syncWrapHeight(); ScrollTrigger.refresh(); });
+  // Image and font loading can change the track width after initialization.
+  // Update the wrapper BEFORE ScrollTrigger measures any start/end positions.
+  ScrollTrigger.addEventListener('refreshInit', syncWrapHeight);
+  track.querySelectorAll('img').forEach((image) => {
+    if (!image.complete) {
+      image.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
+      image.addEventListener('error', () => ScrollTrigger.refresh(), { once: true });
+    }
+  });
+  document.fonts?.ready.then(() => ScrollTrigger.refresh());
 
   const trackTween = gsap.to(track, {
     x: () => -computeDistance(),

@@ -19,7 +19,7 @@ const PROJECTS = [
     bg:      'linear-gradient(135deg,#1e2c0e 0%,#2c3d12 100%)',
     accent:  '#8FA96B',
     href:    'work/pwc-bridge/',
-    image:   'work/pwc-bridge/pwc-bridge-hero.jpg',
+    image:   'work/pwc-bridge/pwc-bridge-hero-landscape.png',
   },
   {
     num: '02', total: '04',
@@ -29,7 +29,7 @@ const PROJECTS = [
     bg:      'linear-gradient(135deg,#2e2208 0%,#4a3810 100%)',
     accent:  '#C8A84B',
     href:    'work/hey-honey/',
-    image:   'work/hey-honey/hero-meadow.jpg',
+    image:   'work/hey-honey/hero-meadow-landscape.png',
   },
   {
     num: '03', total: '04',
@@ -39,7 +39,7 @@ const PROJECTS = [
     bg:      'linear-gradient(135deg,#0a1520 0%,#162436 100%)',
     accent:  '#6B8FA9',
     href:    'work/certifaction/',
-    image:   'work/certifaction/hero.jpg',
+    image:   'work/certifaction/hero-archive-landscape.png',
   },
   {
     num: '04', total: '04',
@@ -49,7 +49,7 @@ const PROJECTS = [
     bg:      'linear-gradient(135deg,#22152a 0%,#36204a 100%)',
     accent:  '#A98FA9',
     href:    'work/share-your-bag/',
-    image:   'work/share-your-bag/hero-card.jpg',
+    image:   'work/share-your-bag/hero-card-landscape.png',
   },
 ];
 
@@ -84,7 +84,7 @@ const workCardsEl   = document.getElementById('workCards');
 const workProgressEl = document.getElementById('workProgress');
 const workVisualEl  = document.getElementById('workVisual');
 
-// Visual items — live in the persistent rounded frame, slide in/out independently
+// Full-height visual slots travel with their text; only the images have rounded edges.
 const workVisualEls = workVisualEl ? PROJECTS.map((p) => {
   const item = document.createElement('div');
   item.className = 'work-visual-item';
@@ -122,7 +122,7 @@ const workCardEls = PROJECTS.map((p) => {
 // 2c. Process orbit — circle blobs
 gsap.registerPlugin(ScrollTrigger);
 
-const CIRCLE_SIZE = 160;
+const CIRCLE_SIZE = Math.round(Math.min(210, window.innerWidth * 0.28, window.innerHeight * 0.29));
 const ORBIT_R = Math.round(Math.min(window.innerWidth * 0.21, window.innerHeight * 0.29, 230));
 const EXIT_R  = Math.hypot(window.innerWidth / 2, window.innerHeight / 2) + CIRCLE_SIZE;
 
@@ -134,51 +134,14 @@ procRingEl.className = 'proc-ring';
 procRingEl.style.cssText = `width:${ORBIT_R * 2}px;height:${ORBIT_R * 2}px;left:calc(50% - ${ORBIT_R}px);top:calc(50% - ${ORBIT_R}px);`;
 if (procOrbitStage) procOrbitStage.appendChild(procRingEl);
 
-const ORB_SVG = {
-  build: {
-    accent: ['#E6A24E','#F0D0A0','#F4EBD8'], ops: [0.78, 0.42], acMid: 48,
-    acCx: 25, acCy: 62, acR: 52, crCx: 60, crCy: 40, crR: 65,
-  },
-  listen: {
-    accent: ['#E9796F','#F0B5A7','#F4EBD8'], ops: [0.72, 0.38], acMid: 48,
-    acCx: 78, acCy: 58, acR: 54, crCx: 42, crCy: 38, crR: 68,
-  },
-  strategy: {
-    accent: ['#B8C97B','#D8DDB2','#F4EBD8'], ops: [0.68, 0.36], acMid: 50,
-    acCx: 58, acCy: 78, acR: 55, crCx: 48, crCy: 35, crR: 70,
-  },
-  design: {
-    accent: ['#A78BD6','#CDBBE4','#F4EBD8'], ops: [0.72, 0.38], acMid: 50,
-    acCx: 28, acCy: 72, acR: 56, crCx: 62, crCy: 38, crR: 68,
-  },
+// Reference circle textures; the fourth step reuses the warm circle.
+const PROCESS_SHAPES = {
+  build: 'images/process/shape-circle1.webp',
+  listen: 'images/process/shape-circle1.webp',
+  strategy: 'images/process/shape-circle3.webp',
+  design: 'images/process/shape-circle2.webp',
 };
 
-function orbSVG(id, v) {
-  // Keep every layer concentric and unmasked so the soft silhouette stays round.
-  return `<svg viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;overflow:visible;display:block">
-  <defs>
-    <filter id="blOut${id}" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="22"/></filter>
-    <filter id="blIn${id}" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="8"/></filter>
-    <radialGradient id="cr${id}" cx="${v.crCx}%" cy="${v.crCy}%" r="${v.crR}%">
-      <stop offset="0%" stop-color="#F8F1DF"/><stop offset="62%" stop-color="#EEE5CC"/><stop offset="100%" stop-color="#D8CDAF"/>
-    </radialGradient>
-    <radialGradient id="ac${id}" cx="${v.acCx}%" cy="${v.acCy}%" r="${v.acR + 30}%">
-      <stop offset="0%" stop-color="${v.accent[0]}" stop-opacity="1"/>
-      <stop offset="${v.acMid}%" stop-color="${v.accent[1]}" stop-opacity="0.85"/>
-      <stop offset="75%" stop-color="${v.accent[1]}" stop-opacity="0.55"/>
-      <stop offset="100%" stop-color="${v.accent[2]}" stop-opacity="0"/>
-    </radialGradient>
-  </defs>
-  <circle cx="110" cy="110" r="60" fill="url(#cr${id})" filter="url(#blOut${id})"/>
-  <circle cx="110" cy="110" r="60" fill="url(#ac${id})" filter="url(#blOut${id})"/>
-    <circle cx="110" cy="110" r="74" fill="url(#cr${id})" filter="url(#blIn${id})"/>
-    <circle cx="110" cy="110" r="74" fill="url(#ac${id})" opacity="0.7" filter="url(#blIn${id})"/>
-</svg>`;
-}
-
-// Two-layer split: the slot owns transform + opacity (and will-change),
-// the inner .proc-circle stays untransformed so the SVG feGaussianBlur halo
-// isn't clipped by Chrome's GPU compositing layer.
 const circleEls = procOrbitStage ? CIRCLES.map((c) => {
   const slot = document.createElement('div');
   slot.className = 'proc-circle-slot';
@@ -188,8 +151,12 @@ const circleEls = procOrbitStage ? CIRCLES.map((c) => {
   wrap.className = 'proc-circle';
 
   const orb = document.createElement('div');
-  orb.className = 'proc-circle-orb';
-  orb.innerHTML = orbSVG(c.variant, ORB_SVG[c.variant]);
+  orb.className = `proc-circle-orb proc-circle-orb--${c.variant}`;
+  const texture = document.createElement('img');
+  texture.src = PROCESS_SHAPES[c.variant];
+  texture.alt = '';
+  texture.setAttribute('aria-hidden', 'true');
+  orb.appendChild(texture);
 
   const label = document.createElement('span');
   label.className = 'orb-content';
@@ -417,6 +384,13 @@ function onHeroScroll() {
 const stmtWrap    = document.getElementById('statement-wrap');
 const stmtSection = document.getElementById('statement');
 const stmtContent = document.getElementById('statementText');
+const stmtWordOptions = Array.from(document.querySelectorAll('.statement-word-option'));
+
+function setStatementWord(index) {
+  stmtWordOptions.forEach((word, wordIndex) => {
+    word.classList.toggle('is-active', wordIndex === index);
+  });
+}
 
 function applyTimeline(p, content, decorItems, inP) {
   const rawIn     = inP !== undefined ? inP : 1;
@@ -479,6 +453,11 @@ function onPinnedScroll() {
       el.style.opacity   = _in * (el.dataset.baseOpacity || 1);
       el.style.transform = `translateY(${(baseY - drift).toFixed(1)}px)`;
     });
+
+    // The word changes with scroll position instead of on a timer: the visitor
+    // has control over the message and can move backwards through each idea.
+    const wordIndex = stmtP < 0.22 ? 0 : stmtP < 0.44 ? 1 : 2;
+    setStatementWord(wordIndex);
   }
 
   // Scene 2 — Process: bg fade only. Slide-up transform lives in gsap.ticker
@@ -520,10 +499,10 @@ function onWorkScroll() {
     workCardsEl.style.opacity   = entryInP;
   }
 
-  // Header: fades in on approach (early), then out as first card enters
+  // Clear the title before the first card starts entering at progress 0.075.
   if (workHeaderEl) {
     const hIn  = 1 - Math.pow(1 - clamp01((headerInP - 0.08) / 0.92), 3);
-    const hOut = Math.pow(clamp01(globalP / 0.14), 1.8);
+    const hOut = smooth(clamp01((globalP - 0.015) / 0.06));
     workHeaderEl.style.opacity   = hIn * (1 - hOut);
     workHeaderEl.style.transform = `translateY(${((1 - hIn) * 40 - hOut * 50).toFixed(1)}px)`;
   }
@@ -580,9 +559,10 @@ function onWorkScroll() {
     card.style.transform    = `translateY(${ty.toFixed(2)}vh)`;
     card.style.pointerEvents = op > 0.5 ? 'auto' : 'none';
 
-    // Visual frame: same timing, translateY in % (clipped by frame overflow:hidden)
+    // Match the text's viewport-height travel exactly, including entry and exit.
     if (workVisualEls[i]) {
-      workVisualEls[i].style.transform = `translateY(${ty.toFixed(2)}%)`;
+      workVisualEls[i].style.transform = `translateY(${ty.toFixed(2)}vh)`;
+      workVisualEls[i].style.opacity = op;
     }
   });
 

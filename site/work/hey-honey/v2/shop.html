@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Shop · Hey Honey</title>
+<meta name="description" content="Browse Hey Honey's varietals: Manuka, Acacia, Pine Tree, Orange Blossom, Elderflower, and Premium reserves.">
+<meta name="theme-color" content="#FBF6EC">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="phone" role="region" aria-label="Hey Honey, shop">
+  <main id="main" class="shell">
+
+    <!-- Top bar -->
+    <header class="topbar">
+      <a class="brand" href="index.html" aria-label="Hey Honey home">Hey&nbsp;<em class="amp">Honey</em></a>
+      <span class="spacer"></span>
+      <a class="iconbtn" href="cart.html" aria-label="Cart, 1 item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.2a2 2 0 0 0 2-1.5L20.5 8H6.2"/></svg>
+        <span class="badge">1</span>
+      </a>
+      <button class="iconbtn" aria-label="Favourites">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 8.3a5 5 0 0 0-8.8-3.2A5 5 0 0 0 3.2 8.3c0 7 8.8 12 8.8 12s8.8-5 8.8-12z"/></svg>
+      </button>
+      <button class="iconbtn" aria-label="Account">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></svg>
+      </button>
+      <button class="iconbtn" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+      </button>
+    </header>
+
+    <h1 style="font-family: var(--ff-display); font-weight: 400; font-size: clamp(2rem, 9vw, 2.75rem); line-height: 0.98; letter-spacing: -0.015em; margin: 0.5rem 0 1rem;">
+      The <em style="font-style: normal; color: var(--accent-emphasis);">whole hive.</em>
+    </h1>
+
+    <!-- Search -->
+    <label class="sr-only" for="q">Search the shop</label>
+    <div class="search">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Search varietals">
+      <button class="filter" aria-label="Open filters">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+      </button>
+    </div>
+
+    <!-- Filter chips -->
+    <nav class="filters" aria-label="Categories">
+      <button class="chip" data-active="true" aria-pressed="true">
+        <span class="chip-dot" aria-hidden="true" style="background: linear-gradient(155deg, var(--honey-2), var(--honey-1));">🍯</span>
+        All
+      </button>
+      <button class="chip" aria-pressed="false">
+        <span class="chip-dot" aria-hidden="true" style="background: linear-gradient(155deg, var(--elder-a), var(--elder-b));">✦</span>
+        Premium
+      </button>
+      <button class="chip" aria-pressed="false">
+        <span class="chip-dot" aria-hidden="true" style="background: linear-gradient(155deg, var(--pine-a), var(--pine-b));">🌲</span>
+        Pine tree
+      </button>
+      <button class="chip" aria-pressed="false">
+        <span class="chip-dot" aria-hidden="true" style="background: linear-gradient(155deg, var(--manuka-a), var(--manuka-b));">❀</span>
+        Manuka
+      </button>
+      <button class="chip" aria-pressed="false">
+        <span class="chip-dot" aria-hidden="true" style="background: linear-gradient(155deg, var(--orange-a), var(--orange-b));">🌸</span>
+        Blossom
+      </button>
+    </nav>
+
+    <!-- Result count + sort -->
+    <div class="shop-toolbar">
+      <p class="count" id="shop-count" aria-live="polite"><strong>6</strong> varietals</p>
+      <button class="sort" type="button" id="shop-sort" aria-haspopup="listbox" aria-expanded="false">
+        Sort: <strong style="font-weight: 500; color: var(--ink);" id="sort-label">Featured</strong>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+    </div>
+
+    <!-- Product grid -->
+    <div class="product-grid" role="list">
+      <a class="product-card product-card--elder" href="product.html" role="listitem" aria-label="Premium Elderflower, CHF 25">
+        <div class="product-photo">
+          <img src="photos/jar-elder.jpg" alt="Premium Elderflower honey">
+          <button class="product-fav" type="button" aria-label="Favourite Elderflower">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 8.3a5 5 0 0 0-8.8-3.2A5 5 0 0 0 3.2 8.3c0 7 8.8 12 8.8 12s8.8-5 8.8-12z"/></svg>
+          </button>
+        </div>
+        <div class="product-info">
+          <h3 class="product-name">Elderflower</h3>
+          <p class="product-tag">Floral, airy, gently perfumed</p>
+          <div class="product-row">
+            <span class="product-price">CHF 25</span>
+            <button class="product-add" type="button" aria-label="Add Elderflower to cart">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            </button>
+          </div>
+        </div>
+      </a>
+
+      <a class="product-card product-card--manuka" href="product.html" role="listitem" aria-label="Manuka, CHF 18">
+        <div class="product-photo">
+          <img src="photos/jar-manuka.jpg" alt="Manuka honey jar">
+          <button class="product-fav" type="button" aria-label="Favourite Manuka">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 8.3a5 5 0 0 0-8.8-3.2A5 5 0 0 0 3.2 8.3c0 7 8.8 12 8.8 12s8.8-5 8.8-12z"/></svg>
+          </button>
+        </div>
+        <div class="product-info">
+          <h3 class="product-name">Manuka</h3>
+          <p class="product-tag">Bold, medicinal, deeply herbal</p>
+          <div class="product-row">
+            <span class="product-price">CHF 18</span>
+            <button class="product-add" type="button" aria-label="Add Manuka to cart">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            </button>
+          </div>
+        </div>
+      </a>
+
+      <a class="product-card product-card--orange" href="product.html" role="listitem" aria-label="Orange Blossom, CHF 19.50">
+        <div class="product-photo">
+          <img src="photos/jar-orange.jpg" alt="Orange Blossom honey">
+          <button class="product-fav" type="button" aria-label="Favourite Orange Blossom">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 8.3a5 5 0 0 0-8.8-3.2A5 5 0 0 0 3.2 8.3c0 7 8.8 12 8.8 12s8.8-5 8.8-12z"/></svg>
+          </button>
+        </div>
+        <div class="product-info">
+          <h3 class="product-name">Orange Blossom</h3>
+          <p class="product-tag">Bright, citrusy, delicate</p>
+          <div class="product-row">
+            <span class="product-price">CHF 19.50</span>
+            <button class="product-add" type="button" aria-label="Add Orange Blossom to cart">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            </button>
+          </div>
+        </div>
+      </a>
+
+      <a class="product-card product-card--pine" href="product.html" role="listitem" aria-label="Pine Tree, CHF 20">
+        <div class="product-photo">
+          <img src="photos/jar-pine.jpg" alt="Pine Tree honey jar">
+          <button class="product-fav" type="button" aria-label="Favourite Pine Tree">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 8.3a5 5 0 0 0-8.8-3.2A5 5 0 0 0 3.2 8.3c0 7 8.8 12 8.8 12s8.8-5 8.8-12z"/></svg>
+          </button>
+        </div>
+        <div class="product-info">
+          <h3 class="product-name">Pine Tree</h3>
+          <p class="product-tag">Resinous, earthy, bittersweet</p>
+          <div class="product-row">
+            <span class="product-price">CHF 20</span>
+            <button class="product-add" type="button" aria-label="Add Pine Tree to cart">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            </button>
+          </div>
+        </div>
+      </a>
+
+      <a class="product-card product-card--blossom" href="product.html" role="listitem" aria-label="Reserve, CHF 28">
+        <div class="product-photo">
+          <img src="photos/jar-reserve.jpg" alt="Alpen Bene Reserve Spéciale honey, 500g">
+          <button class="product-fav" type="button" aria-label="Favourite Reserve">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 8.3a5 5 0 0 0-8.8-3.2A5 5 0 0 0 3.2 8.3c0 7 8.8 12 8.8 12s8.8-5 8.8-12z"/></svg>
+          </button>
+        </div>
+        <div class="product-info">
+          <h3 class="product-name">Reserve</h3>
+          <p class="product-tag">High-alpine, complex, vintage</p>
+          <div class="product-row">
+            <span class="product-price">CHF 28</span>
+            <button class="product-add" type="button" aria-label="Add Reserve to cart">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            </button>
+          </div>
+        </div>
+      </a>
+
+      <a class="product-card product-card--acacia" href="product.html" role="listitem" aria-label="Acacia, CHF 17">
+        <div class="product-photo">
+          <img src="photos/jar-acacia.jpg" alt="Acacia honey jar">
+          <button class="product-fav" type="button" aria-label="Favourite Acacia">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 8.3a5 5 0 0 0-8.8-3.2A5 5 0 0 0 3.2 8.3c0 7 8.8 12 8.8 12s8.8-5 8.8-12z"/></svg>
+          </button>
+        </div>
+        <div class="product-info">
+          <h3 class="product-name">Acacia</h3>
+          <p class="product-tag">Clean, vanilla-soft, delicate</p>
+          <div class="product-row">
+            <span class="product-price">CHF 17</span>
+            <button class="product-add" type="button" aria-label="Add Acacia to cart">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            </button>
+          </div>
+        </div>
+      </a>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  // Filter chip toggle
+  const chips = document.querySelectorAll('.chip');
+  chips.forEach(c => c.addEventListener('click', () => {
+    chips.forEach(x => {
+      x.dataset.active = 'false';
+      x.setAttribute('aria-pressed', 'false');
+    });
+    c.dataset.active = 'true';
+    c.setAttribute('aria-pressed', 'true');
+  }));
+
+  // Sort cycle (prototype: cycles label only)
+  const sortBtn = document.getElementById('shop-sort');
+  const sortLabel = document.getElementById('sort-label');
+  const sortOptions = ['Featured', 'Price: low to high', 'Price: high to low', 'New harvest'];
+  let sortIdx = 0;
+  if (sortBtn && sortLabel) {
+    sortBtn.addEventListener('click', () => {
+      sortIdx = (sortIdx + 1) % sortOptions.length;
+      sortLabel.textContent = sortOptions[sortIdx];
+    });
+  }
+</script>
+</body>
+</html>
