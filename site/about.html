@@ -72,30 +72,33 @@
       width: 100%;
     }
     .about-bio-body {
-      column-count: 2;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       column-gap: 4rem;
-      column-fill: balance;
+      row-gap: 1.4rem;
     }
     .about-bio-body p {
       font-family: var(--ff-sans, 'Jost', sans-serif);
       font-size: clamp(0.95rem, 1.1vw, 1.05rem);
       font-weight: 400;
       line-height: 1.7;
-      margin: 0 0 1.4rem;
+      margin: 0;
       color: var(--olive-deep);
-      break-inside: avoid;
     }
-    .about-bio-body p:last-child { margin-bottom: 0; }
+    .about-bio-body p:nth-of-type(1) { grid-column: 1; grid-row: 1; }
+    .about-bio-body p:nth-of-type(2) { grid-column: 1; grid-row: 2; }
+    .about-bio-body p:nth-of-type(3) { grid-column: 2; grid-row: 1; }
     .about-bio-body em { font-style: italic; color: var(--olive-deep); }
     @media (max-width: 900px) {
-      .about-bio-body { column-count: 1; }
+      .about-bio-body { grid-template-columns: 1fr; }
+      .about-bio-body p:nth-of-type(n) { grid-column: auto; grid-row: auto; }
     }
 
     /* Highlights row */
     .about-highlights {
       padding: 4rem var(--page-gutter) 6rem;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 3rem;
       max-width: 1800px;
       margin: 0 auto;
@@ -207,7 +210,7 @@
     }
 
     /* Quick facts — a scroll-driven card deck */
-    .about-facts-transition { height: 400vh; overflow: clip; }
+    .about-facts-transition { height: 500vh; overflow: clip; }
     .about-facts {
       box-sizing: border-box;
       min-height: 100vh;
@@ -295,6 +298,7 @@
     .about-fact:nth-child(2) { --card-accent: #d77b51; }
     .about-fact:nth-child(3) { --card-accent: #8e9ab0; }
     .about-fact:nth-child(4) { --card-accent: #b4a26d; }
+    .about-fact:nth-child(5) { --card-accent: #b98583; }
     .about-fact::before {
       content: '';
       position: absolute;
@@ -438,7 +442,7 @@
       .about-contact-transition { height: auto; margin-top: 0; }
       .about-facts-transition .about-facts,
       .about-contact-transition .about-contact { min-height: 0; position: relative; }
-      .about-facts-transition { height: 360vh; }
+      .about-facts-transition { height: 460vh; }
       .about-facts-transition .about-facts { min-height: 100vh; position: sticky; top: 0; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -481,36 +485,38 @@
       <div class="eyebrow eyebrow-dark">The story</div>
       <div class="about-bio-body">
         <p>
-          I'm Ieva — a UX/UI designer who moved from Lithuania to Zürich and stayed. For the past few years I've been working at the intersection of research, interaction design, and visual systems — most often on tools that need to be operationally clear before they can be visually beautiful.
+          I’ve always liked figuring out how things work and how they could work better. In design, that usually means understanding what people need, making sense of complicated information, and turning it into something clear and easy to use. Basically a translator, just for apps :)
         </p>
         <p>
-          My most defining project was PwC Switzerland's <em>Project Bridge</em>: a year-long effort to consolidate fragmented tools into one role-aware platform, where I was the lead and only designer working with developers, project managers, and stakeholders who were also our users. It taught me that strong UX leadership isn't about ideal processes — it's about advocating for clarity within real constraints.
+          I’ve worked on very different products and with different kinds of teams, from startups to large corporate environments, so I’m used to adapting as projects change. Taking ownership of the whole process or discussing every detail with the team, I’m comfortable with both.
         </p>
         <p>
-          Before that I shaped the early experience at <em>Certifaction</em>, a Swiss eSignature company, where my onboarding redesign took task completion from 3-out-of-10 to 7-out-of-10 in usability tests. Alongside client work I keep a running set of personal projects — <em>Hey Honey</em>, a marketplace for local Swiss honey producers, and <em>Share Your Bag</em>, a peer-to-peer luxury rental concept I've been refining since 2021.
-        </p>
-        <p>
-          Outside of design my time goes to snowboarding (still trying to land a clean 360), surfing (less skilled, more enthusiastic), tennis, hiking the Swiss alps, cooking, and baking. I share a flat with a Dalmatian named Mochi who is, without exaggeration, the best part of any day.
+          Every year I throw myself into something new to learn. Sometimes it’s a design or AI course, sometimes a new project, and right now it’s Digital Communication studies and German classes.
         </p>
       </div>
     </section>
 
-    <!-- ═══ HIGHLIGHTS ═════════════════════════════════════════════════ -->
+    <!-- ═══ DETAILS ════════════════════════════════════════════════════ -->
     <section class="about-highlights col-lines" id="aboutHighlights">
       <div class="about-highlight">
-        <div class="eyebrow eyebrow-dark">Most recent · 2022–2025</div>
-        <h3>Lead designer, PwC Switzerland</h3>
-        <p>Three years across Tax &amp; Technology. My biggest project was <em>Project Bridge</em> (2024–2025) — consolidated fragmented tools into a single role-aware workspace.</p>
+        <div class="eyebrow eyebrow-dark">Based</div>
+        <h3>Zürich, CH</h3>
+        <p>Swiss home, Lithuanian roots.</p>
       </div>
       <div class="about-highlight">
-        <div class="eyebrow eyebrow-dark">Earlier · 2021</div>
-        <h3>UX at Certifaction</h3>
-        <p>Onboarding redesign that took task completion from 3/10 to 7/10 in usability tests.</p>
+        <div class="eyebrow eyebrow-dark">Languages</div>
+        <h3>English · Lithuanian · German</h3>
+        <p>Hello · Labas · Hallo</p>
       </div>
       <div class="about-highlight">
-        <div class="eyebrow eyebrow-dark">Ongoing</div>
-        <h3>Hey Honey · Share Your Bag</h3>
-        <p>Two end-to-end personal concepts I keep building on the side — marketplace and rental product thinking.</p>
+        <div class="eyebrow eyebrow-dark">Tools</div>
+        <h3>Figma, Adobe CC, Framer &amp; more.</h3>
+        <p>Miro · Claude · Codex · Magic Patterns · Jira</p>
+      </div>
+      <div class="about-highlight">
+        <div class="eyebrow eyebrow-dark">Status</div>
+        <h3>Independent</h3>
+        <p>Open to roles &amp; thoughtful projects.</p>
       </div>
     </section>
 
@@ -525,27 +531,33 @@
       <div class="about-facts-track">
         <article class="about-fact">
           <span class="fact-number">01</span>
-          <div class="eyebrow eyebrow-dark">Based</div>
-          <p>Zürich, CH</p>
-          <span class="fact-detail">Swiss time, Lithuanian roots.</span>
+          <div class="eyebrow eyebrow-dark">Home team</div>
+          <p>Mochi</p>
+          <span class="fact-detail">Dalmatian · best part of my day</span>
         </article>
         <article class="about-fact">
           <span class="fact-number">02</span>
-          <div class="eyebrow eyebrow-dark">Languages</div>
-          <p>English · Lithuanian</p>
-          <span class="fact-detail">Hello · Labas</span>
+          <div class="eyebrow eyebrow-dark">Off-screen</div>
+          <p>Snowboarding · surfing · tennis</p>
+          <span class="fact-detail">Plus as much hiking as Swiss weather allows</span>
         </article>
         <article class="about-fact">
           <span class="fact-number">03</span>
-          <div class="eyebrow eyebrow-dark">Tools</div>
-          <p>Figma, Adobe CC, Framer &amp; more.</p>
-          <span class="fact-detail">Miro · Claude · Codex · Magic Patterns · Jira</span>
+          <div class="eyebrow eyebrow-dark">Current challenge</div>
+          <p>A clean 360</p>
+          <span class="fact-detail">Getting closer. Slowly.</span>
         </article>
         <article class="about-fact">
           <span class="fact-number">04</span>
-          <div class="eyebrow eyebrow-dark">Status</div>
-          <p class="fact-status">Independent</p>
-          <span class="fact-detail">Open to roles &amp; thoughtful projects.</span>
+          <div class="eyebrow eyebrow-dark">In the kitchen</div>
+          <p>Cooking &amp; baking</p>
+          <span class="fact-detail">One of my favourite ways to switch off</span>
+        </article>
+        <article class="about-fact">
+          <span class="fact-number">05</span>
+          <div class="eyebrow eyebrow-dark">Roots</div>
+          <p>Lithuania → Zürich</p>
+          <span class="fact-detail">Lithuanian roots, Swiss home</span>
         </article>
       </div>
     </section>
@@ -588,7 +600,7 @@
         <div class="eyebrow eyebrow-light">Contact</div>
         <h2 class="about-contact-heading">Let's talk.</h2>
         <p class="about-contact-sub">
-          Always open to good projects and full-time roles. Drop me a line — I reply quickly.
+          I’d love to hear what you’re working on.
         </p>
         <div class="pill-row">
           <a href="mailto:ievakirdaikyte@gmail.com" class="pill pill-light">Email</a>
