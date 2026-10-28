@@ -15,7 +15,7 @@ const PROJECTS = [
     num: '01', total: '04',
     eyebrow: '2022–2025 · Lead UX/UI · PwC Switzerland',
     title:   'PwC Bridge',
-    desc:    "Consolidating fragmented tools into a single role-aware workspace for PwC Switzerland's Tax & Technology teams.",
+    desc:    "Designing a custom workspace that gave PwC Switzerland's teams everything they needed in one easy-to-use place.",
     bg:      'linear-gradient(135deg,#1e2c0e 0%,#2c3d12 100%)',
     accent:  '#8FA96B',
     href:    'work/pwc-bridge/',
