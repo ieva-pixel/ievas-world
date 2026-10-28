@@ -184,6 +184,14 @@ function animateHeroTitle() {
     ease: 'expo.out',
     stagger: { each: 0.025, from: 'start' },
     delay: 0.55,
+    onComplete: () => {
+      // Let italic glyphs paint beyond their character boxes after the reveal.
+      // Keeping each letter composited can clip overhanging strokes in WebKit.
+      chars.forEach((char) => {
+        char.style.transform = 'none';
+        char.style.willChange = 'auto';
+      });
+    },
   });
 }
 
