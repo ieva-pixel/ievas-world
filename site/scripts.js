@@ -219,21 +219,9 @@ gsap.ticker.add(() => {
 
   });
 
-  // Slide procSection over the still-pinned statement.
-  // Lives on gsap.ticker (paint-coupled) instead of the scroll listener so it
-  // can't lag a frame on aggressive scrolls — that lag was leaving cream gaps
-  // at the top of the section when flicking back upward.
-  if (procWrap && procSection && stmtWrap) {
-    const procRectTop = procWrap.getBoundingClientRect().top;
-    if (procRectTop > 0) {
-      const stmtP  = sceneProg(stmtWrap);
-      const slideP = clamp01((stmtP - 0.6) / 0.4);
-      const target = (1 - slideP) * window.innerHeight;
-      procSection.style.transform = `translateY(${(target - procRectTop).toFixed(1)}px)`;
-    } else if (procSection.style.transform) {
-      procSection.style.transform = '';
-    }
-  }
+  // Process enters through native sticky positioning. Avoid scroll-cancelling
+  // transforms here: compositor scrolling can run ahead of JavaScript and make
+  // the green section jump when the visitor scrolls quickly or reverses.
 });
 
 // Defer trigger until fonts/layout settle
@@ -380,7 +368,7 @@ function onHeroScroll() {
   });
 }
 
-// 3b. Scene 1 — Statement (cream → olive bg, content fade with blur)
+// 3b. Scene 1 — Statement (word changes, then Process slides over the content)
 const stmtWrap    = document.getElementById('statement-wrap');
 const stmtSection = document.getElementById('statement');
 const stmtContent = document.getElementById('statementText');
@@ -460,8 +448,8 @@ function onPinnedScroll() {
     setStatementWord(wordIndex);
   }
 
-  // Scene 2 — Process: bg fade only. Slide-up transform lives in gsap.ticker
-  // for paint-coupled timing.
+  // Scene 2 — Process: fade the background as Work approaches. Its slide-in
+  // uses native sticky positioning and the overlap defined in CSS.
   if (procWrap && procSection) {
     const bgOutP = approachExitP(workPinWrap, 1.05, 0.05);
     const pr = Math.round(33 + (240 - 33) * bgOutP);

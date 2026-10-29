@@ -497,7 +497,9 @@ section { position: relative; }
 }
 
 /* Scene 1 — Statement */
-#statement-wrap { background: #F1F0EA; height: 220vh; }
+/* 250vh of pinning: the final 100vh lets Process slide over the statement
+   at native scroll speed, beginning at 60% after all three words appear. */
+#statement-wrap { background: #F1F0EA; height: 350vh; }
 #statement      { background: #F1F0EA; z-index: 1; }
 .statement-fade {
   opacity: 0;
