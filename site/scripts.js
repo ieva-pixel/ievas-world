@@ -25,7 +25,7 @@ const PROJECTS = [
     num: '02', total: '04',
     eyebrow: '2025 – 2026 · UX/UI · Personal',
     title:   'Hey Honey',
-    desc:    'A curated marketplace for high-quality, locally produced honey: mobile-first, subscription-friendly, gift-ready.',
+    desc:    'A mobile-first marketplace where people can discover local honey, buy directly from beekeepers, set up subscriptions and send gifts.',
     bg:      'linear-gradient(135deg,#2e2208 0%,#4a3810 100%)',
     accent:  '#C8A84B',
     href:    'work/hey-honey/',
