@@ -19,7 +19,7 @@ const PROJECTS = [
     bg:      'linear-gradient(135deg,#1e2c0e 0%,#2c3d12 100%)',
     accent:  '#8FA96B',
     href:    'work/pwc-bridge/',
-    image:   'work/pwc-bridge/Zurich office laptop with engagement dashboard.png',
+    image:   'work/pwc-bridge/Risk management dashboard on an office laptop.png',
   },
   {
     num: '02', total: '04',
